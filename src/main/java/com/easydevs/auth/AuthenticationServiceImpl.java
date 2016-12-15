@@ -1,4 +1,4 @@
-package com.auth;
+package com.easydevs.auth;
 
 import com.easydevs.user.User;
 import com.easydevs.user.UserService;

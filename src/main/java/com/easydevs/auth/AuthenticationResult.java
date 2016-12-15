@@ -1,4 +1,4 @@
-package com.auth;
+package com.easydevs.auth;
 
 /**
  * Created by arekotto on 15/12/2016.
