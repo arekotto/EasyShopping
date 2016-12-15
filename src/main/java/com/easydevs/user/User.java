@@ -8,6 +8,14 @@ import org.springframework.stereotype.Component;
 public interface User {
 
     Integer getId();
+    String getName();
+    String getLogin();
 
-    void seteId(Integer id);
+    void setId(Integer id);
+
+    void setName(String userName);
+
+    void setLogin(String login);
+
+    void setPassword(String password);
 }

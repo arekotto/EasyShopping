@@ -23,9 +23,21 @@ public class UserServiceImpl implements UserService {
     public User getUser(Integer userId) {
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(userId));
-        List<TestUser> testUsers = mongoTemplate.find(query, TestUser.class);
-        if (testUsers.size() == 1) {
-            return testUsers.get(0);
+        List<StandardUser> usersList = mongoTemplate.find(query, StandardUser.class);
+        if (usersList.size() == 1) {
+            return usersList.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public User getUserByLogin (String login) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("login").is(login));
+        List<StandardUser> usersList = mongoTemplate.find(query, StandardUser.class);
+        if (usersList.size() == 1) {
+            return usersList.get(0);
         } else {
             return null;
         }
@@ -35,6 +47,5 @@ public class UserServiceImpl implements UserService {
     public void createUser(User user) {
         mongoTemplate.insert(user);
     }
-
 
 }
