@@ -11,6 +11,7 @@ public interface User {
     String getName();
     String getLogin();
     Long getTokenValidationTimeStamp();
+    String getPassword();
 
     void setId(Integer id);
 
