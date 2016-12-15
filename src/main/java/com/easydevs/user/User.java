@@ -10,6 +10,7 @@ public interface User {
     Integer getId();
     String getName();
     String getLogin();
+    Long getTokenValidationTimeStamp();
 
     void setId(Integer id);
 

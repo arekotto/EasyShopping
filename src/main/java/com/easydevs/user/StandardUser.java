@@ -1,5 +1,7 @@
 package com.easydevs.user;
 
+import java.util.Locale;
+
 /**
  * Created by ibm on 2016-12-15.
  */
@@ -9,6 +11,7 @@ public class StandardUser implements User{
     private String name;
     private String login;
     private String password;
+    private Long tokenValidationTimeStamp;
 
     public StandardUser(Integer id,
                         String name,
@@ -55,4 +58,11 @@ public class StandardUser implements User{
     public String getLogin() {
         return this.login;
     }
+
+    @Override
+    public Long getTokenValidationTimeStamp() {
+        return this.tokenValidationTimeStamp;
+    }
+
 }
+

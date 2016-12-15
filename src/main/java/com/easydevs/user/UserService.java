@@ -9,5 +9,11 @@ public interface UserService {
 
     User getUserByLogin(String login);
 
-    void createUser(User user);
+    void createUser(User newUser);
+
+    void changeUserName(Integer userId, String newName);
+
+    void changeUserLogin(Integer userId, String newLogin);
+
+//    void changeUserPassword(Integer userId, String newPassword)
 }

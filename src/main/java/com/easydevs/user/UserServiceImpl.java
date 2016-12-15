@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,8 +45,45 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUser(User user) {
+    public void createUser(User newUser) {
+        User user = this.getUserByLogin(newUser.getLogin());
+
+        if (user != null) {
+            throw new InternalError("User currently existing in database");
+        }
+
         mongoTemplate.insert(user);
     }
 
+    @Override
+    public void changeUserName(Integer userId, String newName) {
+        Query query = new Query();
+        Update update = new Update();
+
+        query.addCriteria(Criteria.where("id").is(userId));
+
+        mongoTemplate.updateFirst(query, update.set("name", newName), StandardUser.class);
+
+    }
+
+    @Override
+    public void changeUserLogin(Integer userId, String newLogin) {
+        Query query = new Query();
+        Update update = new Update();
+
+        query.addCriteria(Criteria.where("id").is(userId));
+
+        User user = this.getUserByLogin(newLogin);
+
+        if (user != null) {
+            throw new InternalError("User currently existing in database");
+        }
+
+        mongoTemplate.updateFirst(query, update.set("login", newLogin), StandardUser.class);
+    }
+
+//    @Override
+//    public void changeUserPassword(Integer userId, String newPassword) {
+//
+//    }
 }
