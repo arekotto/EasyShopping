@@ -10,12 +10,10 @@ public interface User {
     Integer getId();
     String getName();
     String getLogin();
+    String getPassword();
 
     void setId(Integer id);
-
     void setName(String userName);
-
     void setLogin(String login);
-
     void setPassword(String password);
 }
