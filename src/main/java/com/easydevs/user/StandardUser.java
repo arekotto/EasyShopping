@@ -11,6 +11,7 @@ public class StandardUser implements User{
     private String name;
     private String login;
     private String password;
+
     private Long tokenValidationTimeStamp;
 
     public StandardUser(Integer id,
@@ -45,6 +46,11 @@ public class StandardUser implements User{
     }
 
     @Override
+    public void setTokenValidationStamp(Long timeStamp) {
+        this.tokenValidationTimeStamp = timeStamp;
+    }
+
+    @Override
     public Integer getId() {
         return this.id;
     }
@@ -57,6 +63,11 @@ public class StandardUser implements User{
     @Override
     public String getLogin() {
         return this.login;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
     }
 
     @Override

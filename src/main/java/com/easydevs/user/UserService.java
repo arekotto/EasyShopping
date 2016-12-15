@@ -15,5 +15,9 @@ public interface UserService {
 
     void changeUserLogin(Integer userId, String newLogin);
 
+    void updateUser(User user);
+
+    void updateTokenTimeStamp(Integer userId, Long timeStamp);
+
 //    void changeUserPassword(Integer userId, String newPassword)
 }

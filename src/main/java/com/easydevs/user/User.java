@@ -10,8 +10,8 @@ public interface User {
     Integer getId();
     String getName();
     String getLogin();
-    Long getTokenValidationTimeStamp();
     String getPassword();
+    Long getTokenValidationTimeStamp();
 
     void setId(Integer id);
 
@@ -20,4 +20,7 @@ public interface User {
     void setLogin(String login);
 
     void setPassword(String password);
+
+    void setTokenValidationStamp(Long timeStamp);
+
 }
