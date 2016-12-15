@@ -31,8 +31,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public Boolean isTokenValid(String token) {
-        return null;
+    public boolean isTokenValid(String token) {
+        return false;
     }
 
     private String generateToken() {
