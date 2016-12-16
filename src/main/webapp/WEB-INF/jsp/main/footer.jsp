@@ -8,6 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <body>
-Here be footer.
+Product of (Y)AAR. All rights reserved. 2016.
 </body>
 </html>

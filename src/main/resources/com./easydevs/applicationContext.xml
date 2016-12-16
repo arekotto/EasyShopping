@@ -16,7 +16,6 @@
 
     <bean id="contentMongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
         <constructor-arg ref="contentMongoDbFactory"/>
+
     </bean>
-
-
 </beans>
