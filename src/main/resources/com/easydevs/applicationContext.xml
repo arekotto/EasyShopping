@@ -10,8 +10,14 @@
 	   http://www.springframework.org/schema/data/mongo
 	   http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
 
+    <context:annotation-config />
+    <context:component-scan base-package="com.easydevs.user"/>
+
+    <!--<bean id="userService" class="com.easydevs.user.UserServiceImpl"/>-->
+    <!--<bean id="userService" class="com.easydevs.user.UserServiceImpl"/>-->
+
     <!--mongo-->
-    <mongo:mongo host="${mongo.host:localhost}" port="27017" id="contentMongo"/>
+    <mongo:mongo host="localhost" port="27017" id="contentMongo"/>
     <mongo:db-factory id="contentMongoDbFactory" mongo-ref="contentMongo" dbname="content_db"/>
 
     <bean id="contentMongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
