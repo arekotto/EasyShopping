@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
         Query query = new Query();
         query.addCriteria(Criteria.where("login").is(login));
         List<StandardUser> usersList = mongoTemplate.find(query, StandardUser.class);
-        if (usersList.size() == 1) {
+        if (!usersList.isEmpty()) {
             return usersList.get(0);
         } else {
             return null;
@@ -58,13 +58,14 @@ public class UserServiceImpl implements UserService {
     public void createUser(User newUser) {
         log.info("UserService.createUser", newUser);
 
-        User user = this.getUserByLogin(newUser.getLogin());
+        User exisitingUser = this.getUserByLogin(newUser.getLogin());
 
-        if (user != null) {
+        if (exisitingUser != null) {
             throw new InternalError("User currently existing in database");
+        } else {
+            mongoTemplate.insert(newUser);
         }
 
-        mongoTemplate.insert(user);
     }
 
     @Override
