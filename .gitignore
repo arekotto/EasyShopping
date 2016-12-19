@@ -29,5 +29,4 @@
 .idea/modules/EasyShopping_test.iml
 .idea/vcs.xml
 .idea/workspace.xml
-build/libs/EasyShopping.war
-build/tmp/war/MANIFEST.MF
+build
