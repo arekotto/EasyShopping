@@ -1,18 +1,16 @@
 package com.easydevs.controller;
 
-import com.easydevs.user.StandardUser;
-import com.easydevs.user.User;
 import com.easydevs.user.UserService;
-import com.easydevs.user.model.UserCommand;
-import com.easydevs.user.model.UserRegistrationCommand;
+import com.easydevs.user.UserType;
+import com.easydevs.user.command.UserCommand;
+import com.easydevs.user.command.UserRegistrationCommand;
+import com.easydevs.user.model.StandardUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by arekotto on 09/12/2016.
@@ -39,12 +37,13 @@ public class UserController {
     @RequestMapping("/create")
     public String createNewUser(Model model, @ModelAttribute("userRegistrationCommand") UserRegistrationCommand userRegistrationCommand) {
 
-        User newUser = new StandardUser(ThreadLocalRandom.current().nextInt(),
-                userRegistrationCommand.getName(),
-                userRegistrationCommand.getLogin(),
-                userRegistrationCommand.getPassword());
+        StandardUser newUser = (StandardUser) userService.createNewUser(UserType.STANDARD);
 
-        userService.createUser(newUser);
+        newUser.setLogin(userRegistrationCommand.getLogin());
+        newUser.setName(userRegistrationCommand.getName());
+        newUser.setPassword(userRegistrationCommand.getPassword());
+
+        userService.updateUser(newUser);
 
 
         // nie zwracamy sciezki do jsp ale wywoluje url mapowany przez motede showUser
@@ -54,7 +53,7 @@ public class UserController {
     @RequestMapping("/userHomepage/{login}")
     public String showUser(Model model, @PathVariable String login) {
 
-        User user = userService.getUserByLogin(login);
+        StandardUser user = (StandardUser) userService.getUserByLogin(login);
 
         UserCommand userCommand = new UserCommand();
         userCommand.setName(user.getName());

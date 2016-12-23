@@ -1,5 +1,8 @@
 package com.easydevs.user;
 
+import com.easydevs.user.model.StandardUser;
+import com.easydevs.user.model.TempUser;
+import com.easydevs.user.model.User;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.slf4j.Logger;
@@ -27,7 +30,7 @@ public class UserServiceImpl implements UserService {
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public User getUser(Integer userId) {
+    public User getUserById(Integer userId) {
         log.info("UserService.getUser", userId);
 
         Query query = new Query();
@@ -55,60 +58,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUser(User newUser) {
-        log.info("UserService.createUser", newUser);
-
-        User exisitingUser = this.getUserByLogin(newUser.getLogin());
-
-        if (exisitingUser != null) {
-            throw new InternalError("User currently existing in database");
+    public User createNewUser(UserType userType) {
+        if (userType == UserType.TEMP) {
+            return new TempUser(9);
         } else {
-            mongoTemplate.insert(newUser);
+            return new StandardUser(9);
         }
 
-    }
-
-    @Override
-    public void changeUserName(Integer userId, String newName) {
-        log.info("UserService.changeUserName", userId, newName);
-
-        Query query = new Query();
-        Update update = new Update();
-
-        query.addCriteria(Criteria.where("id").is(userId));
-
-        mongoTemplate.updateFirst(query, update.set("name", newName), StandardUser.class);
-
-    }
-
-    @Override
-    public void changeUserLogin(Integer userId, String newLogin) {
-        log.info("UserService.changeUserLogin", userId, newLogin);
-
-        Query query = new Query();
-        Update update = new Update();
-
-        query.addCriteria(Criteria.where("id").is(userId));
-
-        User user = this.getUserByLogin(newLogin);
-
-        if (user != null) {
-            throw new InternalError("User currently existing in database");
-        }
-
-        mongoTemplate.updateFirst(query, update.set("login", newLogin), StandardUser.class);
-    }
-
-    @Override
-    public void updateTokenTimeStamp(Integer userId, Long timeStamp) {
-        log.info("UserService.updateTokenTimeStamp", userId);
-
-        Query query = new Query();
-        Update update = new Update();
-
-        query.addCriteria(Criteria.where("id").is(userId));
-
-        mongoTemplate.updateFirst(query, update.set("tokenValidationTimeStamp", timeStamp), StandardUser.class);
     }
 
     @Override

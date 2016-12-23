@@ -1,11 +1,11 @@
-package com.easydevs.user;
+package com.easydevs.user.model;
 
-import java.util.Locale;
+import com.easydevs.user.UserType;
 
 /**
  * Created by ibm on 2016-12-15.
  */
-public class StandardUser implements User{
+public class StandardUser implements User {
 
     private Integer id;
     private String name;
@@ -13,6 +13,12 @@ public class StandardUser implements User{
     private String password;
 
     private Long tokenValidationTimeStamp;
+
+    public StandardUser(){}
+
+    public StandardUser(Integer id){
+        this.id = id;
+    }
 
     public StandardUser(Integer id,
                         String name,
@@ -25,27 +31,18 @@ public class StandardUser implements User{
 
     }
 
-    @Override
     public void setName(String name) {
         this.name = name;
     }
 
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    @Override
     public void setLogin(String login) {
         this.login = login;
     }
 
-    @Override
     public void setPassword(String password) {
         this.password = password;
     }
 
-    @Override
     public void setTokenValidationStamp(Long timeStamp) {
         this.tokenValidationTimeStamp = timeStamp;
     }
@@ -56,24 +53,35 @@ public class StandardUser implements User{
     }
 
     @Override
+    public UserType getUserType() {
+        return UserType.STANDARD;
+    }
+
     public String getName() {
         return this.name;
     }
 
-    @Override
     public String getLogin() {
         return this.login;
     }
 
-    @Override
     public String getPassword() {
         return password;
     }
 
-    @Override
     public Long getTokenValidationTimeStamp() {
         return this.tokenValidationTimeStamp;
     }
 
+    @Override
+    public String toString() {
+        return "StandardUser{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", tokenValidationTimeStamp=" + tokenValidationTimeStamp +
+                '}';
+    }
 }
 

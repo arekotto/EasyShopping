@@ -1,7 +1,7 @@
 package com.easydevs.auth;
 
-import com.easydevs.user.User;
 import com.easydevs.user.UserService;
+import com.easydevs.user.model.StandardUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResult login(String login, String password) {
-        User user = userService.getUserByLogin(login);
+        StandardUser user = (StandardUser) userService.getUserByLogin(login);
         if (user.getPassword().equals(password)) {
             log.info("Login successful: " + login);
             return new AuthenticationResult(true, generateToken());

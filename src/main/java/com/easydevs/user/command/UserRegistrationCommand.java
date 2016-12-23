@@ -1,4 +1,4 @@
-package com.easydevs.user.model;
+package com.easydevs.user.command;
 
 /**
  * Created by arekotto on 16/12/2016.
