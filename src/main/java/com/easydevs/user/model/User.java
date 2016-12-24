@@ -10,16 +10,9 @@ public interface User {
     Integer getId();
 
     UserType getUserType();
-//    String getName();
-//    String getLogin();
-//    String getPassword();
-//    Long getTokenValidationTimeStamp();
 
-//    void setName(String userName);
-//
-//    void setLogin(String login);
-//
-//    void setPassword(String password);
-//
-//    void setTokenValidationStamp(Long timeStamp);
+    String getToken();
+
+    void setToken(String token);
+
 }

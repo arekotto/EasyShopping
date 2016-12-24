@@ -15,6 +15,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.List;
 
 /**
@@ -26,6 +28,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     @Qualifier("contentMongoTemplate")
     private MongoTemplate mongoTemplate;
+
+    private SecureRandom random = new SecureRandom();
+    private final int TOKEN_LENGTH = 130;
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -78,6 +83,19 @@ public class UserServiceImpl implements UserService {
         query.addCriteria(Criteria.where("id").is(user.getId()));
 
         mongoTemplate.upsert(query, update, StandardUser.class);
+    }
+
+    public boolean isTokenValid(Integer userId, String token) {
+        User user = getUserById(userId);
+        if (user != null) {
+            return user.getToken().equals(token);
+        } else {
+            return false;
+        }
+    }
+
+    public String generateToken() {
+        return new BigInteger(TOKEN_LENGTH, random).toString(32);
     }
 
 }

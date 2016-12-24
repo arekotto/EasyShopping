@@ -1,8 +1,11 @@
 package com.easydevs.controller;
 
+import com.easydevs.auth.AuthenticationResult;
+import com.easydevs.auth.AuthenticationService;
 import com.easydevs.user.UserService;
 import com.easydevs.user.UserType;
 import com.easydevs.user.command.UserCommand;
+import com.easydevs.user.command.UserLoginCommand;
 import com.easydevs.user.command.UserRegistrationCommand;
 import com.easydevs.user.model.StandardUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * Created by arekotto on 09/12/2016.
@@ -18,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
+    @Autowired
+    private AuthenticationService authenticationService;
 
     @Autowired
     private UserService userService;
@@ -62,5 +69,29 @@ public class UserController {
         model.addAttribute("userCommand", userCommand);
 
         return "/user_homepage";
+    }
+
+    @RequestMapping("/login")
+    public String showLogin(Model model) {
+        model.addAttribute("userLoginCommand", new UserLoginCommand());
+
+        return "/user_login";
+    }
+
+    @RequestMapping("/authenticate")
+    public String authenticateUser(Model model,
+                        @ModelAttribute("userLoginCommand")UserLoginCommand userLoginCommand,
+                        RedirectAttributes redirectAttributes) {
+        AuthenticationResult authResult = authenticationService.login(userLoginCommand.getLogin(), userLoginCommand.getPassword());
+
+        if (authResult.getSuccessful()) {
+            // todo set token in cookie or sth like that
+            StandardUser user = (StandardUser) userService.getUserByLogin(userLoginCommand.getLogin());
+            return "redirect:userHomepage/" + user.getLogin();
+        } else {
+            userLoginCommand.setLoginFailed(true);
+            redirectAttributes.addAttribute("userLoginCommand", userLoginCommand);
+            return "redirect:login";
+        }
     }
 }

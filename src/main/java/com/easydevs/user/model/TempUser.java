@@ -8,6 +8,7 @@ import com.easydevs.user.UserType;
 public class TempUser implements User {
 
     private Integer id;
+    private String token;
 
     public TempUser(Integer id) {
         this.id = id;
@@ -21,5 +22,15 @@ public class TempUser implements User {
     @Override
     public UserType getUserType() {
         return UserType.TEMP;
+    }
+
+    @Override
+    public String getToken() {
+        return token;
+    }
+
+    @Override
+    public void setToken(String token) {
+        this.token = token;
     }
 }

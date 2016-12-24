@@ -7,5 +7,4 @@ public interface AuthenticationService {
 
     AuthenticationResult login(String userName, String password);
 
-    boolean isTokenValid(String token);
 }

@@ -14,4 +14,6 @@ public interface UserService {
     User createNewUser(UserType userType);
 
     void updateUser(User user);
+
+    String generateToken();
 }
