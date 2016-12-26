@@ -15,4 +15,7 @@ public interface User {
 
     void setToken(String token);
 
+    Long getTokenValidationTimeStamp();
+
+    void setTokenValidationTimeStamp(long timestamp);
 }

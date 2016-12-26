@@ -9,6 +9,7 @@ public class TempUser implements User {
 
     private Integer id;
     private String token;
+    private Long tokenValidationTimestamp;
 
     public TempUser(Integer id) {
         this.id = id;
@@ -32,5 +33,15 @@ public class TempUser implements User {
     @Override
     public void setToken(String token) {
         this.token = token;
+    }
+
+    @Override
+    public Long getTokenValidationTimeStamp() {
+        return tokenValidationTimestamp;
+    }
+
+    @Override
+    public void setTokenValidationTimeStamp(long timestamp) {
+        this. tokenValidationTimestamp = timestamp;
     }
 }

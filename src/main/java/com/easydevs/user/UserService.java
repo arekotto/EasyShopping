@@ -16,4 +16,9 @@ public interface UserService {
     void updateUser(User user);
 
     String generateToken();
+
+    boolean isTokenValid(Integer userId, String token);
+
+    boolean isPasswordFormatCorrect(String password);
+
 }

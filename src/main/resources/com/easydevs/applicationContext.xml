@@ -12,6 +12,7 @@
 
     <context:annotation-config />
     <context:component-scan base-package="com.easydevs.user"/>
+    <context:component-scan base-package="com.easydevs.auth"/>
 
     <!--<bean id="userService" class="com.easydevs.user.UserServiceImpl"/>-->
     <!--<bean id="userService" class="com.easydevs.user.UserServiceImpl"/>-->

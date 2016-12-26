@@ -30,7 +30,9 @@ public class UserServiceImpl implements UserService {
     private MongoTemplate mongoTemplate;
 
     private SecureRandom random = new SecureRandom();
+
     private final int TOKEN_LENGTH = 130;
+    private final long TOKEN_VALIDATION_PERIOD = 1000 * 60 * 60 * 24;
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -76,26 +78,44 @@ public class UserServiceImpl implements UserService {
     public void updateUser(User user) {
         log.info("UserService.updateUser", user);
 
-        Query query = new Query();
-        DBObject userDocument = new BasicDBObject();
-        Update update  = Update.fromDBObject(userDocument, "id");
+//        Query query = new Query();
+//        DBObject userDocument = new BasicDBObject();
+//        Update update  = Update.fromDBObject(userDocument, "id");
+//
+//        query.addCriteria(Criteria.where("id").is(user.getId()));
 
-        query.addCriteria(Criteria.where("id").is(user.getId()));
+        Query query = new Query(Criteria.where("id").is(user.getId()));
+
+        DBObject dbDoc = new BasicDBObject();
+        mongoTemplate.getConverter().write(user, dbDoc);
+        Update update = Update.fromDBObject(dbDoc);
 
         mongoTemplate.upsert(query, update, StandardUser.class);
     }
 
+    @Override
     public boolean isTokenValid(Integer userId, String token) {
         User user = getUserById(userId);
         if (user != null) {
-            return user.getToken().equals(token);
-        } else {
-            return false;
+            Long tokenTimeStamp = user.getTokenValidationTimeStamp();
+            if (tokenTimeStamp != null) {
+                if(System.currentTimeMillis() - TOKEN_VALIDATION_PERIOD < tokenTimeStamp) {
+                    return user.getToken().equals(token);
+                }
+            }
         }
+
+        return false;
     }
 
+    @Override
     public String generateToken() {
         return new BigInteger(TOKEN_LENGTH, random).toString(32);
+    }
+
+    @Override
+    public boolean isPasswordFormatCorrect(String password) {
+        return true;
     }
 
 }

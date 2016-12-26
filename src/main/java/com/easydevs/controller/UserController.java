@@ -32,29 +32,44 @@ public class UserController {
     @RequestMapping("/register")
     public String showRegister(Model model) {
 
-        UserRegistrationCommand userRegistrationCommand = new UserRegistrationCommand();
+        if(!model.containsAttribute("userRegistrationCommand")) {
+            UserRegistrationCommand userRegistrationCommand = new UserRegistrationCommand();
 
-        // default username for testing
-        userRegistrationCommand.setName("here be username");
-        model.addAttribute("userRegistrationCommand", userRegistrationCommand);
+            // default username for testing
+            userRegistrationCommand.setName("here be username");
+            model.addAttribute("userRegistrationCommand", userRegistrationCommand);
+        }
+
+
 
         return "register";
     }
 
     @RequestMapping("/create")
-    public String createNewUser(Model model, @ModelAttribute("userRegistrationCommand") UserRegistrationCommand userRegistrationCommand) {
+    public String createNewUser(RedirectAttributes redirectAttributes,
+                                @ModelAttribute("userRegistrationCommand") UserRegistrationCommand userRegistrationCommand) {
 
-        StandardUser newUser = (StandardUser) userService.createNewUser(UserType.STANDARD);
+        if(userService.getUserByLogin(userRegistrationCommand.getLogin()) == null){
+            StandardUser newUser = (StandardUser) userService.createNewUser(UserType.STANDARD);
 
-        newUser.setLogin(userRegistrationCommand.getLogin());
-        newUser.setName(userRegistrationCommand.getName());
-        newUser.setPassword(userRegistrationCommand.getPassword());
+            newUser.setLogin(userRegistrationCommand.getLogin());
+            newUser.setName(userRegistrationCommand.getName());
+            newUser.setPassword(userRegistrationCommand.getPassword());
 
-        userService.updateUser(newUser);
+            userService.updateUser(newUser);
+
+            // nie zwracamy sciezki do jsp ale wywoluje url mapowany przez motede showUser
+            return "redirect:userHomepage/" + newUser.getLogin();
+        } else {
+            userRegistrationCommand.setLoginUnavailable(true);
+            redirectAttributes.addAttribute("userRegistrationCommand", userRegistrationCommand);
+            return "redirect:register";
+
+        }
 
 
-        // nie zwracamy sciezki do jsp ale wywoluje url mapowany przez motede showUser
-        return "redirect:userHomepage/" + newUser.getLogin();
+
+
     }
 
     @RequestMapping("/userHomepage/{login}")

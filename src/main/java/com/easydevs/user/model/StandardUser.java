@@ -85,6 +85,11 @@ public class StandardUser implements User {
     }
 
     @Override
+    public void setTokenValidationTimeStamp(long timestamp) {
+        this.tokenValidationTimeStamp = timestamp;
+    }
+
+    @Override
     public String toString() {
         return "StandardUser{" +
                 "id=" + id +
