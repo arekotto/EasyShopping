@@ -6,5 +6,4 @@ package com.easydevs.auth;
 public interface AuthenticationService {
 
     AuthenticationResult login(String userName, String password);
-
 }

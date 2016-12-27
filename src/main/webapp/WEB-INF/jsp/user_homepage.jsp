@@ -10,7 +10,7 @@
 <head>
     <title>User home page</title>
     name: ${userCommand.name} <br/>
-    name: ${userCommand.login} <br/>
+    login: ${userCommand.login} <br/>
 
 </head>
 <body>

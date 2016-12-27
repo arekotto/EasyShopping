@@ -48,12 +48,13 @@
     <div>
         <img src="/img/banner.jpg"></img>
         <ul style="font-family: Helvetica-Condensed-Light-Li;">
-            <li><a class="active" href="#home">Home</a></li>
+            <li><a class="active" href="/home">Home</a></li>
             <li><a href="#news">Shop</a></li>
             <li><a href="#contact">About us</a></li>
             <li><a href="#contact">Contact</a></li>
             <li><a href="#contact">User Account</a></li>
             <li><a href="#contact">Log in</a></li>
+            <li><a href="/user/register">Register</a></li>
             <li><a href="#contact">Log out</a></li>
             <li style="float:right"><a href="#about">Admin Panel</a></li>
         </ul>

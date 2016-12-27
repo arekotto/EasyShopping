@@ -21,7 +21,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticationResult login(String login, String password) {
         StandardUser user = (StandardUser) userService.getUserByLogin(login);
-        if (user.getPassword().equals(password)) {
+        if (user != null && user.getPassword().equals(password)) {
 
             log.info("Login successful: " + login);
 

@@ -25,7 +25,7 @@ public class UserLoginCommand {
         this.password = password;
     }
 
-    public boolean isLoginFailed() {
+    public boolean getIsLoginFailed() {
         return isLoginFailed;
     }
 
