@@ -50,7 +50,7 @@ public class RouterController {
             if(authenticationService.isTokenValid(userId, userTokenCookie)){
                 StandardUser user = (StandardUser) userService.getUserById(userId);
                 headerCommand.setUserName(user.getName());
-                headerCommand.setUserLogin(user.getName());
+                headerCommand.setUserEmail(user.getEmail());
                 headerCommand.setIsLoggedIn(true);
             } else {
                 response.addCookie(new Cookie("id", null));

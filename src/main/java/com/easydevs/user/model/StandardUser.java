@@ -9,7 +9,6 @@ public class StandardUser implements User {
 
     private long id;
     private String name;
-    private String login;
     private String email;
     private String street;
     private String country;
@@ -25,19 +24,15 @@ public class StandardUser implements User {
 
     public StandardUser(long id,
                         String name,
-                        String login) {
+                        String email) {
         this.id = id;
         this.name = name;
-        this.login = login;
+        this.email = email;
 
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     public void setEmail(String email) {
@@ -68,10 +63,6 @@ public class StandardUser implements User {
 
     public String getName() {
         return this.name;
-    }
-
-    public String getLogin() {
-        return this.login;
     }
 
     public String getEmail() {
@@ -109,14 +100,5 @@ public class StandardUser implements User {
         this.tokenValidationTimeStamp = timestamp;
     }
 
-    @Override
-    public String toString() {
-        return "StandardUser{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", login='" + login + '\'' +
-                ", tokenValidationTimeStamp=" + tokenValidationTimeStamp +
-                '}';
-    }
 }
 

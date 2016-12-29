@@ -20,7 +20,7 @@
         -moz-border-radius: 10px;
         border-radius: 10px;">
             userName: ${headerCommand.userName} <br/>
-            userLogin: ${headerCommand.userLogin} <br/>
+            userLogin: ${headerCommand.userEmail} <br/>
         </div>
     </div>
     <div class="footer" style="text-align: center;background: black;color:white;font-family:'Helvetica CE 35 Thin';">

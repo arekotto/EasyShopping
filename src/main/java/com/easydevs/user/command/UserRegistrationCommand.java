@@ -4,7 +4,6 @@ package com.easydevs.user.command;
  * Created by arekotto on 16/12/2016.
  */
 public class UserRegistrationCommand {
-    private String login;
     private String password;
     private String name;
     private String email;
@@ -12,18 +11,10 @@ public class UserRegistrationCommand {
     private String city;
     private String country;
 
-    private boolean isLoginUnavailable = false;
+    private boolean isEmailUnavailable = false;
     private boolean isPasswordFormatIncorrect = false;
     private boolean isEmailIncorrect = false;
 
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
 
     public String getPassword() {
         return password;
@@ -42,11 +33,11 @@ public class UserRegistrationCommand {
     }
 
     public boolean getIsLoginUnavailable() {
-        return isLoginUnavailable;
+        return isEmailUnavailable;
     }
 
     public void setIsLoginUnavailable(boolean loginUnavailable) {
-        isLoginUnavailable = loginUnavailable;
+        isEmailUnavailable = loginUnavailable;
     }
 
     public boolean getIsPasswordFormatIncorrect() {

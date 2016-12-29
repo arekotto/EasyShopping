@@ -3,6 +3,7 @@ package com.easydevs.user;
 import com.easydevs.user.model.StandardUser;
 import com.easydevs.user.model.TempUser;
 import com.easydevs.user.model.User;
+import com.easydevs.user.model.UserIdSequence;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.slf4j.Logger;
@@ -33,8 +34,7 @@ public class UserServiceImpl implements UserService {
     public User getUserById(long userId) {
         log.info("UserService.getUser", userId);
 
-        Query query = new Query();
-        query.addCriteria(Criteria.where("id").is(userId));
+        Query query = new Query(Criteria.where("id").is(userId));
         List<StandardUser> usersList = mongoTemplate.find(query, StandardUser.class);
         if (usersList.size() == 1) {
             return usersList.get(0);
@@ -44,11 +44,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByLogin (String login) {
-        log.info("UserService.getUserByLogin", login);
+    public User getUserByEmail (String email) {
+        log.info("UserService.getUserByLogin", email);
 
         Query query = new Query();
-        query.addCriteria(Criteria.where("login").is(login));
+        query.addCriteria(Criteria.where("email").is(email));
         List<StandardUser> usersList = mongoTemplate.find(query, StandardUser.class);
         if (!usersList.isEmpty()) {
             return usersList.get(0);
@@ -59,25 +59,41 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createNewUser(UserType userType) {
+
+
+
         if (userType == UserType.TEMP) {
-            return new TempUser(9L);
+            return new TempUser(getNewIdAndInc());
         } else {
-            return new StandardUser(9L);
+            return new StandardUser(getNewIdAndInc());
         }
 
     }
 
+    private Long getNewIdAndInc() {
+        List<UserIdSequence> userIdSequenceList = mongoTemplate.find(new Query(), UserIdSequence.class);
 
+        UserIdSequence userIdSequence;
+        if (!userIdSequenceList.isEmpty()) {
+            userIdSequence = userIdSequenceList.get(0);
+        } else {
+            userIdSequence = new UserIdSequence();
+        }
+
+        Long currentId = userIdSequence.getCurrent();
+        userIdSequence.setCurrent(++currentId);
+
+        DBObject dbDoc = new BasicDBObject();
+        mongoTemplate.getConverter().write(userIdSequence, dbDoc);
+        Update update = Update.fromDBObject(dbDoc);
+        mongoTemplate.upsert(new Query(), update, UserIdSequence.class);
+
+        return currentId;
+    }
 
     @Override
     public void updateUser(User user) {
         log.info("UserService.updateUser", user);
-
-//        Query query = new Query();
-//        DBObject userDocument = new BasicDBObject();
-//        Update update  = Update.fromDBObject(userDocument, "id");
-//
-//        query.addCriteria(Criteria.where("id").is(user.getId()));
 
         Query query = new Query(Criteria.where("id").is(user.getId()));
 

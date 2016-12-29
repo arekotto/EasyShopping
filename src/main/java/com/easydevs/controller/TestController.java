@@ -31,7 +31,7 @@ public class TestController {
     @ResponseBody
     public String createUser(@RequestParam String login) {
         StandardUser user = (StandardUser) userService.createNewUser(UserType.STANDARD);
-        user.setLogin(login);
+        user.setEmail(login);
         userService.updateUser(user);
 
         return "Created user: " + user;
@@ -48,7 +48,7 @@ public class TestController {
     @ResponseBody
     public String updateUser(@PathVariable Integer userId, @RequestParam String newLogin) {
         StandardUser user = (StandardUser) userService.getUserById(userId);
-        user.setLogin(newLogin);
+        user.setEmail(newLogin);
         userService.updateUser(user);
         return "Changed user: " + user;
     }

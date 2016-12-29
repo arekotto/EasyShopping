@@ -36,14 +36,8 @@
             <fieldset>
 
                 <p>
-                    <form:label path="login">Login:</form:label>
-                    <form:input path="login"/>
-                    <br>
-                </p>
-
-                <p>
-                    <form:label path="name">Name:</form:label>
-                    <form:input path="name"/>
+                    <form:label path="email">Email:</form:label>
+                    <form:input path="email"/>
                     <br>
                 </p>
 
@@ -54,10 +48,11 @@
                 </p>
 
                 <p>
-                    <form:label path="email">Email:</form:label>
-                    <form:input path="email"/>
+                    <form:label path="name">Name:</form:label>
+                    <form:input path="name"/>
                     <br>
                 </p>
+
 
                 <p>
                     <form:label path="street">Street:</form:label>

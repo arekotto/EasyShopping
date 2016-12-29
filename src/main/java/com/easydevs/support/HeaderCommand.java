@@ -6,7 +6,7 @@ package com.easydevs.support;
 public class HeaderCommand {
     private boolean isUserLoggedIn = false;
     private String userName;
-    private String userLogin;
+    private String userEmail;
 
     public String getUserName() {
         return userName;
@@ -16,12 +16,12 @@ public class HeaderCommand {
         this.userName = userName;
     }
 
-    public String getUserLogin() {
-        return userLogin;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUserLogin(String userLogin) {
-        this.userLogin = userLogin;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public boolean getIsLoggedIn() {

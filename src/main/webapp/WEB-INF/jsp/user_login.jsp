@@ -27,8 +27,8 @@
             <fieldset>
 
                 <p>
-                    <form:label path="login">Login:</form:label>
-                    <form:input path="login"/>
+                    <form:label path="email">Email:</form:label>
+                    <form:input path="email"/>
                     <br>
                 </p>
 

@@ -36,7 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResult login(String login, String password) {
-        StandardUser user = (StandardUser) userService.getUserByLogin(login);
+        StandardUser user = (StandardUser) userService.getUserByEmail(login);
 
         if (user != null && login != null && password != null) {
             String realPasswordHash = userPasswordService.getPasswordHash(user.getId());
