@@ -27,6 +27,10 @@
             <h1>PASSWORD TOO SHORT</h1>
         </c:if>
 
+        <c:if test="${userRegistrationCommand.isEmailIncorrect}">
+            <h1>wrong email address</h1>
+        </c:if>
+
         <form:form action="${request.contextPath}/user/create"
                    commandName="userRegistrationCommand">
             <fieldset>
@@ -52,6 +56,24 @@
                 <p>
                     <form:label path="email">Email:</form:label>
                     <form:input path="email"/>
+                    <br>
+                </p>
+
+                <p>
+                    <form:label path="street">Street:</form:label>
+                    <form:input path="street"/>
+                    <br>
+                </p>
+
+                <p>
+                    <form:label path="city">City:</form:label>
+                    <form:input path="city"/>
+                    <br>
+                </p>
+
+                <p>
+                    <form:label path="country">Country:</form:label>
+                    <form:input path="country"/>
                     <br>
                 </p>
 

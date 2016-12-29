@@ -57,9 +57,7 @@ public class UserController {
 
         // user not logged in
         if(!model.containsAttribute("userRegistrationCommand")) {
-            UserRegistrationCommand userRegistrationCommand = new UserRegistrationCommand();
-            userRegistrationCommand.setLogin("here be username");
-            model.addAttribute("userRegistrationCommand", userRegistrationCommand);
+            model.addAttribute("userRegistrationCommand", new UserRegistrationCommand());
         }
 
         return "register";
@@ -87,6 +85,7 @@ public class UserController {
         boolean isPasswordIncorrect = !authenticationService.isPasswordFormatCorrect(userRegistrationCommand.getPassword());
         boolean isEmailFormatIncorrect = !authenticationService.isEmailFormatCorrect(userRegistrationCommand.getEmail());
 
+
         if(!isLoginUnavailable && !isPasswordIncorrect && !isEmailFormatIncorrect){
             StandardUser newUser = (StandardUser) userService.createNewUser(UserType.STANDARD);
 
@@ -95,6 +94,9 @@ public class UserController {
             newUser.setLogin(userRegistrationCommand.getLogin());
             newUser.setName(userRegistrationCommand.getName());
             newUser.setEmail(userRegistrationCommand.getEmail());
+            newUser.setStreet(userRegistrationCommand.getStreet());
+            newUser.setCity(userRegistrationCommand.getCity());
+            newUser.setCountry(userRegistrationCommand.getCountry());
             userService.updateUser(newUser);
 
             AuthenticationResult authResult = authenticationService.login(newUser.getLogin(), userRegistrationCommand.getPassword());
