@@ -14,4 +14,6 @@ public interface AuthenticationService {
     boolean isTokenValid(long userId, String token);
 
     boolean isPasswordFormatCorrect(String password);
+
+    boolean isEmailFormatCorrect(String email);
 }

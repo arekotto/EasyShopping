@@ -10,7 +10,7 @@ public class StandardUser implements User {
     private long id;
     private String name;
     private String login;
-
+    private String email;
     private String token;
     private Long tokenValidationTimeStamp;
 
@@ -37,6 +37,10 @@ public class StandardUser implements User {
         this.login = login;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public void setTokenValidationStamp(Long timeStamp) {
         this.tokenValidationTimeStamp = timeStamp;
     }
@@ -57,6 +61,10 @@ public class StandardUser implements User {
 
     public String getLogin() {
         return this.login;
+    }
+
+    public String getEmail() {
+        return this.email;
     }
 
     public Long getTokenValidationTimeStamp() {

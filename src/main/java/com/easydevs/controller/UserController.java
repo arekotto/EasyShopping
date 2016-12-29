@@ -83,47 +83,36 @@ public class UserController {
                 response.addCookie(new Cookie("token", null));
             }
         }
+        boolean isLoginUnavailable = (userService.getUserByLogin(userRegistrationCommand.getLogin()) != null);
+        boolean isPasswordIncorrect = !authenticationService.isPasswordFormatCorrect(userRegistrationCommand.getPassword());
+        boolean isEmailFormatIncorrect = !authenticationService.isEmailFormatCorrect(userRegistrationCommand.getEmail());
 
-        boolean isPasswordIncorrect = false;
-        boolean isLoginUnavailable = false;
+        if(!isLoginUnavailable && !isPasswordIncorrect && !isEmailFormatIncorrect){
+            StandardUser newUser = (StandardUser) userService.createNewUser(UserType.STANDARD);
 
-        if(userService.getUserByLogin(userRegistrationCommand.getLogin()) == null){
+            userPasswordService.insertOrUpdatePassword(newUser.getId(), new Encryptor().encryptWithMD5(userRegistrationCommand.getPassword()));
 
-            if (authenticationService.isPasswordFormatCorrect(userRegistrationCommand.getPassword())) {
+            newUser.setLogin(userRegistrationCommand.getLogin());
+            newUser.setName(userRegistrationCommand.getName());
+            newUser.setEmail(userRegistrationCommand.getEmail());
+            userService.updateUser(newUser);
 
-                StandardUser newUser = (StandardUser) userService.createNewUser(UserType.STANDARD);
+            AuthenticationResult authResult = authenticationService.login(newUser.getLogin(), userRegistrationCommand.getPassword());
 
-                userPasswordService.insertOrUpdatePassword(newUser.getId(), new Encryptor().encryptWithMD5(userRegistrationCommand.getPassword()));
+            newUser.setToken(authResult.getToken());
+            newUser.setTokenValidationStamp(System.currentTimeMillis());
 
-                newUser.setLogin(userRegistrationCommand.getLogin());
-                newUser.setName(userRegistrationCommand.getName());
+            userService.updateUser(newUser);
 
-                userService.updateUser(newUser);
-
-                AuthenticationResult authResult = authenticationService.login(newUser.getLogin(), userRegistrationCommand.getPassword());
-
-                newUser.setToken(authResult.getToken());
-                newUser.setTokenValidationStamp(System.currentTimeMillis());
-
-                userService.updateUser(newUser);
-
-                Cookie idCookie = new Cookie("id", String.valueOf(newUser.getId()));
-                idCookie.setPath("/");
-                response.addCookie(idCookie);
-                Cookie tokenCookie = new Cookie("token", newUser.getToken());
-                tokenCookie.setPath("/");
-                response.addCookie(tokenCookie);
-                return "redirect:userHomepage";
-            } else {
-                isPasswordIncorrect = true;
-            }
-
-
-        } else {
-            isLoginUnavailable = true;
+            response.addCookie(new Cookie("id", String.valueOf(newUser.getId())));
+            response.addCookie(new Cookie("token", newUser.getToken()));
+            return "redirect:userHomepage";
         }
+
+
         userRegistrationCommand.setIsPasswordFormatIncorrect(isPasswordIncorrect);
         userRegistrationCommand.setIsLoginUnavailable(isLoginUnavailable);
+        userRegistrationCommand.setIsEmailIncorrect(isEmailFormatIncorrect);
         redirectAttributes.addFlashAttribute("userRegistrationCommand", userRegistrationCommand);
         return "redirect:register";
 
