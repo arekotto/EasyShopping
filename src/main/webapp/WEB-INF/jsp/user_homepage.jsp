@@ -19,8 +19,8 @@
         <div style="height:100%;width:100%;background:black;opacity: 0.9;-webkit-border-radius: 10px;
         -moz-border-radius: 10px;
         border-radius: 10px;">
-            name: ${userCommand.name} <br/>
-            login: ${userCommand.login} <br/>
+            userName: ${headerCommand.userName} <br/>
+            userLogin: ${headerCommand.userLogin} <br/>
         </div>
     </div>
     <div class="footer" style="text-align: center;background: black;color:white;font-family:'Helvetica CE 35 Thin';">

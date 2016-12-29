@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrzej
@@ -52,11 +53,19 @@
             <li><a href="#news">Shop</a></li>
             <li><a href="#contact">About us</a></li>
             <li><a href="#contact">Contact</a></li>
-            <li><a href="/user/userHomepage">User Account</a></li>
-            <li><a href="/user/login">Log in</a></li>
-            <li><a href="/user/register">Register</a></li>
-            <li><a href="/user/logout">Log out</a></li>
-            <li style="float:right"><a href="#about">Admin Panel</a></li>
+            <c:choose>
+                <c:when test="${headerCommand.isLoggedIn}">
+                    <li><a href="/user/userHomepage">${headerCommand.userLogin}</a></li>
+                    <li><a href="/user/logout">Log out</a></li>
+                </c:when>
+                <c:otherwise>
+                    <li><a href="/user/login">Log in</a></li>
+                    <li><a href="/user/register">Register</a></li>
+                </c:otherwise>
+            </c:choose>
+
+
+            <%--<li style="float:right"><a href="#about">Admin Panel</a></li>--%>
         </ul>
 
     </div>

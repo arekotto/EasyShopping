@@ -3,10 +3,10 @@ package com.easydevs.controller;
 import com.easydevs.auth.AuthenticationResult;
 import com.easydevs.auth.AuthenticationService;
 import com.easydevs.auth.Encryptor;
+import com.easydevs.support.HeaderCommand;
 import com.easydevs.user.UserPasswordService;
 import com.easydevs.user.UserService;
 import com.easydevs.user.UserType;
-import com.easydevs.user.command.UserCommand;
 import com.easydevs.user.command.UserLoginCommand;
 import com.easydevs.user.command.UserRegistrationCommand;
 import com.easydevs.user.model.StandardUser;
@@ -107,8 +107,12 @@ public class UserController {
 
                 userService.updateUser(newUser);
 
-                response.addCookie(new Cookie("id", String.valueOf(newUser.getId())));
-                response.addCookie(new Cookie("token", newUser.getToken()));
+                Cookie idCookie = new Cookie("id", String.valueOf(newUser.getId()));
+                idCookie.setPath("/");
+                response.addCookie(idCookie);
+                Cookie tokenCookie = new Cookie("token", newUser.getToken());
+                tokenCookie.setPath("/");
+                response.addCookie(tokenCookie);
                 return "redirect:userHomepage";
             } else {
                 isPasswordIncorrect = true;
@@ -137,11 +141,11 @@ public class UserController {
             if(authenticationService.isTokenValid(userId, userTokenCookie)){
                 StandardUser user = (StandardUser) userService.getUserById(userId);
 
-                UserCommand userCommand = new UserCommand();
-                userCommand.setName(user.getName());
-                userCommand.setLogin(user.getLogin());
+                HeaderCommand headerCommand = new HeaderCommand();
+                headerCommand.setUserName(user.getName());
+                headerCommand.setUserLogin(user.getLogin());
 
-                model.addAttribute("userCommand", userCommand);
+                model.addAttribute("headerCommand", headerCommand);
 
                 return "/user_homepage";
             } else {
@@ -225,8 +229,12 @@ public class UserController {
 
             userService.updateUser(user);
 
-            response.addCookie(new Cookie("id", String.valueOf(user.getId())));
-            response.addCookie(new Cookie("token", user.getToken()));
+            Cookie idCookie = new Cookie("id", String.valueOf(user.getId()));
+            idCookie.setPath("/");
+            response.addCookie(idCookie);
+            Cookie tokenCookie = new Cookie("token", user.getToken());
+            tokenCookie.setPath("/");
+            response.addCookie(tokenCookie);
 
             return "redirect:userHomepage";
         } else {
