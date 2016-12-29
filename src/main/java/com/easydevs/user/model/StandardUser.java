@@ -11,6 +11,9 @@ public class StandardUser implements User {
     private String name;
     private String login;
     private String email;
+    private String street;
+    private String country;
+    private String city;
     private String token;
     private Long tokenValidationTimeStamp;
 
@@ -41,6 +44,14 @@ public class StandardUser implements User {
         this.email = email;
     }
 
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setCity(String city) { this.city = city; }
+
+    public void setCountry(String country) { this.country = country; }
+
     public void setTokenValidationStamp(Long timeStamp) {
         this.tokenValidationTimeStamp = timeStamp;
     }
@@ -65,6 +76,18 @@ public class StandardUser implements User {
 
     public String getEmail() {
         return this.email;
+    }
+
+    public String getStreet() {
+        return this.street;
+    }
+
+    public String getCity() {
+        return this.city;
+    }
+
+    public String getCountry() {
+        return this.country;
     }
 
     public Long getTokenValidationTimeStamp() {
