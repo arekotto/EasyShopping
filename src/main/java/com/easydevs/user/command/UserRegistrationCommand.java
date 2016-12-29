@@ -7,11 +7,11 @@ public class UserRegistrationCommand {
     private String login;
     private String password;
     private String name;
-
     private String email;
 
     private boolean isLoginUnavailable = false;
     private boolean isPasswordFormatIncorrect = false;
+    private boolean isEmailIncorrect = false;
 
     public String getLogin() {
         return login;
@@ -60,4 +60,13 @@ public class UserRegistrationCommand {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public boolean getIsEmailIncorrect() {
+        return isEmailIncorrect;
+    }
+
+    public void setIsEmailIncorrect(boolean EmailIncorrect) {
+        isEmailIncorrect = EmailIncorrect;
+    }
+
 }

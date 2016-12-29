@@ -30,11 +30,6 @@
         <form:form action="${request.contextPath}/user/create"
                    commandName="userRegistrationCommand">
             <fieldset>
-                <p>
-                    <form:label path="name">Name:</form:label>
-                    <form:input path="name"/>
-                    <br>
-                </p>
 
                 <p>
                     <form:label path="login">Login:</form:label>
@@ -43,8 +38,20 @@
                 </p>
 
                 <p>
+                    <form:label path="name">Name:</form:label>
+                    <form:input path="name"/>
+                    <br>
+                </p>
+
+                <p>
                     <form:label path="password">Password:</form:label>
                     <form:input path="password"/>
+                    <br>
+                </p>
+
+                <p>
+                    <form:label path="email">Email:</form:label>
+                    <form:input path="email"/>
                     <br>
                 </p>
 
