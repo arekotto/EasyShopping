@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrzej
@@ -17,6 +18,15 @@
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
     <div class="body">
+
+        <c:if test="${userRegistrationCommand.isLoginUnavailable}">
+            <h1>LOGIN IS ALREADY TAKEN. PICK A DIFFERENT ONE!</h1>
+        </c:if>
+
+        <c:if test="${userRegistrationCommand.isPasswordFormatIncorrect}">
+            <h1>PASSWORD TOO SHORT</h1>
+        </c:if>
+
         <form:form action="${request.contextPath}/user/create"
                    commandName="userRegistrationCommand">
             <fieldset>

@@ -15,8 +15,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
-import java.security.SecureRandom;
 import java.util.List;
 
 /**
@@ -29,15 +27,10 @@ public class UserServiceImpl implements UserService {
     @Qualifier("contentMongoTemplate")
     private MongoTemplate mongoTemplate;
 
-    private SecureRandom random = new SecureRandom();
-
-    private final int TOKEN_LENGTH = 130;
-    private final long TOKEN_VALIDATION_PERIOD = 1000 * 60 * 60 * 24;
-
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public User getUserById(Integer userId) {
+    public User getUserById(long userId) {
         log.info("UserService.getUser", userId);
 
         Query query = new Query();
@@ -67,12 +60,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createNewUser(UserType userType) {
         if (userType == UserType.TEMP) {
-            return new TempUser(9);
+            return new TempUser(9L);
         } else {
-            return new StandardUser(9);
+            return new StandardUser(9L);
         }
 
     }
+
+
 
     @Override
     public void updateUser(User user) {
@@ -93,29 +88,6 @@ public class UserServiceImpl implements UserService {
         mongoTemplate.upsert(query, update, StandardUser.class);
     }
 
-    @Override
-    public boolean isTokenValid(Integer userId, String token) {
-        User user = getUserById(userId);
-        if (user != null) {
-            Long tokenTimeStamp = user.getTokenValidationTimeStamp();
-            if (tokenTimeStamp != null) {
-                if(System.currentTimeMillis() - TOKEN_VALIDATION_PERIOD < tokenTimeStamp) {
-                    return user.getToken().equals(token);
-                }
-            }
-        }
 
-        return false;
-    }
-
-    @Override
-    public String generateToken() {
-        return new BigInteger(TOKEN_LENGTH, random).toString(32);
-    }
-
-    @Override
-    public boolean isPasswordFormatCorrect(String password) {
-        return true;
-    }
 
 }

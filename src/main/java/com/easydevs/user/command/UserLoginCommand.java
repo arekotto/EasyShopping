@@ -29,7 +29,7 @@ public class UserLoginCommand {
         return isLoginFailed;
     }
 
-    public void setLoginFailed(boolean loginFailed) {
+    public void setIsLoginFailed(boolean loginFailed) {
         isLoginFailed = loginFailed;
     }
 }

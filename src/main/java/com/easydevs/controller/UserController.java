@@ -2,6 +2,8 @@ package com.easydevs.controller;
 
 import com.easydevs.auth.AuthenticationResult;
 import com.easydevs.auth.AuthenticationService;
+import com.easydevs.auth.Encryptor;
+import com.easydevs.user.UserPasswordService;
 import com.easydevs.user.UserService;
 import com.easydevs.user.UserType;
 import com.easydevs.user.command.UserCommand;
@@ -13,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -33,66 +34,120 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserPasswordService userPasswordService;
+
     @RequestMapping("/register")
-    public String showRegister(Model model) {
+    public String showRegister(Model model,
+                               HttpServletResponse response,
+                               @CookieValue(value = "id", defaultValue = "") String userIdCookie,
+                               @CookieValue(value = "token", defaultValue = "") String userTokenCookie) {
 
-        if(!model.containsAttribute("userRegistrationCommand")) {
-            UserRegistrationCommand userRegistrationCommand = new UserRegistrationCommand();
+        // check if user already logged in
+        if (!userIdCookie.isEmpty() && !userTokenCookie.isEmpty()) {
+            Integer userId = new Integer(userIdCookie);
 
-            // default username for testing
-            userRegistrationCommand.setName("here be username");
-            model.addAttribute("userRegistrationCommand", userRegistrationCommand);
+            if(authenticationService.isTokenValid(userId, userTokenCookie)){
+                return "redirect:userHomepage";
+            } else {
+                response.addCookie(new Cookie("id", null));
+                response.addCookie(new Cookie("token", null));
+            }
         }
 
-
+        // user not logged in
+        if(!model.containsAttribute("userRegistrationCommand")) {
+            UserRegistrationCommand userRegistrationCommand = new UserRegistrationCommand();
+            userRegistrationCommand.setLogin("here be username");
+            model.addAttribute("userRegistrationCommand", userRegistrationCommand);
+        }
 
         return "register";
     }
 
     @RequestMapping("/create")
     public String createNewUser(RedirectAttributes redirectAttributes,
+                                HttpServletResponse response,
+                                @CookieValue(value = "id", defaultValue = "") String userIdCookie,
+                                @CookieValue(value = "token", defaultValue = "") String userTokenCookie,
                                 @ModelAttribute("userRegistrationCommand") UserRegistrationCommand userRegistrationCommand) {
 
-        if(userService.getUserByLogin(userRegistrationCommand.getLogin()) == null){
-            StandardUser newUser = (StandardUser) userService.createNewUser(UserType.STANDARD);
+        // check if user already logged in
+        if (!userIdCookie.isEmpty() && !userTokenCookie.isEmpty()) {
+            Integer userId = new Integer(userIdCookie);
 
-            newUser.setLogin(userRegistrationCommand.getLogin());
-            newUser.setName(userRegistrationCommand.getName());
-            newUser.setPassword(userRegistrationCommand.getPassword());
-
-            userService.updateUser(newUser);
-
-            // nie zwracamy sciezki do jsp ale wywoluje url mapowany przez motede showUser
-            return "redirect:userHomepage/" + newUser.getLogin();
-        } else {
-            userRegistrationCommand.setLoginUnavailable(true);
-            redirectAttributes.addAttribute("userRegistrationCommand", userRegistrationCommand);
-            return "redirect:register";
-
+            if(authenticationService.isTokenValid(userId, userTokenCookie)){
+                return "redirect:userHomepage";
+            } else {
+                response.addCookie(new Cookie("id", null));
+                response.addCookie(new Cookie("token", null));
+            }
         }
 
+        boolean isPasswordIncorrect = false;
+        boolean isLoginUnavailable = false;
+
+        if(userService.getUserByLogin(userRegistrationCommand.getLogin()) == null){
+
+            if (authenticationService.isPasswordFormatCorrect(userRegistrationCommand.getPassword())) {
+
+                StandardUser newUser = (StandardUser) userService.createNewUser(UserType.STANDARD);
+
+                userPasswordService.insertOrUpdatePassword(newUser.getId(), new Encryptor().encryptWithMD5(userRegistrationCommand.getPassword()));
+
+                newUser.setLogin(userRegistrationCommand.getLogin());
+                newUser.setName(userRegistrationCommand.getName());
+
+                userService.updateUser(newUser);
+
+                AuthenticationResult authResult = authenticationService.login(newUser.getLogin(), userRegistrationCommand.getPassword());
+
+                newUser.setToken(authResult.getToken());
+                newUser.setTokenValidationStamp(System.currentTimeMillis());
+
+                userService.updateUser(newUser);
+
+                response.addCookie(new Cookie("id", String.valueOf(newUser.getId())));
+                response.addCookie(new Cookie("token", newUser.getToken()));
+                return "redirect:userHomepage";
+            } else {
+                isPasswordIncorrect = true;
+            }
 
 
+        } else {
+            isLoginUnavailable = true;
+        }
+        userRegistrationCommand.setIsPasswordFormatIncorrect(isPasswordIncorrect);
+        userRegistrationCommand.setIsLoginUnavailable(isLoginUnavailable);
+        redirectAttributes.addFlashAttribute("userRegistrationCommand", userRegistrationCommand);
+        return "redirect:register";
 
     }
 
-    @RequestMapping("/userHomepage/{login}")
+    @RequestMapping("/userHomepage")
     public String showUser(Model model,
-                           @PathVariable String login,
                            HttpServletResponse response,
-                           @CookieValue("id") String cookieId,
-                           @CookieValue("token") String cookieToken) {
+                           @CookieValue(value = "id", defaultValue = "") String userIdCookie,
+                           @CookieValue(value = "token", defaultValue = "") String userTokenCookie) {
 
-        if (userService.isTokenValid(Integer.parseInt(cookieId), cookieToken)) {
-            StandardUser user = (StandardUser) userService.getUserByLogin(login);
+        if (!userIdCookie.isEmpty() && !userTokenCookie.isEmpty()) {
+            Long userId = new Long(userIdCookie);
 
-            UserCommand userCommand = new UserCommand();
-            userCommand.setName(user.getName());
-            userCommand.setLogin(user.getLogin());
+            if(authenticationService.isTokenValid(userId, userTokenCookie)){
+                StandardUser user = (StandardUser) userService.getUserById(userId);
 
-            model.addAttribute("userCommand", userCommand);
+                UserCommand userCommand = new UserCommand();
+                userCommand.setName(user.getName());
+                userCommand.setLogin(user.getLogin());
 
-            return "/user_homepage";
+                model.addAttribute("userCommand", userCommand);
+
+                return "/user_homepage";
+            } else {
+                response.addCookie(new Cookie("id", null));
+                response.addCookie(new Cookie("token", null));
+            }
         }
 
         return "redirect:login";
@@ -101,7 +156,50 @@ public class UserController {
     }
 
     @RequestMapping("/login")
-    public String showLogin(Model model) {
+    public String showLogin(Model model,
+                            HttpServletResponse response,
+                            @CookieValue(value = "id", defaultValue = "") String userIdCookie,
+                            @CookieValue(value = "token", defaultValue = "") String userTokenCookie) {
+
+        // check if user already logged in
+        if (!userIdCookie.isEmpty() && !userTokenCookie.isEmpty()) {
+            Long userId = new Long(userIdCookie);
+
+            if(authenticationService.isTokenValid(userId, userTokenCookie)){
+                return "redirect:userHomepage";
+            } else {
+                response.addCookie(new Cookie("id", null));
+                response.addCookie(new Cookie("token", null));
+            }
+        }
+
+        if(!model.containsAttribute("userLoginCommand")) {
+            model.addAttribute("userLoginCommand", new UserLoginCommand());
+        }
+
+        return "/user_login";
+    }
+
+    @RequestMapping("/logout")
+    public String logoutUser(Model model,
+                            HttpServletResponse response,
+                            @CookieValue(value = "id", defaultValue = "") String userIdCookie,
+                            @CookieValue(value = "token", defaultValue = "") String userTokenCookie) {
+
+        // check if user already logged in
+        if (!userIdCookie.isEmpty() && !userTokenCookie.isEmpty()) {
+            Integer userId = new Integer(userIdCookie);
+
+            StandardUser user = (StandardUser) userService.getUserById(userId);
+            if (user != null) {
+                user.setToken(null);
+                user.setTokenValidationStamp(null);
+                userService.updateUser(user);
+            }
+            response.addCookie(new Cookie("id", null));
+            response.addCookie(new Cookie("token", null));
+        }
+
         if(!model.containsAttribute("userLoginCommand")) {
             model.addAttribute("userLoginCommand", new UserLoginCommand());
         }
@@ -122,17 +220,17 @@ public class UserController {
 
             StandardUser user = (StandardUser) userService.getUserByLogin(userLoginCommand.getLogin());
 
-            user.setToken(userService.generateToken());
+            user.setToken(authResult.getToken());
             user.setTokenValidationStamp(System.currentTimeMillis());
 
             userService.updateUser(user);
 
-            response.addCookie(new Cookie("id", user.getId().toString()));
+            response.addCookie(new Cookie("id", String.valueOf(user.getId())));
             response.addCookie(new Cookie("token", user.getToken()));
 
-            return "redirect:userHomepage/" + user.getLogin();
+            return "redirect:userHomepage";
         } else {
-            userLoginCommand.setLoginFailed(true);
+            userLoginCommand.setIsLoginFailed(true);
             redirectAttributes.addFlashAttribute("userLoginCommand", userLoginCommand);
             return "redirect:login";
         }

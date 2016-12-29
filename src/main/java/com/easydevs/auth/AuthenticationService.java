@@ -6,4 +6,12 @@ package com.easydevs.auth;
 public interface AuthenticationService {
 
     AuthenticationResult login(String userName, String password);
+
+//    boolean isSessionActive(String userCookieId, String userCookieToken);
+
+//    String generateToken();
+
+    boolean isTokenValid(long userId, String token);
+
+    boolean isPasswordFormatCorrect(String password);
 }

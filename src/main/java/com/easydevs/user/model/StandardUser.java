@@ -7,28 +7,25 @@ import com.easydevs.user.UserType;
  */
 public class StandardUser implements User {
 
-    private Integer id;
+    private long id;
     private String name;
     private String login;
-    private String password;
 
     private String token;
     private Long tokenValidationTimeStamp;
 
     public StandardUser(){}
 
-    public StandardUser(Integer id){
+    public StandardUser(long id){
         this.id = id;
     }
 
-    public StandardUser(Integer id,
+    public StandardUser(long id,
                         String name,
-                        String login,
-                        String password) {
+                        String login) {
         this.id = id;
         this.name = name;
         this.login = login;
-        this.password = password;
 
     }
 
@@ -40,16 +37,12 @@ public class StandardUser implements User {
         this.login = login;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public void setTokenValidationStamp(Long timeStamp) {
         this.tokenValidationTimeStamp = timeStamp;
     }
 
     @Override
-    public Integer getId() {
+    public long getId() {
         return this.id;
     }
 
@@ -64,10 +57,6 @@ public class StandardUser implements User {
 
     public String getLogin() {
         return this.login;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public Long getTokenValidationTimeStamp() {
@@ -95,7 +84,6 @@ public class StandardUser implements User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
                 ", tokenValidationTimeStamp=" + tokenValidationTimeStamp +
                 '}';
     }

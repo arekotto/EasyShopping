@@ -7,7 +7,7 @@ import com.easydevs.user.UserType;
  */
 public interface User {
 
-    Integer getId();
+    long getId();
 
     UserType getUserType();
 

@@ -8,8 +8,10 @@ public class UserRegistrationCommand {
     private String password;
     private String name;
 
-    private boolean isLoginUnavailable;
-    private boolean isPasswordFormatCorrect;
+    private String email;
+
+    private boolean isLoginUnavailable = false;
+    private boolean isPasswordFormatIncorrect = false;
 
     public String getLogin() {
         return login;
@@ -35,19 +37,27 @@ public class UserRegistrationCommand {
         this.name = name;
     }
 
-    public boolean isLoginUnavailable() {
+    public boolean getIsLoginUnavailable() {
         return isLoginUnavailable;
     }
 
-    public void setLoginUnavailable(boolean loginUnavailable) {
+    public void setIsLoginUnavailable(boolean loginUnavailable) {
         isLoginUnavailable = loginUnavailable;
     }
 
-    public boolean isPasswordFormatCorrect() {
-        return isPasswordFormatCorrect;
+    public boolean getIsPasswordFormatIncorrect() {
+        return isPasswordFormatIncorrect;
     }
 
-    public void setPasswordFormatCorrect(boolean passwordFormatCorrect) {
-        isPasswordFormatCorrect = passwordFormatCorrect;
+    public void setIsPasswordFormatIncorrect(boolean isPasswordFormatIncorrect) {
+        this.isPasswordFormatIncorrect = isPasswordFormatIncorrect;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

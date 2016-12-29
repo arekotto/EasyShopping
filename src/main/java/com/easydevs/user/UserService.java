@@ -7,18 +7,12 @@ import com.easydevs.user.model.User;
  */
 public interface UserService {
 
-    User getUserById(Integer userId);
+    User getUserById(long userId);
 
     User getUserByLogin(String login);
 
     User createNewUser(UserType userType);
 
     void updateUser(User user);
-
-    String generateToken();
-
-    boolean isTokenValid(Integer userId, String token);
-
-    boolean isPasswordFormatCorrect(String password);
 
 }

@@ -7,16 +7,16 @@ import com.easydevs.user.UserType;
  */
 public class TempUser implements User {
 
-    private Integer id;
+    private long id;
     private String token;
     private Long tokenValidationTimestamp;
 
-    public TempUser(Integer id) {
+    public TempUser(long id) {
         this.id = id;
     }
 
     @Override
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
