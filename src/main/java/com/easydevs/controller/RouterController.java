@@ -36,45 +36,18 @@ public class RouterController {
 
 
     @RequestMapping("/header")
-    public String retrieveHeader(Model model,
-                                 HttpServletResponse response,
-                                 HttpServletRequest request,
-                                 @CookieValue(value = "id", defaultValue = "") String userIdCookie,
-                                 @CookieValue(value = "token", defaultValue = "") String userTokenCookie) {
-        HeaderCommand headerCommand = new HeaderCommand();
-
-        // check if user already logged in
-        if (!userIdCookie.isEmpty() && !userTokenCookie.isEmpty()) {
-            Integer userId = new Integer(userIdCookie);
-
-            if(authenticationService.isTokenValid(userId, userTokenCookie)){
-                StandardUser user = (StandardUser) userService.getUserById(userId);
-                headerCommand.setUserName(user.getName());
-                headerCommand.setUserEmail(user.getEmail());
-                headerCommand.setIsLoggedIn(true);
-            } else {
-                response.addCookie(new Cookie("id", null));
-                response.addCookie(new Cookie("token", null));
-            }
-        }
-
-        model.addAttribute("headerCommand", headerCommand);
+    public String retrieveHeader(){
 
         return "main/header";
     }
 
     @RequestMapping("/footer")
-    public String retrieveFooter(@CookieValue(value = "id", defaultValue = "") String userIdCookie,
-                                 @CookieValue(value = "token", defaultValue = "") String userTokenCookie){
+    public String retrieveFooter(){
         return "main/footer";
     }
 
     @RequestMapping("/home")
-    public String retrieveHomePage(Model model,
-                                   HttpServletResponse response,
-                                   HttpServletRequest request,
-                                   @CookieValue(value = "id", defaultValue = "") String userIdCookie,
-                                   @CookieValue(value = "token", defaultValue = "") String userTokenCookie) {
+    public String retrieveHomePage() {
         return "home";
     }
 

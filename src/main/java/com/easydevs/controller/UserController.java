@@ -43,9 +43,6 @@ public class UserController {
                                @CookieValue(value = "id", defaultValue = "") String userIdCookie,
                                @CookieValue(value = "token", defaultValue = "") String userTokenCookie) {
 
-        if (checkUserAndManageCookies(response, userIdCookie, userTokenCookie)) {
-            return "redirect:userHomepage";
-        }
 
         if(!model.containsAttribute("userRegistrationCommand")) {
             model.addAttribute("userRegistrationCommand", new UserRegistrationCommand());
@@ -61,9 +58,6 @@ public class UserController {
                                 @CookieValue(value = "token", defaultValue = "") String userTokenCookie,
                                 @ModelAttribute("userRegistrationCommand") UserRegistrationCommand userRegistrationCommand) {
 
-        if (checkUserAndManageCookies(response, userIdCookie, userTokenCookie)) {
-            return "redirect:userHomepage";
-        }
 
         boolean isEmailUnavailable = (userService.getUserByEmail(userRegistrationCommand.getEmail()) != null);
         boolean isPasswordIncorrect = !authenticationService.isPasswordFormatCorrect(userRegistrationCommand.getPassword());
@@ -91,7 +85,7 @@ public class UserController {
 
             response.addCookie(getCookie("id", String.valueOf(newUser.getId())));
             response.addCookie(getCookie("token", newUser.getToken()));
-            return "redirect:userHomepage";
+            return "redirect:homepage";
         }
 
 
@@ -103,34 +97,23 @@ public class UserController {
 
     }
 
-    @RequestMapping("/userHomepage")
+    @RequestMapping("/homepage")
     public String showUser(Model model,
                            HttpServletResponse response,
                            @CookieValue(value = "id", defaultValue = "") String userIdCookie,
                            @CookieValue(value = "token", defaultValue = "") String userTokenCookie) {
 
-        if (!userIdCookie.isEmpty() && !userTokenCookie.isEmpty()) {
-            Long userId = new Long(userIdCookie);
 
-            if(authenticationService.isTokenValid(userId, userTokenCookie)){
-                StandardUser user = (StandardUser) userService.getUserById(userId);
+        Long userId = new Long(userIdCookie);
+        StandardUser user = (StandardUser) userService.getUserById(userId);
 
-                HeaderCommand headerCommand = new HeaderCommand();
-                headerCommand.setUserName(user.getName());
-                headerCommand.setUserEmail(user.getEmail());
+        HeaderCommand headerCommand = new HeaderCommand();
+        headerCommand.setUserName(user.getName());
+        headerCommand.setUserEmail(user.getEmail());
 
-                model.addAttribute("headerCommand", headerCommand);
+        model.addAttribute("headerCommand", headerCommand);
 
-                return "/user_homepage";
-            } else {
-                response.addCookie(getCookie("id", null));
-                response.addCookie(getCookie("token", null));
-            }
-        }
-
-        return "redirect:login";
-
-
+        return "/user_homepage";
     }
 
     @RequestMapping("/login")
@@ -139,9 +122,7 @@ public class UserController {
                             @CookieValue(value = "id", defaultValue = "") String userIdCookie,
                             @CookieValue(value = "token", defaultValue = "") String userTokenCookie) {
 
-        if (checkUserAndManageCookies(response, userIdCookie, userTokenCookie)) {
-            return "redirect:userHomepage";
-        }
+
 
         if(!model.containsAttribute("userLoginCommand")) {
             model.addAttribute("userLoginCommand", new UserLoginCommand());
@@ -152,36 +133,29 @@ public class UserController {
 
     @RequestMapping("/logout")
     public String logoutUser(Model model,
-                            HttpServletResponse response,
-                            @CookieValue(value = "id", defaultValue = "") String userIdCookie,
-                            @CookieValue(value = "token", defaultValue = "") String userTokenCookie) {
+                             HttpServletResponse response,
+                             @CookieValue(value = "id", defaultValue = "") String userIdCookie,
+                             @CookieValue(value = "token", defaultValue = "") String userTokenCookie) {
 
-        if (!userIdCookie.isEmpty() && !userTokenCookie.isEmpty()) {
-            Integer userId = new Integer(userIdCookie);
+        Long userId = new Long(userIdCookie);
 
-            StandardUser user = (StandardUser) userService.getUserById(userId);
-            if (user != null) {
-                user.setToken(null);
-                user.setTokenValidationStamp(null);
-                userService.updateUser(user);
-            }
-            response.addCookie(getCookie("id", null));
-            response.addCookie(getCookie("token", null));
+        StandardUser user = (StandardUser) userService.getUserById(userId);
+        if (user != null) {
+            user.setToken(null);
+            user.setTokenValidationStamp(null);
+            userService.updateUser(user);
         }
-
-        if(!model.containsAttribute("userLoginCommand")) {
-            model.addAttribute("userLoginCommand", new UserLoginCommand());
-        }
-
-        return "/user_login";
+        response.addCookie(getCookie("id", null));
+        response.addCookie(getCookie("token", null));
+        return "redirect:login";
     }
 
     @RequestMapping("/authenticate")
     public String authenticateUser(
-                Model model,
-                HttpServletResponse response,
-                @ModelAttribute("userLoginCommand")UserLoginCommand userLoginCommand,
-                RedirectAttributes redirectAttributes) {
+            Model model,
+            HttpServletResponse response,
+            @ModelAttribute("userLoginCommand")UserLoginCommand userLoginCommand,
+            RedirectAttributes redirectAttributes) {
 
         AuthenticationResult authResult = authenticationService.login(userLoginCommand.getEmail(), userLoginCommand.getPassword());
 
@@ -197,26 +171,12 @@ public class UserController {
             response.addCookie(getCookie("id", String.valueOf(user.getId())));
             response.addCookie(getCookie("token", user.getToken()));
 
-            return "redirect:userHomepage";
+            return "redirect:homepage";
         } else {
             userLoginCommand.setIsLoginFailed(true);
             redirectAttributes.addFlashAttribute("userLoginCommand", userLoginCommand);
             return "redirect:login";
         }
-    }
-
-    private boolean checkUserAndManageCookies(HttpServletResponse response, String userIdCookie, String userTokenCookie) {
-        if (!userIdCookie.isEmpty() && !userTokenCookie.isEmpty()) {
-            Integer userId = new Integer(userIdCookie);
-
-            if(authenticationService.isTokenValid(userId, userTokenCookie)){
-                return true;
-            } else {
-                response.addCookie(getCookie("id", null));
-                response.addCookie(getCookie("token", null));
-            }
-        }
-        return false;
     }
 
     private Cookie getCookie(String key, String value) {

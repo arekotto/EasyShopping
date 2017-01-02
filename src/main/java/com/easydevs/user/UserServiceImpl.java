@@ -3,7 +3,7 @@ package com.easydevs.user;
 import com.easydevs.user.model.StandardUser;
 import com.easydevs.user.model.TempUser;
 import com.easydevs.user.model.User;
-import com.easydevs.user.model.UserIdSequence;
+import com.easydevs.support.DbIdSequence;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.slf4j.Logger;
@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService {
     private MongoTemplate mongoTemplate;
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
+    private final String USER_ID_SEQUENCE_COLLECTION_NAME = "userIdSequence";
 
     @Override
     public User getUserById(long userId) {
@@ -71,13 +72,13 @@ public class UserServiceImpl implements UserService {
     }
 
     private Long getNewIdAndInc() {
-        List<UserIdSequence> userIdSequenceList = mongoTemplate.find(new Query(), UserIdSequence.class);
+        List<DbIdSequence> userIdSequenceList = mongoTemplate.find(new Query(), DbIdSequence.class, USER_ID_SEQUENCE_COLLECTION_NAME);
 
-        UserIdSequence userIdSequence;
+        DbIdSequence userIdSequence;
         if (!userIdSequenceList.isEmpty()) {
             userIdSequence = userIdSequenceList.get(0);
         } else {
-            userIdSequence = new UserIdSequence();
+            userIdSequence = new DbIdSequence();
         }
 
         Long currentId = userIdSequence.getCurrent();
@@ -86,7 +87,7 @@ public class UserServiceImpl implements UserService {
         DBObject dbDoc = new BasicDBObject();
         mongoTemplate.getConverter().write(userIdSequence, dbDoc);
         Update update = Update.fromDBObject(dbDoc);
-        mongoTemplate.upsert(new Query(), update, UserIdSequence.class);
+        mongoTemplate.upsert(new Query(), update, DbIdSequence.class);
 
         return currentId;
     }

@@ -25,4 +25,9 @@
         <constructor-arg ref="contentMongoDbFactory"/>
 
     </bean>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!--10mB-->
+        <property name="maxUploadSize" value="10000000 "/>
+    </bean>
 </beans>
