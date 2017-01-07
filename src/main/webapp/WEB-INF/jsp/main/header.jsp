@@ -55,6 +55,7 @@
             <li><a href="#contact">Contact</a></li>
             <c:choose>
                 <c:when test="${headerCommand.isLoggedIn}">
+                    <li><a href="/product/create">Add a New Product</a></li>
                     <li><a href="/user/homepage">${headerCommand.userEmail}</a></li>
                     <li><a href="/user/logout">Log out</a></li>
                 </c:when>

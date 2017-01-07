@@ -107,11 +107,9 @@ public class UserController {
         Long userId = new Long(userIdCookie);
         StandardUser user = (StandardUser) userService.getUserById(userId);
 
-        HeaderCommand headerCommand = new HeaderCommand();
-        headerCommand.setUserName(user.getName());
-        headerCommand.setUserEmail(user.getEmail());
 
-        model.addAttribute("headerCommand", headerCommand);
+
+//        model.addAttribute("headerCommand", getHeaderCommand(user));
 
         return "/user_homepage";
     }
@@ -184,6 +182,14 @@ public class UserController {
         cookie.setPath("/");
         return cookie;
     }
+
+//    private HeaderCommand getHeaderCommand(StandardUser user) {
+//        HeaderCommand headerCommand = new HeaderCommand();
+//        headerCommand.setIsLoggedIn(true);
+//        headerCommand.setUserName(user.getName());
+//        headerCommand.setUserEmail(user.getEmail());
+//        return headerCommand;
+//    }
 
 
 }

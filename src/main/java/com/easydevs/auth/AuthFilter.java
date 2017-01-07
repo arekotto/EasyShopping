@@ -26,8 +26,9 @@ public class AuthFilter extends OncePerRequestFilter{
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     private final List<String> filteredUrls = new ArrayList<String>() {{
-        add("/user/homepage");
         add("/user/logout");
+        add("/product/createForm");
+        add("/product/create");
 
     }};
 
@@ -40,7 +41,7 @@ public class AuthFilter extends OncePerRequestFilter{
     }};
 
     @Autowired
-    private AuthenticationService authenticationService;
+    private RequestVerificationService requestVerificationService;
 
     @Autowired
     private MultipartResolver multipartResolver;
@@ -55,7 +56,7 @@ public class AuthFilter extends OncePerRequestFilter{
                 request = multipartResolver.resolveMultipart(request);
             }
         }
-        boolean verified = this.verifyRequest(request);
+        boolean verified = requestVerificationService.verifyRequest(request);
 
         if (verified && authenticationUrls.contains(requestURI)) {
             response.sendRedirect("/user/homepage");
@@ -68,19 +69,6 @@ public class AuthFilter extends OncePerRequestFilter{
             response.sendRedirect("/user/login");
 
         }
-    }
-
-    private boolean verifyRequest(HttpServletRequest request) {
-        String token = "";
-        String userId = "";
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("token")) {
-                token = cookie.getValue();
-            } else if (cookie.getName().equals("id")) {
-                userId = cookie.getValue();
-            }
-        }
-        return !(token.isEmpty() || userId.isEmpty()) && authenticationService.isTokenValid(Long.parseLong(userId), token);
     }
 
     private String getUrl(HttpServletRequest req) {

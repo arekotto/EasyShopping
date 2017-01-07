@@ -21,22 +21,31 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class RouterController {
 
-//    @RequestMapping("/start")
-//    @ResponseBody
-//    public String test(){
-//        return "yo mothafuckaaaaaa";
-//    }
-
-
-    @Autowired
-    private AuthenticationService authenticationService;
-
     @Autowired
     UserService userService;
 
 
+    @RequestMapping("/headerLoggedOut")
+    public String retrieveHeaderLoggedOut(){
+        return "main/header";
+    }
+
     @RequestMapping("/header")
     public String retrieveHeader(){
+        return "main/header";
+    }
+
+    @RequestMapping("/headerLoggedIn")
+    public String retrieveHeaderLoggedIn(Model model,
+                           @CookieValue(value = "id", defaultValue = "") String userIdCookie) {
+
+
+        Long userId = new Long(userIdCookie);
+        StandardUser user = (StandardUser) userService.getUserById(userId);
+
+
+
+        model.addAttribute("headerCommand", getHeaderCommand(user));
 
         return "main/header";
     }
@@ -51,5 +60,11 @@ public class RouterController {
         return "home";
     }
 
-
+    private HeaderCommand getHeaderCommand(StandardUser user) {
+        HeaderCommand headerCommand = new HeaderCommand();
+        headerCommand.setIsLoggedIn(true);
+        headerCommand.setUserName(user.getName());
+        headerCommand.setUserEmail(user.getEmail());
+        return headerCommand;
+    }
 }
