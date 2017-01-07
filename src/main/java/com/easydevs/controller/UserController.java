@@ -3,12 +3,12 @@ package com.easydevs.controller;
 import com.easydevs.auth.AuthenticationResult;
 import com.easydevs.auth.AuthenticationService;
 import com.easydevs.auth.Encryptor;
-import com.easydevs.support.HeaderCommand;
 import com.easydevs.user.UserPasswordService;
 import com.easydevs.user.UserService;
 import com.easydevs.user.UserType;
 import com.easydevs.user.command.UserLoginCommand;
 import com.easydevs.user.command.UserRegistrationCommand;
+import com.easydevs.user.command.UserStandardCommand;
 import com.easydevs.user.model.StandardUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -109,7 +109,7 @@ public class UserController {
 
 
 
-//        model.addAttribute("headerCommand", getHeaderCommand(user));
+        model.addAttribute("userStandardCommand", new UserStandardCommand(user));
 
         return "/user_homepage";
     }

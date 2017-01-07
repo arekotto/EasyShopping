@@ -68,30 +68,9 @@
         </init-param>
     </filter>
 
-    <filter>
-        <filter-name>headerFilter</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-        <init-param>
-            <param-name>targetBeanName</param-name>
-            <param-value>headerFilter</param-value>
-        </init-param>
-    </filter>
-
 
     <filter-mapping>
         <filter-name>authorizationFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
-    <filter-mapping>
-        <filter-name>headerFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-        <dispatcher>INCLUDE</dispatcher>
-        <!--<dispatcher>FORWARD</dispatcher>-->
-        <!--<dispatcher>REQUEST</dispatcher>-->
-
-    </filter-mapping>
-
-
-
 </web-app>

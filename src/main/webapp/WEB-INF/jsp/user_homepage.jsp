@@ -21,8 +21,9 @@
         <div style="height:100%;width:100%;background:black;opacity: 0.9;-webkit-border-radius: 10px;
         -moz-border-radius: 10px;
         border-radius: 10px;">
-            userName: ${headerCommand.userName} <br/>
-            userLogin: ${headerCommand.userEmail} <br/>
+            Name: ${userStandardCommand.name} <br/>
+            Email: ${userStandardCommand.email} <br/>
+            City: ${userStandardCommand.city} <br/>
         </div>
     </div>
     <div class="footer" style="text-align: center;background: black;color:white;font-family:'Helvetica CE 35 Thin';">

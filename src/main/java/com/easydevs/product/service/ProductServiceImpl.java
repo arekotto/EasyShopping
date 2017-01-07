@@ -84,4 +84,9 @@ public class ProductServiceImpl implements ProductService {
 
         mongoTemplate.upsert(query, update, StandardProduct.class);
     }
+
+    @Override
+    public List<StandardProduct> getAll() {
+        return mongoTemplate.findAll(StandardProduct.class);
+    }
 }

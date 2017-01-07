@@ -1,6 +1,5 @@
 package com.easydevs.controller;
 
-import com.easydevs.auth.AuthenticationService;
 import com.easydevs.support.HeaderCommand;
 import com.easydevs.user.UserService;
 import com.easydevs.user.model.StandardUser;
@@ -10,9 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by Arek on 31.10.2016.
@@ -25,27 +22,29 @@ public class RouterController {
     UserService userService;
 
 
-    @RequestMapping("/headerLoggedOut")
-    public String retrieveHeaderLoggedOut(){
-        return "main/header";
-    }
+//    @RequestMapping("/headerLoggedOut")
+//    public String retrieveHeaderLoggedOut(){
+//        return "main/header";
+//    }
+//
+//    @RequestMapping("/header")
+//    public String retrieveHeader(){
+//        return "main/header";
+//    }
 
     @RequestMapping("/header")
-    public String retrieveHeader(){
-        return "main/header";
-    }
-
-    @RequestMapping("/headerLoggedIn")
     public String retrieveHeaderLoggedIn(Model model,
+                                         HttpServletRequest request,
                            @CookieValue(value = "id", defaultValue = "") String userIdCookie) {
 
 
-        Long userId = new Long(userIdCookie);
-        StandardUser user = (StandardUser) userService.getUserById(userId);
+        Boolean isRequestVerified = (Boolean) request.getAttribute("isRequestVerified");
+        if (isRequestVerified != null && isRequestVerified) {
+            Long userId = new Long(userIdCookie);
+            StandardUser user = (StandardUser) userService.getUserById(userId);
+            model.addAttribute("headerCommand", getHeaderCommand(user));
+        }
 
-
-
-        model.addAttribute("headerCommand", getHeaderCommand(user));
 
         return "main/header";
     }
