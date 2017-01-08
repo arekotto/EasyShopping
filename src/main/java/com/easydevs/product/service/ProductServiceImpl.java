@@ -34,6 +34,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProductById(long productId) {
+        log.info("ProductService - getProductById", productId);
 
         Query query = new Query(Criteria.where("id").is(productId));
         List<StandardProduct> usersList = mongoTemplate.find(query, StandardProduct.class);
@@ -55,6 +56,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private Long getNewIdAndInc() {
+        log.info("ProductService - getNewIdAndInc");
+
         List<DbIdSequence> userIdSequenceList = mongoTemplate.find(new Query(), DbIdSequence.class, PRODUCT_ID_SEQUENCE_COLLECTION_NAME);
 
         DbIdSequence userIdSequence;
@@ -76,6 +79,8 @@ public class ProductServiceImpl implements ProductService {
     }
     @Override
     public void updateProduct(Product product) {
+        log.info("ProductService - updateProduct", product.toString());
+
         Query query = new Query(Criteria.where("id").is(product.getId()));
 
         DBObject dbDoc = new BasicDBObject();
@@ -86,7 +91,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public void removeProduct(Product product) {
+        log.info("ProductService - removeProduct", product.getId());
+
+        Query query = new Query(Criteria.where("id").is(product.getId()));
+        mongoTemplate.findAndRemove(query, StandardProduct.class);
+    }
+
+    @Override
     public List<StandardProduct> getAll() {
         return mongoTemplate.findAll(StandardProduct.class);
+    }
+
+    @Override
+    public List<StandardProduct> getProductsByUserId(long userId) {
+        log.info("ProductService - getProductsByUserId", userId);
+
+        Query query = new Query(Criteria.where("createdByUserId").is(userId));
+        return mongoTemplate.find(query, StandardProduct.class);
     }
 }
