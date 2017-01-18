@@ -30,13 +30,25 @@
 
                 <p>
                     <form:label path="description">Description:</form:label>
-                    <form:input path="description"/>
+                    <form:input path="description" rows="5"/>
                     <br>
                 </p>
 
                 <p>
                     <form:label path="manufacturer">Manufacturer:</form:label>
                     <form:input path="manufacturer"/>
+                    <br>
+                </p>
+
+                <p>
+                    <form:label path="category">Product Category:</form:label>
+                    <form:input path="category"/>
+                    <br>
+                </p>
+
+                <p>
+                    <form:label path="price">Price:</form:label>
+                    <form:input type="number" step="0.01" path="price"/>
                     <br>
                 </p>
 

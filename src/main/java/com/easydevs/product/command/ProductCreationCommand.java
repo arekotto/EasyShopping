@@ -8,6 +8,8 @@ public class ProductCreationCommand {
     private String name;
     private String description;
     private String manufacturer;
+    private double price;
+    private String category;
 
     public String getName() {
         return name;
@@ -31,5 +33,21 @@ public class ProductCreationCommand {
 
     public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
+    }
+
+    public  String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

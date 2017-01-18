@@ -10,6 +10,8 @@ public class StandardProduct implements Product {
     private String name;
     private String manufacturer;
     private String description;
+    private double price;
+    private String category;
 
     public StandardProduct(){
 
@@ -40,6 +42,10 @@ public class StandardProduct implements Product {
         this.name = name;
     }
 
+    public double getPrice() { return price; }
+
+    public void setPrice(double price) { this.price = price; }
+
     public String getDescription() {
         return description;
     }
@@ -55,4 +61,8 @@ public class StandardProduct implements Product {
     public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
     }
+
+    public String getCategory() { return category; }
+
+    public void setCategory(String category) { this.category = category; }
 }

@@ -4,6 +4,7 @@ import com.easydevs.product.model.Product;
 import com.easydevs.product.model.StandardProduct;
 import com.easydevs.support.DbIdSequence;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,11 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by Arek on 02.01.2017.
@@ -108,6 +111,27 @@ public class ProductServiceImpl implements ProductService {
         log.info("ProductService - getProductsByUserId", userId);
 
         Query query = new Query(Criteria.where("createdByUserId").is(userId));
+        return mongoTemplate.find(query, StandardProduct.class);
+    }
+
+    @Override
+    public List<StandardProduct> getProductsByCategory(String category) {
+        log.info("ProductService - getProductsByCategory", category);
+
+        Query query = new Query(Criteria.where("category").is(category));
+        return mongoTemplate.find(query, StandardProduct.class);
+    }
+
+    @Override
+    public List<StandardProduct> search(String searchQuery, String searchCategory) {
+        log.info("ProductService - searching products by query", searchQuery);
+
+//        BasicDBObject regexQuery = new BasicDBObject();
+//        regexQuery.put("name", new BasicDBObject("$regex", "^(?)" + Pattern.quote(searchQuery))
+//                .append("$options", "i"));
+
+        Query query = new Query((Criteria.where(searchCategory).regex("^(?)" + Pattern.quote(searchQuery), "i")));
+        //DBCursor cursor = StandardProduct.class;//.find(regexQuery);
         return mongoTemplate.find(query, StandardProduct.class);
     }
 }

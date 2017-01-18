@@ -41,6 +41,8 @@ public class ProductController {
         newProduct.setDescription(productCreationCommand.getDescription());
         newProduct.setManufacturer(productCreationCommand.getManufacturer());
         newProduct.setAddedByUserId(Long.parseLong(userId));
+        newProduct.setCategory(productCreationCommand.getCategory());
+        newProduct.setPrice(productCreationCommand.getPrice());
         productService.updateProduct(newProduct);
 
         return "redirect:view/" + newProduct.getId();
@@ -77,5 +79,18 @@ public class ProductController {
         }
         model.addAttribute("productCommandList", productCommandList);
         return "product_all";
+    }
+
+    @RequestMapping("/{category}")
+    public String viewByCategory(Model model, @PathVariable String category) {
+        List<StandardProduct> standardProducts = productService.getProductsByCategory(category);
+        List<ProductCommand> productCommandList = new ArrayList<>();
+
+        for (StandardProduct standardProduct: standardProducts) {
+            productCommandList.add(new ProductCommand(standardProduct));
+        }
+
+        model.addAttribute("productCommandList", productCommandList);
+        return "product-" + category;
     }
 }
