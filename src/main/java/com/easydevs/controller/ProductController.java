@@ -79,7 +79,7 @@ public class ProductController {
             productCommandList.add(new ProductCommand(standardProduct));
         }
         model.addAttribute("productCommandList", productCommandList);
-        return "product_user";
+        return "product_all";
     }
 
     @RequestMapping("/all")
@@ -103,6 +103,6 @@ public class ProductController {
         }
 
         model.addAttribute("productCommandList", productCommandList);
-        return "product-" + categoryId;
+        return "product_all";
     }
 }

@@ -1,5 +1,6 @@
 package com.easydevs.product.service;
 
+import com.easydevs.product.model.Category;
 import com.easydevs.product.model.Product;
 import com.easydevs.product.model.StandardProduct;
 import com.easydevs.support.DbIdSequence;
@@ -134,5 +135,12 @@ public class ProductServiceImpl implements ProductService {
         Query query = new Query((Criteria.where(searchCategory).regex("^(?)" + Pattern.quote(searchQuery), "i")));
         //DBCursor cursor = StandardProduct.class;//.find(regexQuery);
         return mongoTemplate.find(query, StandardProduct.class);
+    }
+
+    @Override
+    public List<Category> getAllCategories() {
+        log.info("ProductService - getAllCategories");
+
+        return mongoTemplate.findAll(Category.class);
     }
 }

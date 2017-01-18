@@ -27,6 +27,11 @@
                     <br>
                 </p>
                 <p>
+                    <form:label path="description">Description:</form:label>
+                    <form:input path="description"/>
+                    <br>
+                </p>
+                <p>
                     <input type="submit" class="formbutton" value="Create">
 
                     <br>

@@ -1,6 +1,7 @@
 package com.easydevs.product.service;
 
 
+import com.easydevs.product.model.Category;
 import com.easydevs.product.model.Product;
 import com.easydevs.product.model.StandardProduct;
 //import com.sun.xml.internal.bind.api.impl.NameConverter;
@@ -24,6 +25,8 @@ public interface ProductService {
     List<StandardProduct> getProductsByUserId(long userId);
 
     List<StandardProduct> getProductsByCategory(long categoryId);
+
+    List<Category> getAllCategories();
 
     List<StandardProduct> search(String searchQuery, String searchCategory);
 }
