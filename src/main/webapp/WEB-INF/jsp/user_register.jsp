@@ -12,78 +12,88 @@
 <head>
     <title>Title</title>
 </head>
-<body id="register-page-body">
-<div id="container">
+<body>
+<div class="container">
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
     <div class="body">
-
         <c:if test="${userRegistrationCommand.isLoginUnavailable}">
-            <h1>LOGIN IS ALREADY TAKEN. PICK A DIFFERENT ONE!</h1>
+            <h1>Login is already taken. Please pick another one.</h1>
         </c:if>
 
         <c:if test="${userRegistrationCommand.isPasswordFormatIncorrect}">
-            <h1>PASSWORD TOO SHORT</h1>
+            <h1>Password is too short.</h1>
         </c:if>
 
         <c:if test="${userRegistrationCommand.isEmailIncorrect}">
-            <h1>wrong email address</h1>
+            <h1>Wrong e-mail address.</h1>
         </c:if>
-
-        <form:form action="${request.contextPath}/user/create"
+        <div class="inner-body">
+            <div style="min-height:30px;"></div>
+        <form:form cssStyle="width:50%;margin:0px auto;" action="${request.contextPath}/user/create"
                    commandName="userRegistrationCommand">
-            <fieldset>
+            <table>
+                <tr>
+                    <td>
+                        <form:label path="email">Email:</form:label>
+                    </td>
+                    <td>
+                        <form:input path="email"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form:label path="password">Password:</form:label>
+                    </td>
+                    <td>
+                        <form:input path="password"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form:label path="name">Name:</form:label>
 
-                <p>
-                    <form:label path="email">Email:</form:label>
-                    <form:input path="email"/>
-                    <br>
-                </p>
+                    </td>
+                    <td>
+                        <form:input path="name"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form:label path="street">Street:</form:label>
+                    </td>
+                    <td>
+                        <form:input path="street"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form:label path="city">City:</form:label>
 
-                <p>
-                    <form:label path="password">Password:</form:label>
-                    <form:input path="password"/>
-                    <br>
-                </p>
-
-                <p>
-                    <form:label path="name">Name:</form:label>
-                    <form:input path="name"/>
-                    <br>
-                </p>
-
-
-                <p>
-                    <form:label path="street">Street:</form:label>
-                    <form:input path="street"/>
-                    <br>
-                </p>
-
-                <p>
-                    <form:label path="city">City:</form:label>
-                    <form:input path="city"/>
-                    <br>
-                </p>
-
-                <p>
-                    <form:label path="country">Country:</form:label>
-                    <form:input path="country"/>
-                    <br>
-                </p>
-
-                <p>
-                    <input type="submit" class="formbutton" value="Save">
-
-                    <br>
-                </p>
+                    </td>
+                    <td>
+                        <form:input path="city"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form:label path="country">Country:</form:label>
+                    </td>
+                    <td>
+                        <form:input path="country"/>
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" class="formbutton" value="Save">
             </fieldset>
         </form:form>
+            <div style="min-height:30px;"></div>
+    </div>
     </div>
     <div class="footer">
         <jsp:include page="${request.contextPath}/footer"></jsp:include>
     </div>
-
 </div>
 </body>
 </html>

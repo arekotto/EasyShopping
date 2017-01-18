@@ -26,4 +26,5 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
         <property name="suffix" value=".jsp"/>
     </bean>
     <mvc:resources mapping="/img/**" location="./img/" />
+    <mvc:resources mapping="/css/**" location="./css/" />
 </beans>

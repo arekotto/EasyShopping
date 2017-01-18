@@ -13,44 +13,44 @@
     <title>Login</title>
 </head>
 <body>
-<div id="container">
+<div class="container">
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
     <div class="body">
-        <c:if test="${userLoginCommand.isLoginFailed}">
-                <h3>login has failed!</h3>
-        </c:if>
-
-        <form:form action="${request.contextPath}/user/authenticate"
+        <div class="inner-body">
+            <div style="min-height:30px;"></div>
+        <form:form cssStyle="width:50%;margin:0px auto;" action="${request.contextPath}/user/authenticate"
                    commandName="userLoginCommand">
-            <fieldset>
-
-                <p>
-                    <form:label path="email">Email:</form:label>
-                    <form:input path="email"/>
-                    <br>
-                </p>
-
-                <p>
-                    <form:label path="password">Password:</form:label>
-                    <form:input path="password"/>
-                    <br>
-                </p>
-
-                <p>
+                <table>
+                    <tr>
+                        <td>
+                            <form:label path="email">Email:</form:label>
+                        </td>
+                        <td>
+                            <form:input path="email"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <form:label path="password">Password:</form:label>
+                        </td>
+                        <td>
+                            <form:input  path="password"/>
+                        </td>
+                    </tr>
+                </table>
                     <input type="submit" class="formbutton" value="Log In">
-
-                    <br>
-                </p>
-
-            </fieldset>
         </form:form>
+            <c:if test="${userLoginCommand.isLoginFailed}">
+                <h3>Login has failed!</h3>
+            </c:if>
+            <div style="min-height:30px;"></div>
+        </div>
     </div>
     <div class="footer">
         <jsp:include page="${request.contextPath}/footer"></jsp:include>
     </div>
-
 </div>
 </body>
 </html>

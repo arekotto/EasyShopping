@@ -1,3 +1,32 @@
-.container {
-    background: purple;
+body {
+    background-image: url("/img/background.jpg");
+}
+
+.body{
+    background-color:#333;
+    opacity: 0.8;
+    padding:15px;
+}
+
+.footer{
+    text-align: center;
+    background: black;
+    color:white;
+    font-family:'Helvetica CE 35 Thin';
+}
+
+.container{
+    margin:auto;
+    width:1000px;
+    border:3px solid lightpink;
+}
+
+.inner-body{
+    height:100%;
+    width:100%;
+    background:white;
+    opacity: 0.95;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
 }

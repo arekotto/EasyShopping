@@ -9,6 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link href="/css/stylesheet.css" rel="stylesheet">
     <style>
         ul {
             list-style-type: none;

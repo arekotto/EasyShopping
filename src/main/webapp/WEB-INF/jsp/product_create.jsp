@@ -12,54 +12,61 @@
     <title>Add a new product</title>
 </head>
 <body>
-<div id="container">
+<div class="container">
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
     <div class="body">
-
-        <form:form action="${request.contextPath}/product/create"
+        <div class="inner-body">
+        <form:form cssStyle="width:50%;margin:0px auto;" action="${request.contextPath}/product/create"
                    commandName="productCreationCommand">
-            <fieldset>
+                <table>
+                    <tr>
+                        <td>
+                            <form:label path="name">Product Name:</form:label>
 
-                <p>
-                    <form:label path="name">Product Name:</form:label>
-                    <form:input path="name"/>
-                    <br>
-                </p>
+                        </td>
+                        <td>
+                            <form:input path="name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <form:label path="description">Description:</form:label>
 
-                <p>
-                    <form:label path="description">Description:</form:label>
-                    <form:input path="description" rows="5"/>
-                    <br>
-                </p>
-
-                <p>
-                    <form:label path="manufacturer">Manufacturer:</form:label>
-                    <form:input path="manufacturer"/>
-                    <br>
-                </p>
-
-                <p>
-                    <form:label path="category">Product Category:</form:label>
-                    <form:input path="category"/>
-                    <br>
-                </p>
-
-                <p>
-                    <form:label path="price">Price:</form:label>
-                    <form:input type="number" step="0.01" path="price"/>
-                    <br>
-                </p>
-
-                <p>
+                        </td>
+                        <td>
+                            <form:input path="description" rows="5"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <form:label path="manufacturer">Manufacturer:</form:label>
+                        </td>
+                        <td>
+                            <form:input path="manufacturer"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <form:label path="category">Product Category:</form:label>
+                        </td>
+                        <td>
+                            <form:input path="category"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <form:label path="price">Price:</form:label>
+                        </td>
+                        <td>
+                            <form:input type="number" step="0.01" path="price"/>
+                        </td>
+                    </tr>
+                </table>
                     <input type="submit" class="formbutton" value="Create">
-
-                    <br>
-                </p>
-
-            </fieldset>
         </form:form>
+        </div>
     </div>
     <div class="footer">
         <jsp:include page="${request.contextPath}/footer"></jsp:include>
