@@ -16,23 +16,30 @@
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
-    <div class="body" style="color:white";background-color:#333;height:300px;opacity: 0.8;padding:15px;">
+    <div class="body" style="color:white" ;background-color:#333;height:300px;opacity: 0.8;padding:15px;
+    ">
 
-            <c:forEach var="productCommand" items="${productCommandList}">
-                <a href="/product/view/${productCommand.id}">
-                    Product:
-                </a><br/>
-                ${productCommand.name}<br/>
-                ${productCommand.description}<br/>
-                ${productCommand.manufacturer}<br/>
-                ${productCommand.category}<br/>
-                <a href="/cart/add?productId=${productCommand.id}" >Add to cart</a><br/><br/>
-
-            </c:forEach>
-    </div>
-    <div class="footer" style="text-align: center;background: black;color:white;font-family:'Helvetica CE 35 Thin';">
-        <jsp:include page="${request.contextPath}/footer"></jsp:include>
-    </div>
+    <c:forEach var="productCommand" items="${productCommandList}">
+        <a href="/product/view/${productCommand.id}">
+            Product:
+        </a><br/>
+        ${productCommand.name}<br/>
+        ${productCommand.description}<br/>
+        ${productCommand.manufacturer}<br/>
+        ${productCommand.category}<br/>
+        <c:choose>
+            <c:when test="${isOnlyForUser}">
+                <a href="/product/remove?productId=${productCommand.id}" style="color:red">Remove</a><br/><br/>
+            </c:when>
+            <c:otherwise>
+                <a href="/cart/add?productId=${productCommand.id}">Add to cart</a><br/><br/>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+</div>
+<div class="footer" style="text-align: center;background: black;color:white;font-family:'Helvetica CE 35 Thin';">
+    <jsp:include page="${request.contextPath}/footer"></jsp:include>
+</div>
 
 </div>
 </body>

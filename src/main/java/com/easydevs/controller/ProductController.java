@@ -64,7 +64,7 @@ public class ProductController {
         StandardProduct product = (StandardProduct) productService.getProductById(productId);
         if (Long.parseLong(userId) == product.getAddedByUserId()) {
             productService.removeProduct(product);
-            return "redirect:all";
+            return "redirect:user";
 
         }
 
@@ -79,6 +79,7 @@ public class ProductController {
             productCommandList.add(new ProductCommand(standardProduct));
         }
         model.addAttribute("productCommandList", productCommandList);
+        model.addAttribute("isOnlyForUser", true);
         return "product_all";
     }
 
@@ -90,6 +91,7 @@ public class ProductController {
             productCommandList.add(new ProductCommand(standardProduct));
         }
         model.addAttribute("productCommandList", productCommandList);
+        model.addAttribute("isOnlyForUser", false);
         return "product_all";
     }
 
