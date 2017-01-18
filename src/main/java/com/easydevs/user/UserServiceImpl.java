@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
         DBObject dbDoc = new BasicDBObject();
         mongoTemplate.getConverter().write(userIdSequence, dbDoc);
         Update update = Update.fromDBObject(dbDoc);
-        mongoTemplate.upsert(new Query(), update, DbIdSequence.class);
+        mongoTemplate.upsert(new Query(), update, DbIdSequence.class, USER_ID_SEQUENCE_COLLECTION_NAME);
 
         return currentId;
     }
