@@ -9,6 +9,7 @@ public class CategoryCommand {
 
     private long id;
     private String name;
+    private String description;
 
     public CategoryCommand() {
     }
@@ -16,6 +17,7 @@ public class CategoryCommand {
     public CategoryCommand(Category category) {
         id = category.getId();
         name = category.getName();
+        description = category.getDescription();
     }
 
     public long getId() { return id; }
@@ -25,4 +27,8 @@ public class CategoryCommand {
     public void setId(long id) { this.id = id; }
 
     public void setName(String name) { this.name = name; }
+
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { this.description = description; }
 }
