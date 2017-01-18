@@ -9,7 +9,7 @@ public class ProductCreationCommand {
     private String description;
     private String manufacturer;
     private double price;
-    private String category;
+    private long categoryId;
 
     public String getName() {
         return name;
@@ -35,12 +35,12 @@ public class ProductCreationCommand {
         this.manufacturer = manufacturer;
     }
 
-    public  String getCategory() {
-        return category;
+    public long getCategory() {
+        return categoryId;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategory(long category) {
+        this.categoryId = category;
     }
 
     public double getPrice() {

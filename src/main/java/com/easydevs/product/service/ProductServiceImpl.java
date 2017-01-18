@@ -115,10 +115,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<StandardProduct> getProductsByCategory(String category) {
-        log.info("ProductService - getProductsByCategory", category);
+    public List<StandardProduct> getProductsByCategory(long categoryId) {
+        log.info("ProductService - getProductsByCategory", categoryId);
 
-        Query query = new Query(Criteria.where("category").is(category));
+        Query query = new Query(Criteria.where("categoryId").is(categoryId));
         return mongoTemplate.find(query, StandardProduct.class);
     }
 
