@@ -2,6 +2,7 @@ package com.easydevs.purchase.model;
 
 import com.easydevs.product.model.StandardProduct;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,33 +10,50 @@ import java.util.List;
  */
 public class Cart {
 
-    private List<StandardProduct> productList;
+    private long userId;
+    private List<Long> productIdList;
 
-    public Cart() {}
-
-    public void addToCart(StandardProduct product) {
-        this.productList.add(product);
+    public Cart(long userId, List<Long> productIdList) {
+        this.userId = userId;
+        this.productIdList = productIdList;
     }
 
-    public void removeFromCart(StandardProduct product) {
-        this.productList.remove(this.productList.indexOf(product));
+    public long getUserId() {
+        return userId;
+    }
+
+    public void addToCart(long productId) {
+        this.productIdList.add(productId);
+    }
+
+    public void removeFromCart(long productId) {
+        this.productIdList.remove(this.productIdList.indexOf(productId));
     }
 
     public void resetCart() {
-        this.productList.clear();
+        this.productIdList.clear();
     }
 
-    public double getTotalPrice() {
-        double totalPrice = 0;
+//
+//    public void resetCart() {
+//        this.productIdList.clear();
+//    }
+//
+//    public double getTotalPrice() {
+//        double totalPrice = 0;
+//
+//        for (StandardProduct standardProduct: this.productList) {
+//            totalPrice += standardProduct.getPrice();
+//        }
+//
+//        return totalPrice;
+//    }
 
-        for (StandardProduct standardProduct: this.productList) {
-            totalPrice += standardProduct.getPrice();
+    public List<Long> getProductIdList() {
+        if (productIdList == null) {
+            return new ArrayList<>();
+        } else {
+            return productIdList;
         }
-
-        return totalPrice;
-    }
-
-    public List<StandardProduct> getProductList() {
-        return productList;
     }
 }

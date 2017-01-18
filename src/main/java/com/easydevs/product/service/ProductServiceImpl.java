@@ -45,7 +45,8 @@ public class ProductServiceImpl implements ProductService {
             return usersList.get(0);
         } else {
             return null;
-        }    }
+        }
+    }
 
     @Override
     public Product createNewProduct() {

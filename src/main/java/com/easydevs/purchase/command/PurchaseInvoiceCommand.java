@@ -18,20 +18,18 @@ public class PurchaseInvoiceCommand {
     private String shipToAddressStreet;
     private String shipToAddressCity;
     private String shipToAddressCountry;
-    private String zipCode;
 
     public PurchaseInvoiceCommand() {}
 
     public PurchaseInvoiceCommand(PurchaseInvoice purchaseInvoice) {
         id = purchaseInvoice.getId();
-        productList = purchaseInvoice.getProductList();
+        productList = purchaseInvoice.getProductIdList();
         price = purchaseInvoice.getPrice();
         userId = purchaseInvoice.getUserId();
         userName = purchaseInvoice.getUserName();
         shipToAddressCity = purchaseInvoice.getShipToAddressCity();
         shipToAddressCountry = purchaseInvoice.getShipToAddressCountry();
         shipToAddressStreet = purchaseInvoice.getShipToAddressStreet();
-        zipCode = purchaseInvoice.getZipCode();
     }
 
 
@@ -66,8 +64,5 @@ public class PurchaseInvoiceCommand {
     public String getShipToAddressCountry() { return shipToAddressCountry; }
 
     public void setShipToAddressCountry(String country) { this.shipToAddressCountry = country; }
-
-    public String getZipCode() { return zipCode; }
-
-    public void setZipCode(String zipCode) { this.zipCode = zipCode; }
+    
 }

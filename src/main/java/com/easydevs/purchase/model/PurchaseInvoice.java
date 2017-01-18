@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by ibm on 2017-01-18.
  */
-public class PurchaseInvoice extends Cart{
+public class PurchaseInvoice {
 
     private Long id;
     private List<StandardProduct> productList;
@@ -18,7 +18,6 @@ public class PurchaseInvoice extends Cart{
     private String shipToAddressStreet;
     private String shipToAddressCity;
     private String shipToAddressCountry;
-    private String zipCode;
 
     public PurchaseInvoice() {
     }
@@ -35,7 +34,6 @@ public class PurchaseInvoice extends Cart{
         this.shipToAddressCity = user.getCity();
         this.shipToAddressCountry = user.getCountry();
         this.shipToAddressStreet = user.getStreet();
-//        this.zipCode = user.getZipCode
         this.price = this.getTotalPrice();
     }
 
@@ -43,8 +41,7 @@ public class PurchaseInvoice extends Cart{
         return id;
     }
 
-    @Override
-    public List<StandardProduct> getProductList() {
+    public List<StandardProduct> getProductIdList() {
         return productList;
     }
 
@@ -72,10 +69,6 @@ public class PurchaseInvoice extends Cart{
         return shipToAddressCountry;
     }
 
-    public String getZipCode() {
-        return zipCode;
-    }
-
     public void setId(long id) {
         this.id = id;
     }
@@ -96,7 +89,14 @@ public class PurchaseInvoice extends Cart{
         this.shipToAddressCountry = shipToAddressCountry;
     }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+
+    public double getTotalPrice() {
+        double totalPrice = 0;
+
+        for (StandardProduct standardProduct: this.productList) {
+            totalPrice += standardProduct.getPrice();
+        }
+
+        return totalPrice;
     }
 }
