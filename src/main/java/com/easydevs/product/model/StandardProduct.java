@@ -11,7 +11,7 @@ public class StandardProduct implements Product {
     private String manufacturer;
     private String description;
     private double price;
-    private String category;
+    private long categoryId;
 
     public StandardProduct(){
 
@@ -62,7 +62,7 @@ public class StandardProduct implements Product {
         this.manufacturer = manufacturer;
     }
 
-    public String getCategory() { return category; }
+    public long getCategory() { return categoryId; }
 
-    public void setCategory(String category) { this.category = category; }
+    public void setCategory(long category) { this.categoryId = category; }
 }

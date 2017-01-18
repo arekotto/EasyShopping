@@ -82,8 +82,8 @@ public class ProductController {
     }
 
     @RequestMapping("/{category}")
-    public String viewByCategory(Model model, @PathVariable String category) {
-        List<StandardProduct> standardProducts = productService.getProductsByCategory(category);
+    public String viewByCategory(Model model, @PathVariable long categoryId) {
+        List<StandardProduct> standardProducts = productService.getProductsByCategory(categoryId);
         List<ProductCommand> productCommandList = new ArrayList<>();
 
         for (StandardProduct standardProduct: standardProducts) {
@@ -91,6 +91,6 @@ public class ProductController {
         }
 
         model.addAttribute("productCommandList", productCommandList);
-        return "product-" + category;
+        return "product-" + categoryId;
     }
 }
