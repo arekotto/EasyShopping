@@ -7,10 +7,7 @@ import com.easydevs.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,14 +58,29 @@ public class ProductController {
         return "";
     }
 
-    @RequestMapping("/remove/{productId}")
-    public String remove(Model model, @PathVariable Integer productId) {
+    @RequestMapping("/remove")
+    public String remove(Model model, @CookieValue("id") String userId, @RequestParam Integer productId) {
 
+        StandardProduct product = (StandardProduct) productService.getProductById(productId);
+        if (Long.parseLong(userId) == product.getAddedByUserId()) {
+            productService.removeProduct(product);
+            return "redirect:all";
 
+        }
 
-        return "";
+        return "redirect:view/" + productId;
     }
 
+    @RequestMapping("/user")
+    public String viewUsers(Model model, @CookieValue("id") String userId) {
+        List<StandardProduct> standardProducts = productService.getProductsByUserId(Long.parseLong(userId));
+        List<ProductCommand> productCommandList = new ArrayList<>();
+        for (StandardProduct standardProduct : standardProducts) {
+            productCommandList.add(new ProductCommand(standardProduct));
+        }
+        model.addAttribute("productCommandList", productCommandList);
+        return "product_user";
+    }
 
     @RequestMapping("/all")
     public String viewAll(Model model) {

@@ -26,11 +26,14 @@ public class AuthFilter extends OncePerRequestFilter{
 
     private final List<String> filteredUrls = new ArrayList<String>() {{
         add("/user/logout");
+        add("/user/homepage");
         add("/product/createForm");
         add("/product/create");
+        add("/product/remove");
+        add("/product/user");
         add("/cart/view");
         add("/cart/add");
-        add("/product/remove");
+        add("/cart/remove");
 
     }};
 
@@ -38,7 +41,6 @@ public class AuthFilter extends OncePerRequestFilter{
         add("/user/create");
         add("/user/register");
         add("/user/login");
-        add("/user/create");
 
     }};
 

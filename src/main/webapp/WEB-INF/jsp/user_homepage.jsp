@@ -22,7 +22,9 @@
             <div>
                 Name: ${userStandardCommand.name} <br/>
                 Email: ${userStandardCommand.email} <br/>
+                Country: ${userStandardCommand.country} <br/>
                 City: ${userStandardCommand.city} <br/>
+                Street: ${userStandardCommand.street} <br/>
             </div>
         </div>
     </div>

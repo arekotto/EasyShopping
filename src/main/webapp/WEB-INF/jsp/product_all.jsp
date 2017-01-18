@@ -24,7 +24,9 @@
                 </a><br/>
                 ${productCommand.name}<br/>
                 ${productCommand.description}<br/>
-                ${productCommand.manufacturer}<br/><br/>
+                ${productCommand.manufacturer}<br/>
+                ${productCommand.category}<br/>
+                <a href="/cart/add?productId=${productCommand.id}" >Add to cart</a><br/><br/>
 
             </c:forEach>
     </div>

@@ -111,7 +111,7 @@ public class ProductServiceImpl implements ProductService {
     public List<StandardProduct> getProductsByUserId(long userId) {
         log.info("ProductService - getProductsByUserId", userId);
 
-        Query query = new Query(Criteria.where("createdByUserId").is(userId));
+        Query query = new Query(Criteria.where("addedByUserId").is(userId));
         return mongoTemplate.find(query, StandardProduct.class);
     }
 

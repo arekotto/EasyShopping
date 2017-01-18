@@ -23,6 +23,8 @@
             desc: ${productCommand.description} <br/>
             manufacturer: ${productCommand.manufacturer} <br/>
             createdByUserId: ${productCommand.createdByUserId} <br/>
+            <a href="/cart/add?productId=${productCommand.id}" >Add to cart</a><br/><br/>
+
         </div>
     </div>
     <div class="footer" style="text-align: center;background: black;color:white;font-family:'Helvetica CE 35 Thin';">
