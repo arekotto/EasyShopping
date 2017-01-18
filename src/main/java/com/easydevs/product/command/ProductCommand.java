@@ -13,7 +13,7 @@ public class ProductCommand {
     private String description;
     private String manufacturer;
     private double price;
-    private String category;
+    private long categoryId;
 
     public ProductCommand() {
     }
@@ -24,7 +24,7 @@ public class ProductCommand {
         name = standardProduct.getName();
         description = standardProduct.getDescription();
         manufacturer = standardProduct.getManufacturer();
-        category = standardProduct.getCategory();
+        categoryId = standardProduct.getCategory();
         price = standardProduct.getPrice();
     }
 
@@ -69,12 +69,12 @@ public class ProductCommand {
         this.manufacturer = manufacturer;
     }
 
-    public  String getCategory() {
-        return category;
+    public long getCategory() {
+        return categoryId;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategory(long category) {
+        this.categoryId = category;
     }
 
     public double getPrice() {

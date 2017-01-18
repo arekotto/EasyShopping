@@ -23,7 +23,7 @@ public interface ProductService {
 
     List<StandardProduct> getProductsByUserId(long userId);
 
-    List<StandardProduct> getProductsByCategory(String category);
+    List<StandardProduct> getProductsByCategory(long categoryId);
 
     List<StandardProduct> search(String searchQuery, String searchCategory);
 }
