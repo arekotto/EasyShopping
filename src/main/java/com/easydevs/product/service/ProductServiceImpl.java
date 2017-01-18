@@ -61,11 +61,11 @@ public class ProductServiceImpl implements ProductService {
     private Long getNewIdAndInc() {
         log.info("ProductService - getNewIdAndInc");
 
-        List<DbIdSequence> userIdSequenceList = mongoTemplate.find(new Query(), DbIdSequence.class, PRODUCT_ID_SEQUENCE_COLLECTION_NAME);
+        List<DbIdSequence> productIdSequenceList = mongoTemplate.find(new Query(), DbIdSequence.class, PRODUCT_ID_SEQUENCE_COLLECTION_NAME);
 
         DbIdSequence userIdSequence;
-        if (!userIdSequenceList.isEmpty()) {
-            userIdSequence = userIdSequenceList.get(0);
+        if (!productIdSequenceList.isEmpty()) {
+            userIdSequence = productIdSequenceList.get(0);
         } else {
             userIdSequence = new DbIdSequence();
         }
@@ -76,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
         DBObject dbDoc = new BasicDBObject();
         mongoTemplate.getConverter().write(userIdSequence, dbDoc);
         Update update = Update.fromDBObject(dbDoc);
-        mongoTemplate.upsert(new Query(), update, DbIdSequence.class);
+        mongoTemplate.upsert(new Query(), update, DbIdSequence.class, PRODUCT_ID_SEQUENCE_COLLECTION_NAME);
 
         return currentId;
     }
