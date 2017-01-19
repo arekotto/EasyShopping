@@ -11,13 +11,13 @@
 <head>
     <title>Your cart</title>
 </head>
-<body id="home-page-body" background="/img/background.jpg">
-<div id="container" style="margin:auto;width:1000px;border:3px solid lightpink">
+<body>
+<div class="container">
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
-    <div class="body" style="color:white;background-color:#333;height:300px;opacity: 0.8;padding:15px;">
-
+    <div class="body">
+        <div class="inner-body">
     <c:forEach var="productCommand" items="${productCommandList}">
         <a href="/product/view/${productCommand.id}">
             Product:
@@ -28,8 +28,9 @@
         <a href="/cart/remove?productId=${productCommand.id}" style="color:red">Remove</a><br/><br/>
 
     </c:forEach>
+        </div>
 </div>
-<div class="footer" style="text-align: center;background: black;color:white;font-family:'Helvetica CE 35 Thin';">
+<div class="footer">
     <jsp:include page="${request.contextPath}/footer"></jsp:include>
 </div>
 

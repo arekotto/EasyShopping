@@ -11,13 +11,13 @@
 <head>
     <title>ALl Products</title>
 </head>
-<body id="home-page-body" background="/img/background.jpg">
-<div id="container" style="margin:auto;width:1000px;border:3px solid lightpink">
+<body>
+<div class="container">
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
-    <div class="body">
-        <div class="inner-body">
+    <div class="body" style="overflow: hidden;">
+        <div class="inner-body" style="padding:20px;">
 
             <h3 class="text-bold text-info">
                 Product List
