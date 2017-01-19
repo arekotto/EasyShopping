@@ -18,7 +18,8 @@
     </div>
     <div class="body">
         <div class="inner-body">
-        <form:form cssStyle="width:50%;margin:0px auto;" action="${request.contextPath}/product/create"
+        <form:form style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; "
+                   action="${request.contextPath}/product/create"
                    commandName="productCreationCommand">
                 <table>
                     <tr>
@@ -36,7 +37,7 @@
 
                         </td>
                         <td>
-                            <form:input path="description" rows="5"/>
+                            <form:textarea path="description" rows="5"/>
                         </td>
                     </tr>
                     <tr>

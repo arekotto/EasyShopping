@@ -18,52 +18,63 @@
     </div>
     <div class="body">
         <div class="inner-body">
+            <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
+                <h3 class="text-bold text-info">
+                    Product List
+                </h3>
+            </div>
+            <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
+                <table>
+                    <c:forEach var="productCommand" items="${productCommandList}">
 
-            <h3 class="text-bold text-info">
-                Product List
-            </h3>
-            <table>
-                <tbody>
-                <tr>
-                    <td>Name</td>
-                    <td>Description</td>
-                    <td>Manufacturer</td>
-                    <td>Category</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <c:forEach var="productCommand" items="${productCommandList}">
-
-                <tr>
-                    <td>${productCommand.name}<td/>
-                    <td>${productCommand.description}<td/>
-                    <td>${productCommand.manufacturer}<td/>
-                    <td>${productCommand.category}<td/>
-                    <td>
-                        <a href="/product/view/${productCommand.id}">
-                            Details:
-                        </a>
-                    </td>
-                    <td>
-                        <c:choose>
-                            <c:when test="${isOnlyForUser}">
-                                <a href="/product/remove?productId=${productCommand.id}" style="color:red">Remove</a>
-                                <a href="/product/edit?productId=${productCommand.id}" style="color:blue">Edit</a>
-                            </c:when>
-                            <c:otherwise>
-                                <a href="/cart/add?productId=${productCommand.id}">Add to cart</a>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+                        <tr>
+                            <td>
+                                ${productCommand.name}
+                            <td/>
+                            <td>
+                                ${productCommand.description}
+                            <td/>
+                            <td>
+                                ${productCommand.manufacturer}
+                            <td/>
+                            <td>
+                                ${productCommand.category}
+                            <td/>
+                            <td>
+                                <form action="/product/view/${productCommand.id}">
+                                    <input type="submit" value="Details" />
+                                </form>
+                                <%--<a href="/product/view/${productCommand.id}">--%>
+                                    <%--Details:--%>
+                                <%--</a>--%>
+                            </td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${isOnlyForUser}">
+                                        <form action="/product/remove?productId=${productCommand.id}">
+                                            <input type="submit" value="Remove"  style="color:red;"/>
+                                        </form>
+                                        <form action="/product/edit?productId=${productCommand.id}">
+                                            <input type="submit" value="Edit" style="color:darkgoldenrod"/>
+                                        </form>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <form action="/cart/add?productId=${productCommand.id}">
+                                            <input type="submit" value="Add to cart"/>
+                                        </form>
+                                        <%--<a href="/cart/add?productId=${productCommand.id}">Add to cart</a>--%>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
 
         </div>
     </div>
     <%--<div class="footer" style="text-align: center;background: black;color:white;font-family:'Helvetica CE 35 Thin';">--%>
-        <%--<jsp:include page="${request.contextPath}/footer"></jsp:include>--%>
+    <%--<jsp:include page="${request.contextPath}/footer"></jsp:include>--%>
     <%--</div>--%>
 
 </div>
