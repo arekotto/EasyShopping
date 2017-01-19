@@ -20,7 +20,14 @@
         <div class="inner-body" style="padding:20px;">
             <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
                 <h3 class="text-bold text-info">
-                    Product List
+                    <c:choose>
+                        <c:when test="${isOnlyForUser}">
+                            My Products
+                        </c:when>
+                        <c:otherwise>
+                            Product List
+                        </c:otherwise>
+                    </c:choose>
                 </h3>
             </div>
             <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
@@ -29,46 +36,51 @@
 
                         <tr>
                             <td>
-                                ${productCommand.name}
+                                    ${productCommand.name}
                             <td/>
                             <td>
-                                ${productCommand.description}
+                                    ${productCommand.description}
                             <td/>
                             <td>
-                                ${productCommand.manufacturer}
+                                    ${productCommand.manufacturer}
                             <td/>
                             <td>
-                                ${productCommand.category}
+                                    ${productCommand.category}
                             <td/>
                             <td>
                                 <form action="/product/view/${productCommand.id}">
-                                    <input type="submit" value="Details" />
+                                    <input type="submit" value="Details"/>
                                 </form>
-                                <%--<a href="/product/view/${productCommand.id}">--%>
+                                    <%--<a href="/product/view/${productCommand.id}">--%>
                                     <%--Details:--%>
-                                <%--</a>--%>
+                                    <%--</a>--%>
                             </td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${isOnlyForUser}">
+
+                            <c:choose>
+                                <c:when test="${isOnlyForUser}">
+                                    <td>
                                         <form action="/product/remove">
-                                            <input type="hidden" name="productId" value="${productCommand.id}" />
-                                            <input type="submit" value="Remove"  style="color:red;"/>
+                                            <input type="hidden" name="productId" value="${productCommand.id}"/>
+                                            <input type="submit" value="Remove" style="color:red;"/>
                                         </form>
+                                    </td>
+                                    <td>
                                         <form action="/product/edit">
-                                            <input type="hidden" name="productId" value="${productCommand.id}" />
+                                            <input type="hidden" name="productId" value="${productCommand.id}"/>
                                             <input type="submit" value="Edit" style="color:darkgoldenrod"/>
                                         </form>
-                                    </c:when>
-                                    <c:otherwise>
+                                    </td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td>
                                         <form action="/cart/add">
-                                            <input type="hidden" name="productId" value="${productCommand.id}" />
+                                            <input type="hidden" name="productId" value="${productCommand.id}"/>
                                             <input type="submit" value="Add to cart"/>
                                         </form>
-                                        <%--<a href="/cart/add?productId=${productCommand.id}">Add to cart</a>--%>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
+                                    </td>
+                                    <%--<a href="/cart/add?productId=${productCommand.id}">Add to cart</a>--%>
+                                </c:otherwise>
+                            </c:choose>
                         </tr>
                     </c:forEach>
                 </table>
