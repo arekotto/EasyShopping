@@ -16,8 +16,12 @@
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
+<<<<<<< HEAD
     <div class="body" style="overflow: hidden;">
         <div class="inner-body" style="padding:20px;">
+=======
+    <div class="body">
+        <div class="inner-body">
             <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
                 <h3 class="text-bold text-info">
                     Product List
@@ -26,6 +30,7 @@
             <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
                 <table>
                     <c:forEach var="productCommand" items="${productCommandList}">
+>>>>>>> 40cdd21033a0a2654d67800b4ec46fa759a6ee39
 
                         <tr>
                             <td>
