@@ -2,7 +2,9 @@ package com.easydevs.controller;
 
 import com.easydevs.product.command.ProductCommand;
 import com.easydevs.product.command.ProductCreationCommand;
+import com.easydevs.product.model.Category;
 import com.easydevs.product.model.StandardProduct;
+import com.easydevs.product.service.CategoryService;
 import com.easydevs.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,9 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     @RequestMapping("/createForm")
     public String showCreateNewForm(Model model) {
         model.addAttribute("productCreationCommand", new ProductCreationCommand());
@@ -34,6 +39,8 @@ public class ProductController {
                          @ModelAttribute("productCreationCommand") ProductCreationCommand productCreationCommand) {
 
         StandardProduct newProduct = (StandardProduct) productService.createNewProduct();
+        List<Category> categoryList = categoryService.getAll();
+
         newProduct.setName(productCreationCommand.getName());
         newProduct.setDescription(productCreationCommand.getDescription());
         newProduct.setManufacturer(productCreationCommand.getManufacturer());

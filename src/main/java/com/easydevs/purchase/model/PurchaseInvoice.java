@@ -41,7 +41,7 @@ public class PurchaseInvoice {
         return id;
     }
 
-    public List<StandardProduct> getProductIdList() {
+    public List<StandardProduct> getProductList() {
         return productList;
     }
 
@@ -85,10 +85,13 @@ public class PurchaseInvoice {
         this.shipToAddressCity = shipToAddressCity;
     }
 
-    public void setShipToAddressCountry(String shipToAddressCountry) {
-        this.shipToAddressCountry = shipToAddressCountry;
-    }
+    public void setShipToAddressCountry(String shipToAddressCountry) { this.shipToAddressCountry = shipToAddressCountry; }
 
+    public void setUserId(long userId) { this.userId = userId; }
+
+    public void setUserName(String userName) { this.userName = userName; }
+
+    public void setProductList(List<StandardProduct> productLise) { this.productList = productList; }
 
     public double getTotalPrice() {
         double totalPrice = 0;

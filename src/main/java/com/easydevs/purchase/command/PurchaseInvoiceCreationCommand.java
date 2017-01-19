@@ -1,16 +1,14 @@
 package com.easydevs.purchase.command;
 
 import com.easydevs.product.model.StandardProduct;
-import com.easydevs.purchase.model.PurchaseInvoice;
 
 import java.util.List;
 
 /**
- * Created by ibm on 2017-01-18.
+ * Created by ibm on 2017-01-19.
  */
-public class PurchaseInvoiceCommand {
+public class PurchaseInvoiceCreationCommand {
 
-    private long id;
     private List<StandardProduct> productList;
     private double price;
     private long userId;
@@ -18,24 +16,6 @@ public class PurchaseInvoiceCommand {
     private String shipToAddressStreet;
     private String shipToAddressCity;
     private String shipToAddressCountry;
-
-    public PurchaseInvoiceCommand() {}
-
-    public PurchaseInvoiceCommand(PurchaseInvoice purchaseInvoice) {
-        id = purchaseInvoice.getId();
-        productList = purchaseInvoice.getProductList();
-        price = purchaseInvoice.getPrice();
-        userId = purchaseInvoice.getUserId();
-        userName = purchaseInvoice.getUserName();
-        shipToAddressCity = purchaseInvoice.getShipToAddressCity();
-        shipToAddressCountry = purchaseInvoice.getShipToAddressCountry();
-        shipToAddressStreet = purchaseInvoice.getShipToAddressStreet();
-    }
-
-
-    public long getId() { return id; }
-
-    public void setId(long id) { this.id = id; }
 
     public List<StandardProduct> getProductList() { return productList; }
 
@@ -64,5 +44,4 @@ public class PurchaseInvoiceCommand {
     public String getShipToAddressCountry() { return shipToAddressCountry; }
 
     public void setShipToAddressCountry(String country) { this.shipToAddressCountry = country; }
-    
 }

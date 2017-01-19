@@ -82,6 +82,7 @@ public class ProductServiceImpl implements ProductService {
 
         return currentId;
     }
+
     @Override
     public void updateProduct(Product product) {
         log.info("ProductService - updateProduct", product.toString());
