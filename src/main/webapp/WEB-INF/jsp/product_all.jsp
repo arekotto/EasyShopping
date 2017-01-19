@@ -29,7 +29,8 @@
         ${productCommand.category}<br/>
         <c:choose>
             <c:when test="${isOnlyForUser}">
-                <a href="/product/remove?productId=${productCommand.id}" style="color:red">Remove</a><br/><br/>
+                <a href="/product/remove?productId=${productCommand.id}" style="color:red">Remove</a><br/>
+                <a href="/product/edit?productId=${productCommand.id}" style="color:blue">Edit</a><br/><br/>
             </c:when>
             <c:otherwise>
                 <a href="/cart/add?productId=${productCommand.id}">Add to cart</a><br/><br/>

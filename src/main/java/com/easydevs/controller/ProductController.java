@@ -52,6 +52,34 @@ public class ProductController {
         return "redirect:view/" + newProduct.getId();
     }
 
+    @RequestMapping("/edit")
+    public String showEditForm(Model model, @CookieValue("id") String userId, @RequestParam Integer productId) {
+
+        StandardProduct product = (StandardProduct) productService.getProductById(productId);
+        if (product.getAddedByUserId() == Long.parseLong(userId)) {
+            model.addAttribute("productCommand", new ProductCommand(product));
+            return "product_edit";
+        }
+        return "redirect:view/" + product.getId();
+    }
+
+    @RequestMapping("/save")
+    public String save(Model model,
+                       @CookieValue("id") String userId,
+                       @RequestParam Integer productId,
+                       @RequestParam Integer addedByUserId,
+                       @ModelAttribute("productCommand") ProductCommand productCommand) {
+        StandardProduct product = (StandardProduct) productService.getProductById(productId);
+        if (product.getAddedByUserId() == addedByUserId) {
+            product.setDescription(productCommand.getDescription());
+            product.setManufacturer(productCommand.getManufacturer());
+            product.setPrice(productCommand.getPrice());
+            productService.updateProduct(product);
+            model.addAttribute("productCommand", new ProductCommand(product));
+        }
+        return "redirect:view/" + product.getId();
+    }
+
     @RequestMapping("/view/{productId}")
     public String view(Model model, @PathVariable Long productId) {
 
