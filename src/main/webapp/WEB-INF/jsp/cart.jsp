@@ -16,18 +16,22 @@
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
-    <div class="body" style="color:white;background-color:#333;height:300px;opacity: 0.8;padding:15px;">
+    <div class="body">
 
+        <div class="inner-body">
     <c:forEach var="productCommand" items="${productCommandList}">
         <a href="/product/view/${productCommand.id}">
             Product:
         </a><br/>
-        ${productCommand.name}<br/>
-        ${productCommand.description}<br/>
-        ${productCommand.manufacturer}<br/>
-        <a href="/cart/remove?productId=${productCommand.id}" style="color:red">Remove</a><br/><br/>
+        Name: ${productCommand.name}<br/>
+        Description: ${productCommand.description}<br/>
+        Manufacturer: ${productCommand.manufacturer}<br/>
+        <form action="/cart/remove?productId=${productCommand.id}">
+            <input style="color: red;"type="submit" value="Remove" />
+        </form>
 
     </c:forEach>
+        </div>
 </div>
 <div class="footer" style="text-align: center;background: black;color:white;font-family:'Helvetica CE 35 Thin';">
     <jsp:include page="${request.contextPath}/footer"></jsp:include>
