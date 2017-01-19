@@ -15,20 +15,22 @@
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
-    <div class="body" style="color:white;background-color:#333;height:300px;opacity: 0.8;padding:15px;">
-        <div style="height:100%;width:100%;background:black;opacity: 0.9;-webkit-border-radius: 10px;
-        -moz-border-radius: 10px;
-        border-radius: 10px;">
-            Name: ${productCommand.name} <br/>
-            Description: ${productCommand.description} <br/>
-            Manufacturer: ${productCommand.manufacturer} <br/>
-            Added by user: ${productCommand.createdByUserId} <br/>
-            <form action="/cart/add?productId=${productCommand.id}">
-                <input type="submit" value="Add to cart" />
-            </form>
+    <div class="body" style="overflow: hidden">
+        <div class="inner-body" style="padding:20px;overflow: hidden">
+            <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
 
+                Name: ${productCommand.name} <br/>
+                Description: ${productCommand.description} <br/>
+                Manufacturer: ${productCommand.manufacturer} <br/>
+                Added by user: ${productCommand.createdByUserId} <br/>
+                Price: ${productCommand.price} <br/>
+                <form action="/cart/add?productId=${productCommand.id}">
+                    <input type="submit" value="Add to cart"/>
+                </form>
+            </div>
         </div>
     </div>
+
     <div class="footer" style="text-align: center;background: black;color:white;font-family:'Helvetica CE 35 Thin';">
         <jsp:include page="${request.contextPath}/footer"></jsp:include>
     </div>
