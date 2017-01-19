@@ -18,7 +18,7 @@
     </div>
     <div class="body">
         <div class="inner-body">
-        <form:form style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; "
+        <form:form style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px;"
                    action="${request.contextPath}/product/create"
                    commandName="productCreationCommand">
                 <table>

@@ -42,6 +42,12 @@ public class PurchaseInvoiceController {
     @Autowired
     CartService cartService;
 
+    @RequestMapping("/createForm")
+    public String showCreateNewForm(Model model) {
+        model.addAttribute("purchaseInvoiceCreationCommand", new PurchaseInvoiceCreationCommand());
+        return "purchase_create";
+    }
+
     @RequestMapping("/create")
     public String create(Model model,
                          @CookieValue("id") String userId,

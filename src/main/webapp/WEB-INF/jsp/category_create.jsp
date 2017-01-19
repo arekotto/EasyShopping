@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: ibm
@@ -16,28 +17,34 @@
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
     <div class="body">
+        <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
+            <h3 class="text-bold text-info">
+                Category List
+            </h3>
+        </div>
+        <form:form style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px;"
+                action="${request.contextPath}/category/create" commandName="categoryCreationCommand">
+            <table>
+                <tr>
+                    <td>
+                        <form:label path="name">Name:</form:label>
 
-        <form:form action="${request.contextPath}/category/create"
-                   commandName="categoryCreationCommand">
-            <fieldset>
+                    </td>
+                    <td>
+                        <form:input path="name"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form:label path="description">Description:</form:label>
 
-                <p>
-                    <form:label path="name">Category Name:</form:label>
-                    <form:input path="name"/>
-                    <br>
-                </p>
-                <p>
-                    <form:label path="description">Description:</form:label>
-                    <form:input path="description"/>
-                    <br>
-                </p>
-                <p>
-                    <input type="submit" class="formbutton" value="Create">
-
-                    <br>
-                </p>
-
-            </fieldset>
+                    </td>
+                    <td>
+                        <form:textarea path="description" rows="5"/>
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" class="formbutton" value="Create">
         </form:form>
     </div>
     <div class="footer">
