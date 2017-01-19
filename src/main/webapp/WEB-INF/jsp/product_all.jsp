@@ -51,15 +51,18 @@
                             <td>
                                 <c:choose>
                                     <c:when test="${isOnlyForUser}">
-                                        <form action="/product/remove?productId=${productCommand.id}">
+                                        <form action="/product/remove">
+                                            <input type="hidden" name="productId" value="${productCommand.id}" />
                                             <input type="submit" value="Remove"  style="color:red;"/>
                                         </form>
-                                        <form action="/product/edit?productId=${productCommand.id}">
+                                        <form action="/product/edit">
+                                            <input type="hidden" name="productId" value="${productCommand.id}" />
                                             <input type="submit" value="Edit" style="color:darkgoldenrod"/>
                                         </form>
                                     </c:when>
                                     <c:otherwise>
-                                        <form action="/cart/add?productId=${productCommand.id}">
+                                        <form action="/cart/add">
+                                            <input type="hidden" name="productId" value="${productCommand.id}" />
                                             <input type="submit" value="Add to cart"/>
                                         </form>
                                         <%--<a href="/cart/add?productId=${productCommand.id}">Add to cart</a>--%>

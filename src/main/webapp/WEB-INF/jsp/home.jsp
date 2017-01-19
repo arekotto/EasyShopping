@@ -17,9 +17,23 @@
     </div>
     <div class="body">
         <div class="inner-body">
-    </div>
+            <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
+                <h3 class="text-bold text-info">
+                    Welcome to Easy Shopping!
+                </h3>
+            </div>
+            <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
+                <h5 class="text-bold text-info">
+                    It's a web marketplace allowing you to add and sell your products and buy products
+                    from other users.
+                </h5>
+            </div>
+        </div>
     </div>
     <div class="footer">
+            <h6 class="text-bold text-info">
+                Website still requires some final polishing and adjustments.
+            </h6>
         <jsp:include page="${request.contextPath}/footer"></jsp:include>
     </div>
 </div>

@@ -19,47 +19,54 @@
     <div class="body">
         <div class="inner-body">
             <div style="min-height:30px;"></div>
-            <form:form cssStyle="width:50%;margin:0px auto;" action="${request.contextPath}/user/save"
-                       commandName="userStandardCommand">
-                <table>
-                    <tr>
-                        <td>
-                            <form:label path="name">Name:</form:label>
+            <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
+                <h3 class="text-bold text-info">
+                    Edit user info
+                </h3>
+            </div>
+            <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
+                <form:form cssStyle="width:50%;margin:0px auto;" action="${request.contextPath}/user/save"
+                           commandName="userStandardCommand">
+                    <table>
+                        <tr>
+                            <td>
+                                <form:label path="name">Name:</form:label>
 
-                        </td>
-                        <td>
-                            <form:input path="name"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <form:label path="street">Street:</form:label>
-                        </td>
-                        <td>
-                            <form:input path="street"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <form:label path="city">City:</form:label>
+                            </td>
+                            <td>
+                                <form:input path="name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <form:label path="street">Street:</form:label>
+                            </td>
+                            <td>
+                                <form:input path="street"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <form:label path="city">City:</form:label>
 
-                        </td>
-                        <td>
-                            <form:input path="city"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <form:label path="country">Country:</form:label>
-                        </td>
-                        <td>
-                            <form:input path="country"/>
-                        </td>
-                    </tr>
-                </table>
-                <input type="submit" class="formbutton" value="Save">
-                </fieldset>
-            </form:form>
+                            </td>
+                            <td>
+                                <form:input path="city"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <form:label path="country">Country:</form:label>
+                            </td>
+                            <td>
+                                <form:input path="country"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="submit" class="formbutton" value="Save">
+                </form:form>
+            </div>
+
             <div style="min-height:30px;"></div>
         </div>
     </div>

@@ -79,7 +79,7 @@ public class PurchaseInvoiceController {
 
         PurchaseInvoice invoice = purchaseInvoiceService.getPurchaseInvoiceById(invoiceId);
         if (invoice != null) {
-            model.addAttribute("productCommand", new PurchaseInvoiceCommand(invoice));
+            model.addAttribute("purchaseInvoiceCommand", new PurchaseInvoiceCommand(invoice));
             return "invoice_view";
 
         }

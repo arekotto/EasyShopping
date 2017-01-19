@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: arekotto
@@ -20,15 +21,60 @@
     <div class="body">
         <div class="inner-body">
             <div>
-                Email: ${userStandardCommand.email} <br/>
-                Name: ${userStandardCommand.name} <br/>
-                Country: ${userStandardCommand.country} <br/>
-                City: ${userStandardCommand.city} <br/>
-                Street: ${userStandardCommand.street} <br/>
+                <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
+                    <h3 class="text-bold text-info">
+                        User info
+                    </h3>
+                </div>
+                <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
+                    <form:form cssStyle="width:50%;margin:0px auto;" action="${request.contextPath}/user/edit"
+                               commandName="userStandardCommand">
+                        <%--Email: ${userStandardCommand.email}--%>
+                        <%--Name: ${userStandardCommand.name}--%>
+                        <%--Country: ${userStandardCommand.country}--%>
+                        <%--City: ${userStandardCommand.city}--%>
+                        <%--Street: ${userStandardCommand.street} <br/>--%>
+                        <table>
+                            <tr>
+                                <td>
+                                    <form:label path="name">Name:</form:label>
 
-                <form action="${request.contextPath}/user/edit">
-                    <input type="submit" value="Edit Info" />
-                </form>
+                                </td>
+                                <td>
+                                    <form:input path="name" disabled="true"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <form:label path="street">Street:</form:label>
+                                </td>
+                                <td>
+                                    <form:input path="street" disabled="true"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <form:label path="city">City:</form:label>
+
+                                </td>
+                                <td>
+                                    <form:input path="city" disabled="true"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <form:label path="country">Country:</form:label>
+                                </td>
+                                <td>
+                                    <form:input path="country" disabled="true"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <form action="${request.contextPath}/user/edit">
+                            <input type="submit" value="Edit Info"/>
+                        </form>
+                    </form:form>
+                </div>
             </div>
         </div>
     </div>

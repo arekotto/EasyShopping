@@ -26,7 +26,8 @@
         Name: ${productCommand.name}<br/>
         Description: ${productCommand.description}<br/>
         Manufacturer: ${productCommand.manufacturer}<br/>
-        <form action="/cart/remove?productId=${productCommand.id}">
+        <form action="/cart/remove">
+            <input type="hidden" name="productId" value="${productCommand.id}" />
             <input style="color: red;"type="submit" value="Remove" />
         </form>
 
