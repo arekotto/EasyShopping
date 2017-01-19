@@ -16,7 +16,7 @@
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
-    <div class="body" style="color:white";background-color:#333;height:300px;opacity: 0.8;padding:15px;">
+    <div class="body" style="color:white;background-color:#333;height:300px;opacity: 0.8;padding:15px;">
 
     <c:forEach var="productCommand" items="${productCommandList}">
         <a href="/product/view/${productCommand.id}">
