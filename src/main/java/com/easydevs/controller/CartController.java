@@ -40,11 +40,8 @@ public class CartController {
             for (Long productId : userCart.getProductIdList()) {
                 StandardProduct product = (StandardProduct) productService.getProductById(productId);
                 productCommandList.add(new ProductCommand(product));
-
             }
         }
-
-
         model.addAttribute("productCommandList", productCommandList);
         return "cart";
     }

@@ -17,7 +17,10 @@
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
     <div class="body">
-        <div class="inner-body">
+<<<<<<< HEAD
+=======
+
+>>>>>>> 40cdd21033a0a2654d67800b4ec46fa759a6ee39
         <div class="inner-body">
     <c:forEach var="productCommand" items="${productCommandList}">
         <a href="/product/view/${productCommand.id}">
@@ -26,8 +29,7 @@
         Name: ${productCommand.name}<br/>
         Description: ${productCommand.description}<br/>
         Manufacturer: ${productCommand.manufacturer}<br/>
-        <form action="/cart/remove">
-            <input type="hidden" name="productId" value="${productCommand.id}" />
+        <form action="/cart/remove?productId=${productCommand.id}">
             <input style="color: red;"type="submit" value="Remove" />
         </form>
 
