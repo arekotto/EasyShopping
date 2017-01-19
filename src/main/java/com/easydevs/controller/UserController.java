@@ -83,8 +83,8 @@ public class UserController {
 
             userService.updateUser(newUser);
 
-            response.addCookie(getCookie("id", String.valueOf(newUser.getId())));
-            response.addCookie(getCookie("token", newUser.getToken()));
+            response.addCookie(createNewCookie("id", String.valueOf(newUser.getId())));
+            response.addCookie(createNewCookie("token", newUser.getToken()));
             return "redirect:homepage";
         }
 
@@ -94,7 +94,27 @@ public class UserController {
         userRegistrationCommand.setIsEmailIncorrect(isEmailFormatIncorrect);
         redirectAttributes.addFlashAttribute("userRegistrationCommand", userRegistrationCommand);
         return "redirect:register";
+    }
 
+    @RequestMapping("/edit")
+    public String showEdit(Model model, @CookieValue(value = "id") String userIdCookie) {
+        StandardUser user = (StandardUser) userService.getUserById(Long.parseLong(userIdCookie));
+        model.addAttribute("userStandardCommand", new UserStandardCommand(user));
+        return "/user_edit";
+    }
+
+    @RequestMapping("/save")
+    public String save(@CookieValue(value = "id") String userIdCookie,
+                       @ModelAttribute("userStandardCommand") UserStandardCommand userStandardCommand) {
+
+        StandardUser user = (StandardUser) userService.getUserById(Long.parseLong(userIdCookie));
+        user.setCity(userStandardCommand.getCity());
+        user.setCountry(userStandardCommand.getCountry());
+        user.setStreet(userStandardCommand.getStreet());
+        user.setName(userStandardCommand.getName());
+        userService.updateUser(user);
+
+        return "redirect:homepage";
     }
 
     @RequestMapping("/homepage")
@@ -106,9 +126,6 @@ public class UserController {
 
         Long userId = new Long(userIdCookie);
         StandardUser user = (StandardUser) userService.getUserById(userId);
-
-
-
         model.addAttribute("userStandardCommand", new UserStandardCommand(user));
 
         return "/user_homepage";
@@ -119,8 +136,6 @@ public class UserController {
                             HttpServletResponse response,
                             @CookieValue(value = "id", defaultValue = "") String userIdCookie,
                             @CookieValue(value = "token", defaultValue = "") String userTokenCookie) {
-
-
 
         if(!model.containsAttribute("userLoginCommand")) {
             model.addAttribute("userLoginCommand", new UserLoginCommand());
@@ -143,8 +158,8 @@ public class UserController {
             user.setTokenValidationStamp(null);
             userService.updateUser(user);
         }
-        response.addCookie(getCookie("id", null));
-        response.addCookie(getCookie("token", null));
+        response.addCookie(createNewCookie("id", null));
+        response.addCookie(createNewCookie("token", null));
         return "redirect:login";
     }
 
@@ -166,8 +181,8 @@ public class UserController {
 
             userService.updateUser(user);
 
-            response.addCookie(getCookie("id", String.valueOf(user.getId())));
-            response.addCookie(getCookie("token", user.getToken()));
+            response.addCookie(createNewCookie("id", String.valueOf(user.getId())));
+            response.addCookie(createNewCookie("token", user.getToken()));
 
             return "redirect:homepage";
         } else {
@@ -177,19 +192,9 @@ public class UserController {
         }
     }
 
-    private Cookie getCookie(String key, String value) {
+    private Cookie createNewCookie(String key, String value) {
         Cookie cookie = new Cookie(key, value);
         cookie.setPath("/");
         return cookie;
     }
-
-//    private HeaderCommand getHeaderCommand(StandardUser user) {
-//        HeaderCommand headerCommand = new HeaderCommand();
-//        headerCommand.setIsLoggedIn(true);
-//        headerCommand.setUserName(user.getName());
-//        headerCommand.setUserEmail(user.getEmail());
-//        return headerCommand;
-//    }
-
-
 }

@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Register</title>
 </head>
 <body>
 <div class="container">
@@ -85,7 +85,7 @@
                     </td>
                 </tr>
             </table>
-            <input type="submit" class="formbutton" value="Save">
+            <input type="submit" class="formbutton" value="Create user">
             </fieldset>
         </form:form>
             <div style="min-height:30px;"></div>

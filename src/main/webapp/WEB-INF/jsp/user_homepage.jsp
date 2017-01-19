@@ -20,11 +20,15 @@
     <div class="body">
         <div class="inner-body">
             <div>
-                Name: ${userStandardCommand.name} <br/>
                 Email: ${userStandardCommand.email} <br/>
+                Name: ${userStandardCommand.name} <br/>
                 Country: ${userStandardCommand.country} <br/>
                 City: ${userStandardCommand.city} <br/>
                 Street: ${userStandardCommand.street} <br/>
+
+                <form action="${request.contextPath}/user/edit">
+                    <input type="submit" value="Edit Info" />
+                </form>
             </div>
         </div>
     </div>

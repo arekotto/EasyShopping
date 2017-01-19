@@ -27,6 +27,8 @@ public class AuthFilter extends OncePerRequestFilter{
     private final List<String> filteredUrls = new ArrayList<String>() {{
         add("/user/logout");
         add("/user/homepage");
+        add("/user/edit");
+        add("/user/save");
         add("/product/createForm");
         add("/product/create");
         add("/product/remove");

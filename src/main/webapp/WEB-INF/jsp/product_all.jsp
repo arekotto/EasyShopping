@@ -16,31 +16,55 @@
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
-    <div class="body" style="color:white" ;background-color:#333;height:300px;opacity: 0.8;padding:15px;
-    ">
+    <div class="body">
+        <div class="inner-body">
 
-    <c:forEach var="productCommand" items="${productCommandList}">
-        <a href="/product/view/${productCommand.id}">
-            Product:
-        </a><br/>
-        ${productCommand.name}<br/>
-        ${productCommand.description}<br/>
-        ${productCommand.manufacturer}<br/>
-        ${productCommand.category}<br/>
-        <c:choose>
-            <c:when test="${isOnlyForUser}">
-                <a href="/product/remove?productId=${productCommand.id}" style="color:red">Remove</a><br/>
-                <a href="/product/edit?productId=${productCommand.id}" style="color:blue">Edit</a><br/><br/>
-            </c:when>
-            <c:otherwise>
-                <a href="/cart/add?productId=${productCommand.id}">Add to cart</a><br/><br/>
-            </c:otherwise>
-        </c:choose>
-    </c:forEach>
-</div>
-<div class="footer" style="text-align: center;background: black;color:white;font-family:'Helvetica CE 35 Thin';">
-    <jsp:include page="${request.contextPath}/footer"></jsp:include>
-</div>
+            <h3 class="text-bold text-info">
+                Product List
+            </h3>
+            <table>
+                <tbody>
+                <tr>
+                    <td>Name</td>
+                    <td>Description</td>
+                    <td>Manufacturer</td>
+                    <td>Category</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <c:forEach var="productCommand" items="${productCommandList}">
+
+                <tr>
+                    <td>${productCommand.name}<td/>
+                    <td>${productCommand.description}<td/>
+                    <td>${productCommand.manufacturer}<td/>
+                    <td>${productCommand.category}<td/>
+                    <td>
+                        <a href="/product/view/${productCommand.id}">
+                            Details:
+                        </a>
+                    </td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${isOnlyForUser}">
+                                <a href="/product/remove?productId=${productCommand.id}" style="color:red">Remove</a>
+                                <a href="/product/edit?productId=${productCommand.id}" style="color:blue">Edit</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="/cart/add?productId=${productCommand.id}">Add to cart</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <%--<div class="footer" style="text-align: center;background: black;color:white;font-family:'Helvetica CE 35 Thin';">--%>
+        <%--<jsp:include page="${request.contextPath}/footer"></jsp:include>--%>
+    <%--</div>--%>
 
 </div>
 </body>
