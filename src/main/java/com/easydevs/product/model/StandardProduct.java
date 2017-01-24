@@ -12,6 +12,7 @@ public class StandardProduct implements Product {
     private String description;
     private double price;
     private long categoryId;
+    private boolean hasImage = false;
 
     public StandardProduct(){
 
@@ -65,4 +66,12 @@ public class StandardProduct implements Product {
     public long getCategory() { return categoryId; }
 
     public void setCategory(long category) { this.categoryId = category; }
+
+    public boolean isHasImage() {
+        return hasImage;
+    }
+
+    public void setHasImage(boolean hasImage) {
+        this.hasImage = hasImage;
+    }
 }

@@ -14,6 +14,7 @@ public class ProductCommand {
     private String manufacturer;
     private double price;
     private long categoryId;
+    private boolean hasImage;
 
     public ProductCommand() {
     }
@@ -26,6 +27,7 @@ public class ProductCommand {
         manufacturer = standardProduct.getManufacturer();
         categoryId = standardProduct.getCategory();
         price = standardProduct.getPrice();
+        hasImage = standardProduct.isHasImage();
     }
 
 
@@ -83,5 +85,13 @@ public class ProductCommand {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public boolean isHasImage() {
+        return hasImage;
+    }
+
+    public void setHasImage(boolean hasImage) {
+        this.hasImage = hasImage;
     }
 }

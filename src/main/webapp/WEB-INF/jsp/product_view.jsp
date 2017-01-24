@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Arek
@@ -24,7 +25,9 @@
                 Manufacturer: ${productCommand.manufacturer} <br/>
                 Added by user: ${productCommand.createdByUserId} <br/>
                 Price: ${productCommand.price} <br/>
-                Image: <img src="/product/image/${productCommand.id}"/>
+                <c:if test="${productCommand.hasImage}">
+                    Image: <img src="/product/image/${productCommand.id}"/>
+                </c:if>
                 <form action="/cart/add?productId=${productCommand.id}">
                     <input type="submit" value="Add to cart"/>
                 </form>

@@ -19,7 +19,9 @@
     <div class="body">
         <div class="inner-body">
             <form:form cssStyle="width:50%;margin:0px auto;" action="${request.contextPath}/product/save?productId=${productCommand.id}&addedByUserId=${productCommand.createdByUserId}"
-                       commandName="productCommand">
+                       commandName="productCommand"
+                       method="post"
+                       enctype="multipart/form-data">
                 <table>
 
                     <tr>
@@ -64,7 +66,13 @@
                             <form:input type="number" step="0.01" path="price"/>
                         </td>
                     </tr>
+
                 </table>
+                <p>
+                    <label>Upload an Image:</label>
+                    <input type="file" name="image" id="fileToUpload">
+                    <br>
+                </p>
                 <input type="submit" class="formbutton" value="Save Changes">
             </form:form>
         </div>

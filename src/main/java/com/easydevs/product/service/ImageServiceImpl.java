@@ -54,4 +54,9 @@ public class ImageServiceImpl implements ImageService {
         }
     }
 
+    @Override
+    public void removeProductImage(long productId) {
+        Query query = new Query(Criteria.where("id").is(productId));
+        mongoTemplate.findAndRemove(query, ProductImage.class);
+    }
 }

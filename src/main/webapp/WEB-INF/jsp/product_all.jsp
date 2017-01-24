@@ -35,25 +35,29 @@
                     <c:forEach var="productCommand" items="${productCommandList}">
 
                         <tr>
+                            <c:if test="${productCommand.hasImage}">
+                                <td>
+                                    <img src="/product/image/${productCommand.id}"/>
+                                <td/>
+                            </c:if>
+
                             <td>
                                     ${productCommand.name}
-                            <td/>
+                            </td>
                             <td>
                                     ${productCommand.description}
-                            <td/>
+                            </td>
                             <td>
                                     ${productCommand.manufacturer}
-                            <td/>
+                            </td>
                             <td>
                                     ${productCommand.category}
-                            <td/>
+                            </td>
                             <td>
                                 <form action="/product/view/${productCommand.id}">
                                     <input type="submit" value="Details"/>
                                 </form>
-                                    <%--<a href="/product/view/${productCommand.id}">--%>
-                                    <%--Details:--%>
-                                    <%--</a>--%>
+
                             </td>
 
                             <c:choose>

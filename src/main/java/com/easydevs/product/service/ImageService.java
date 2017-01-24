@@ -10,4 +10,6 @@ public interface ImageService {
     void updateProductImage(ProductImage productImage);
 
     ProductImage getProductImage(long productId);
+
+    void removeProductImage(long productId);
 }

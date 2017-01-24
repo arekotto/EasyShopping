@@ -65,7 +65,6 @@ public class ProductController {
         newProduct.setAddedByUserId(Long.parseLong(userId));
         newProduct.setCategory(productCreationCommand.getCategory());
         newProduct.setPrice(productCreationCommand.getPrice());
-        productService.updateProduct(newProduct);
 
         MultipartFile image = request.getFile("image");
 
@@ -74,7 +73,10 @@ public class ProductController {
                 || image.getContentType().equals("image/png"))) {
 
             saveImage(image, newProduct.getId());
+            newProduct.setHasImage(true);
         }
+
+        productService.updateProduct(newProduct);
 
         return "redirect:view/" + newProduct.getId();
     }
@@ -105,7 +107,6 @@ public class ProductController {
             product.setDescription(productCommand.getDescription());
             product.setManufacturer(productCommand.getManufacturer());
             product.setPrice(productCommand.getPrice());
-            productService.updateProduct(product);
 
             MultipartFile image = request.getFile("image");
 
@@ -114,7 +115,10 @@ public class ProductController {
                     || image.getContentType().equals("image/png"))) {
 
                 saveImage(image, productId);
+                product.setHasImage(true);
+
             }
+            productService.updateProduct(product);
 
             model.addAttribute("productCommand", new ProductCommand(product));
         }
@@ -162,6 +166,7 @@ public class ProductController {
         StandardProduct product = (StandardProduct) productService.getProductById(productId);
         if (Long.parseLong(userId) == product.getAddedByUserId()) {
             productService.removeProduct(product);
+            imageService.removeProductImage(productId);
             return "redirect:user";
 
         }
