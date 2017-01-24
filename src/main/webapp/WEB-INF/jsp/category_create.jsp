@@ -12,17 +12,16 @@
     <title>Add new category</title>
 </head>
 <body>
-<div id="container">
+<div class="container">
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
-    <div class="body">
-        <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
-            <h3 class="text-bold text-info">
-                Category List
-            </h3>
-        </div>
-        <form:form style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px;"
+    <div class="torso">
+        <div class="inner-torso">
+            <div class="title">
+                Add category
+            </div>
+        <form:form style="background:white;padding:12px;"
                 action="${request.contextPath}/category/create" commandName="categoryCreationCommand">
             <table>
                 <tr>
@@ -46,6 +45,7 @@
             </table>
             <input type="submit" class="formbutton" value="Create">
         </form:form>
+    </div>
     </div>
     <div class="footer">
         <jsp:include page="${request.contextPath}/footer"></jsp:include>

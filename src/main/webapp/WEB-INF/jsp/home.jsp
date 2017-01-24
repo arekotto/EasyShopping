@@ -15,25 +15,44 @@
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
-    <div class="body">
-        <div class="inner-body">
-            <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
-                <h3 class="text-bold text-info">
-                    Welcome to Easy Shopping!
-                </h3>
+    <div class="torso">
+        <div class="inner-torso">
+            <div class="news">
+                <div class="news-header">
+                    Radek Potyka kicked out of University of Silesia.
+                </div>
+                <div class="news-body">
+                    Integer fermentum, enim nec dignissim bibendum, justo arcu finibus nisi, ac sollicitudin ante sapien aliquet diam. Aliquam congue augue a elit faucibus sodales. Nullam hendrerit lacus quis nisl aliquam rhoncus. Aliquam porta vel nibh commodo ultricies. Nullam vel enim risus. Nullam sodales erat justo, eu tempus diam vehicula quis. Donec sed semper nulla. Integer egestas elementum tellus, a gravida lorem porttitor quis. Vestibulum vitae tellus eu lacus ultricies volutpat vel vel ante. In quis volutpat diam. Nullam at nisi at lacus porttitor pretium.
+                </div>
+                <div class="news-footer">
+                    Anna Maria Wesołowska 16.03.2012
+                </div>
             </div>
-            <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
-                <h5 class="text-bold text-info">
-                    It's a web marketplace allowing you to add and sell your products and buy products
-                    from other users.
-                </h5>
+            <div class="news">
+                <div class="news-header">
+                    New promotion.
+                </div>
+                <div class="news-body">
+                    You underestimated my power Mr Ferdek.
+                </div>
+                <div class="news-footer">
+                    Grubas One 15.03.2012
+                </div>
+            </div>
+            <div class="news">
+                <div class="news-header">
+                    Welcome to our online shop!
+                </div>
+                <div class="news-body">
+                    Quisque vitae tellus dignissim, consectetur metus eu, imperdiet magna. Morbi eros augue, volutpat vel tincidunt a, consequat eget risus. Praesent eu diam ligula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas ultricies iaculis accumsan. Aliquam accumsan ex leo, nec accumsan mauris rhoncus id. Donec odio lectus, vehicula vitae nibh ut, vulputate lobortis erat. Ut blandit sagittis velit. Sed pharetra lorem orci, nec auctor dolor ultrices vel. Cras ut vulputate sapien. Praesent porta sollicitudin cursus. Donec ultrices fringilla justo quis porttitor. Fusce nec gravida tortor.
+                </div>
+                <div class="news-footer">
+                    Anna Maria Wesołowska 20.11.1337
+                </div>
             </div>
         </div>
     </div>
     <div class="footer">
-            <h6 class="text-bold text-info">
-                Website still requires some final polishing and adjustments.
-            </h6>
         <jsp:include page="${request.contextPath}/footer"></jsp:include>
     </div>
 </div>

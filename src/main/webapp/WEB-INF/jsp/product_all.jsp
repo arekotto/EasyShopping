@@ -16,10 +16,9 @@
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
-    <div class="body" style="overflow: hidden;">
-        <div class="inner-body" style="padding:20px;">
-            <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
-                <h3 class="text-bold text-info">
+    <div class="torso">
+        <div class="inner-torso">
+            <div class="title">
                     <c:choose>
                         <c:when test="${isOnlyForUser}">
                             My Products
@@ -28,73 +27,69 @@
                             Product List
                         </c:otherwise>
                     </c:choose>
-                </h3>
             </div>
-            <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
-                <table>
-                    <c:forEach var="productCommand" items="${productCommandList}">
-
-                        <tr>
+        <c:forEach var="productCommand" items="${productCommandList}">
+            <div class="item">
+                <table style="width:250px;">
+                    <tr>
+                        <td>
                             <c:if test="${productCommand.hasImage}">
-                                <td>
-                                    <img src="/product/image/${productCommand.id}"/>
-                                <td/>
+                                <img style="max-width:150px;" src="/product/image/${productCommand.id}"/>
                             </c:if>
-
-                            <td>
-                                    ${productCommand.name}
-                            </td>
-                            <td>
-                                    ${productCommand.description}
-                            </td>
-                            <td>
-                                    ${productCommand.manufacturer}
-                            </td>
-                            <td>
-                                    ${productCommand.category}
-                            </td>
-                            <td>
-                                <form action="/product/view/${productCommand.id}">
-                                    <input type="submit" value="Details"/>
-                                </form>
-
-                            </td>
-
+                        </td>
+                        <td style="vertical-align:top; padding:8px;">
+                            Name: </br>
+                            ${productCommand.name}</br>
+                            Description: </br>
+                            ${productCommand.description}</br>
+                            Manufacturer: </br>
+                                ${productCommand.manufacturer}</br>
+                            Category: </br>
+                                ${productCommand.category}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align:top; padding:8px;" align="center">
+                            <form action="/product/view/${productCommand.id}">
+                                <input type="submit" value="Details"/>
+                            </form>
+                        </td>
+                        <td style="vertical-align:top; padding:8px;" align="center">
                             <c:choose>
-                                <c:when test="${isOnlyForUser}">
-                                    <td>
-                                        <form action="/product/remove">
-                                            <input type="hidden" name="productId" value="${productCommand.id}"/>
-                                            <input type="submit" value="Remove" style="color:red;"/>
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <form action="/product/edit">
-                                            <input type="hidden" name="productId" value="${productCommand.id}"/>
-                                            <input type="submit" value="Edit" style="color:darkgoldenrod"/>
-                                        </form>
-                                    </td>
-                                </c:when>
-                                <c:otherwise>
-                                    <td>
-                                        <form action="/cart/add">
-                                            <input type="hidden" name="productId" value="${productCommand.id}"/>
-                                            <input type="submit" value="Add to cart"/>
-                                        </form>
-                                    </td>
-                                    <%--<a href="/cart/add?productId=${productCommand.id}">Add to cart</a>--%>
-                                </c:otherwise>
-                            </c:choose>
-                        </tr>
-                    </c:forEach>
+                            <c:when test="${isOnlyForUser}">
+                        <span>
+                            <form action="/product/remove">
+                                <input type="hidden" name="productId" value="${productCommand.id}"/>
+                                <input type="submit" value="Remove" style="color:red;"/>
+                            </form>
+                        </span>
+                        <span>
+                            <form action="/product/edit">
+                                <input type="hidden" name="productId" value="${productCommand.id}"/>
+                                <input type="submit" value="Edit" style="color:darkgoldenrod"/>
+                            </form>
+                        </span>
+                        </c:when>
+                        <c:otherwise>
+                            <span>
+                                <form action="/cart/add">
+                                    <input type="hidden" name="productId" value="${productCommand.id}"/>
+                                    <input type="submit" value="Add to cart"/>
+                                </form>
+                            </span>
+                            <%--<a href="/cart/add?productId=${productCommand.id}">Add to cart</a>--%>
+                        </c:otherwise>
+                        </c:choose>
+                        </td>
+                    </tr>
                 </table>
             </div>
-
+        </c:forEach>
         </div>
     </div>
-    <%--<div class="footer" style="text-align: center;background: black;color:white;font-family:'Helvetica CE 35 Thin';">--%>
-    <%--<jsp:include page="${request.contextPath}/footer"></jsp:include>--%>
-    <%--</div>--%>
+    <div class="footer">
+    <jsp:include page="${request.contextPath}/footer"></jsp:include>
+    </div>
 
 </div>
 </body>

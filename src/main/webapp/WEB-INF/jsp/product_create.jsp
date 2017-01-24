@@ -16,14 +16,17 @@
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
-    <div class="body">
-        <div class="inner-body">
-        <form:form style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px;"
+    <div class="torso">
+        <div class="inner-torso">
+            <div class="title">
+                Add item
+            </div>
+        <form:form style="background:white; padding:8px;"
                    action="${request.contextPath}/product/create"
                    commandName="productCreationCommand"
                    method="post"
                    enctype="multipart/form-data">
-                <table>
+                <table cellpadding="2">
                     <tr>
                         <td>
                             <form:label path="name">Product Name:</form:label>

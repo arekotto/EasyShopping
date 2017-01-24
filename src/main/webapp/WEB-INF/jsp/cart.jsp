@@ -16,31 +16,40 @@
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
-    <div class="body" style="overflow: hidden">
-        <div class="inner-body" style="padding:20px;overflow: hidden">
-            <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
-                <h3 class="text-bold text-info">
-                    My Cart
-                </h3>
+    <div class="torso">
+        <div class="inner-torso">
+            <div class="title">
+                My cart
             </div>
-            <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
+            <div style="background: white;padding:12px;">
 
-                <c:forEach var="productCommand" items="${productCommandList}">
-                    Name: ${productCommand.name}<br/>
-                    Description: ${productCommand.description}<br/>
-                    Manufacturer: ${productCommand.manufacturer}<br/>
-                    Price: ${productCommand.price}<br/>
-                    <form action="/product/view/${productCommand.id}">
-                        <input type="submit" value="Details" />
-                    </form>
-                    <form action="/cart/remove">
-                        <input type="hidden" name="productId" value="${productCommand.id}"/>
-                        <input style="color: red;" type="submit" value="Remove From Cart"/>
-                    </form>
+                <table class="cart" style="width:100%">
+                    <tr>
+                        <th>Item name</th>
+                        <th>Description</th>
+                        <th>Manufacturer</th>
+                        <th>Price</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <c:forEach var="productCommand" items="${productCommandList}">
+                    <tr>
+                        <td>${productCommand.name}</td>
+                        <td>${productCommand.description}</td>
+                        <td>${productCommand.manufacturer}</td>
+                        <td>${productCommand.price}</td>
+                        <td><form action="/product/view/${productCommand.id}">
+                            <input type="submit" value="Details" />
+                        </form></td>
+                        <td>
+                            <form action="/cart/remove">
+                                <input type="hidden" name="productId" value="${productCommand.id}"/>
+                                <input style="color: red;" type="submit" value="Remove From Cart"/>
+                            </form></td>
+                    </tr>
+                    </c:forEach>
+                </table>
 
-                    <br/>
-                    <br/>
-                </c:forEach>
             </div>
         </div>
     </div>
