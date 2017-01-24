@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: arekotto
@@ -9,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>ALl Products</title>
+    <title>All Products</title>
 </head>
 <body>
 <div class="container">
@@ -31,6 +32,21 @@
                 </h3>
             </div>
             <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
+                <c:if test="${!isOnlyForUser}">
+
+                    <p>
+                        <form:form cssStyle="width:50%;margin:0px auto;"
+                                   action="${request.contextPath}/product/search"
+                                   commandName="searchCommand">
+
+                            <form:label path="searchedPhrase">Search:</form:label>
+                            <form:input path="searchedPhrase"/>
+
+                            <input type="submit" class="formbutton" value="Search">
+
+                        </form:form>
+                    </p>
+                </c:if>
                 <table>
                     <c:forEach var="productCommand" items="${productCommandList}">
 
@@ -45,10 +61,10 @@
                                     ${productCommand.name}
                             </td>
                             <td>
-                                    ${productCommand.description}
+                                    ${productCommand.manufacturer}
                             </td>
                             <td>
-                                    ${productCommand.manufacturer}
+                                    ${productCommand.description}
                             </td>
                             <td>
                                     ${productCommand.category}

@@ -129,12 +129,13 @@ public class ProductServiceImpl implements ProductService {
     public List<StandardProduct> search(String searchQuery, String searchCategory) {
         log.info("ProductService - searching products by query", searchQuery);
 
-//        BasicDBObject regexQuery = new BasicDBObject();
-//        regexQuery.put("name", new BasicDBObject("$regex", "^(?)" + Pattern.quote(searchQuery))
-//                .append("$options", "i"));
+        Query query = new Query(
+                new Criteria().orOperator(
+                        Criteria.where("name").regex(searchQuery, "i"),
+                        Criteria.where("manufacturer").regex(searchQuery, "i")
+                ));
 
-        Query query = new Query((Criteria.where(searchCategory).regex("^(?)" + Pattern.quote(searchQuery), "i")));
-        //DBCursor cursor = StandardProduct.class;//.find(regexQuery);
+
         return mongoTemplate.find(query, StandardProduct.class);
     }
 

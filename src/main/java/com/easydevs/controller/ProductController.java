@@ -2,6 +2,7 @@ package com.easydevs.controller;
 
 import com.easydevs.product.command.ProductCommand;
 import com.easydevs.product.command.ProductCreationCommand;
+import com.easydevs.product.command.SearchCommand;
 import com.easydevs.product.model.Category;
 import com.easydevs.product.model.ProductImage;
 import com.easydevs.product.model.StandardProduct;
@@ -16,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -188,13 +190,18 @@ public class ProductController {
 
     @RequestMapping("/all")
     public String viewAll(Model model) {
-        List<StandardProduct> standardProducts = productService.getAll();
-        List<ProductCommand> productCommandList = new ArrayList<>();
-        for (StandardProduct standardProduct : standardProducts) {
-            productCommandList.add(new ProductCommand(standardProduct));
+        if (!model.containsAttribute("productCommandList")) {
+            List<StandardProduct> standardProducts = productService.getAll();
+            List<ProductCommand> productCommandList = new ArrayList<>();
+            for (StandardProduct standardProduct : standardProducts) {
+                productCommandList.add(new ProductCommand(standardProduct));
+            }
+            model.addAttribute("productCommandList", productCommandList);
+            model.addAttribute("isOnlyForUser", false);
         }
-        model.addAttribute("productCommandList", productCommandList);
-        model.addAttribute("isOnlyForUser", false);
+
+        model.addAttribute("searchCommand", new SearchCommand());
+
         return "product_all";
     }
 
@@ -210,4 +217,22 @@ public class ProductController {
         model.addAttribute("productCommandList", productCommandList);
         return "product_all";
     }
+
+    @RequestMapping("/search")
+    public String search(Model model,
+                         @CookieValue("id") String userId,
+                         @ModelAttribute("searchCommand") SearchCommand searchCommand,
+                         RedirectAttributes redirectAttributes) {
+
+        List<StandardProduct> productList = productService.search(searchCommand.getSearchedPhrase(), "0");
+        List<ProductCommand> productCommandList = new ArrayList<>();
+        for (StandardProduct standardProduct : productList) {
+            productCommandList.add(new ProductCommand(standardProduct));
+        }
+        redirectAttributes.addFlashAttribute("productCommandList", productCommandList);
+        redirectAttributes.addFlashAttribute("isOnlyForUser", false);
+
+        return "redirect:all" ;
+    }
+
 }
