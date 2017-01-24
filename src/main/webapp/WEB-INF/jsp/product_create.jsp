@@ -20,7 +20,9 @@
         <div class="inner-body">
         <form:form style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px;"
                    action="${request.contextPath}/product/create"
-                   commandName="productCreationCommand">
+                   commandName="productCreationCommand"
+                   method="post"
+                   enctype="multipart/form-data">
                 <table>
                     <tr>
                         <td>
@@ -65,6 +67,11 @@
                         </td>
                     </tr>
                 </table>
+                <p>
+                    <label>Upload an Image:</label>
+                    <input type="file" name="image" id="fileToUpload">
+                    <br>
+                </p>
                     <input type="submit" class="formbutton" value="Create">
         </form:form>
         </div>

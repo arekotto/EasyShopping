@@ -3,14 +3,26 @@ package com.easydevs.controller;
 import com.easydevs.product.command.ProductCommand;
 import com.easydevs.product.command.ProductCreationCommand;
 import com.easydevs.product.model.Category;
+import com.easydevs.product.model.ProductImage;
 import com.easydevs.product.model.StandardProduct;
 import com.easydevs.product.service.CategoryService;
+import com.easydevs.product.service.ImageService;
 import com.easydevs.product.service.ProductService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +39,9 @@ public class ProductController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private ImageService imageService;
+
     @RequestMapping("/createForm")
     public String showCreateNewForm(Model model) {
         model.addAttribute("productCreationCommand", new ProductCreationCommand());
@@ -36,7 +51,10 @@ public class ProductController {
     @RequestMapping("/create")
     public String create(Model model,
                          @CookieValue("id") String userId,
-                         @ModelAttribute("productCreationCommand") ProductCreationCommand productCreationCommand) {
+                         @ModelAttribute("productCreationCommand") ProductCreationCommand productCreationCommand,
+                         MultipartHttpServletRequest request) throws IOException {
+
+
 
         StandardProduct newProduct = (StandardProduct) productService.createNewProduct();
         List<Category> categoryList = categoryService.getAll();
@@ -48,6 +66,15 @@ public class ProductController {
         newProduct.setCategory(productCreationCommand.getCategory());
         newProduct.setPrice(productCreationCommand.getPrice());
         productService.updateProduct(newProduct);
+
+        MultipartFile image = request.getFile("image");
+
+        if (!image.isEmpty()
+                && (image.getContentType().equals("image/jpeg")
+                || image.getContentType().equals("image/png"))) {
+
+            saveImage(image, newProduct.getId());
+        }
 
         return "redirect:view/" + newProduct.getId();
     }
@@ -63,21 +90,45 @@ public class ProductController {
         return "redirect:view/" + product.getId();
     }
 
-    @RequestMapping("/save")
+    @RequestMapping(value = "/save")
     public String save(Model model,
                        @CookieValue("id") String userId,
                        @RequestParam Integer productId,
                        @RequestParam Integer addedByUserId,
-                       @ModelAttribute("productCommand") ProductCommand productCommand) {
+                       @ModelAttribute("productCommand") ProductCommand productCommand,
+                       MultipartHttpServletRequest request) throws IOException {
+
+
+
         StandardProduct product = (StandardProduct) productService.getProductById(productId);
         if (product.getAddedByUserId() == addedByUserId) {
             product.setDescription(productCommand.getDescription());
             product.setManufacturer(productCommand.getManufacturer());
             product.setPrice(productCommand.getPrice());
             productService.updateProduct(product);
+
+            MultipartFile image = request.getFile("image");
+
+            if (!image.isEmpty()
+                    && (image.getContentType().equals("image/jpeg")
+                    || image.getContentType().equals("image/png"))) {
+
+                saveImage(image, productId);
+            }
+
             model.addAttribute("productCommand", new ProductCommand(product));
         }
         return "redirect:view/" + product.getId();
+    }
+
+    private void saveImage(MultipartFile image, long productId) throws IOException {
+        BufferedImage bufferedImage = ImageIO.read(image.getInputStream());
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, "jpg", os);
+        InputStream is = new ByteArrayInputStream(os.toByteArray());
+
+        ProductImage productImage = new ProductImage(productId, IOUtils.toByteArray(image.getInputStream()));
+        imageService.updateProductImage(productImage);
     }
 
     @RequestMapping("/view/{productId}")
@@ -91,6 +142,18 @@ public class ProductController {
         }
 
         return "";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/image/{productId}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] viewImage(Model model, @PathVariable Long productId) {
+
+        ProductImage image = imageService.getProductImage(productId);
+        if (image != null) {
+            return image.getBytes();
+        }
+
+        return new byte[0];
     }
 
     @RequestMapping("/remove")

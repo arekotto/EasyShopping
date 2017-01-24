@@ -24,6 +24,7 @@
                 Manufacturer: ${productCommand.manufacturer} <br/>
                 Added by user: ${productCommand.createdByUserId} <br/>
                 Price: ${productCommand.price} <br/>
+                Image: <img src="/product/image/${productCommand.id}"/>
                 <form action="/cart/add?productId=${productCommand.id}">
                     <input type="submit" value="Add to cart"/>
                 </form>
