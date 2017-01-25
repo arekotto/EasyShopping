@@ -16,18 +16,15 @@
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
-    <div class="body">
-        <div class="inner-body">
-            <div style="min-height:30px;"></div>
-            <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
-                <h3 class="text-bold text-info">
+    <div class="torso">
+        <div class="inner-torso">
+            <div class="title">
                     Edit user info
-                </h3>
             </div>
-            <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
+            <div style="background:white; ">
                 <form:form cssStyle="width:50%;margin:0px auto;" action="${request.contextPath}/user/save"
                            commandName="userStandardCommand">
-                    <table>
+                    <table class="ncart">
                         <tr>
                             <td>
                                 <form:label path="name">Name:</form:label>
@@ -63,11 +60,9 @@
                             </td>
                         </tr>
                     </table>
-                    <input type="submit" class="formbutton" value="Save">
+                    <input style="margin-bottom: 10px;" type="submit" class="formbutton" value="Save">
                 </form:form>
             </div>
-
-            <div style="min-height:30px;"></div>
         </div>
     </div>
     <div class="footer">

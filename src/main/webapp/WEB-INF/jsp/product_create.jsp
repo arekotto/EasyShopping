@@ -26,7 +26,7 @@
                    commandName="productCreationCommand"
                    method="post"
                    enctype="multipart/form-data">
-                <table cellpadding="2">
+                <table class="ncart">
                     <tr>
                         <td>
                             <form:label path="name">Product Name:</form:label>

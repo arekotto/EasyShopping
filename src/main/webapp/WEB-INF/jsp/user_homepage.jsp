@@ -18,15 +18,12 @@
             <jsp:param name="includePath" value="/header"/>
         </jsp:include>
     </div>
-    <div class="body">
-        <div class="inner-body">
-            <div>
-                <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
-                    <h3 class="text-bold text-info">
+    <div class="torso">
+        <div class="inner-torso">
+                <div class="title">
                         User info
-                    </h3>
                 </div>
-                <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
+                <div style="background:white; ">
                     <form:form cssStyle="width:50%;margin:0px auto;" action="${request.contextPath}/user/edit"
                                commandName="userStandardCommand">
                         <%--Email: ${userStandardCommand.email}--%>
@@ -34,7 +31,7 @@
                         <%--Country: ${userStandardCommand.country}--%>
                         <%--City: ${userStandardCommand.city}--%>
                         <%--Street: ${userStandardCommand.street} <br/>--%>
-                        <table>
+                        <table class="ncart">
                             <tr>
                                 <td>
                                     <form:label path="name">Name:</form:label>
@@ -71,11 +68,10 @@
                             </tr>
                         </table>
                         <form action="${request.contextPath}/user/edit">
-                            <input type="submit" value="Edit Info"/>
+                            <input style="margin-bottom: 10px;" type="submit" value="Edit Info"/>
                         </form>
                     </form:form>
                 </div>
-            </div>
         </div>
     </div>
     <div class="footer">

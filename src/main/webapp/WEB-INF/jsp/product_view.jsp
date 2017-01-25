@@ -12,21 +12,57 @@
     <title>View Product</title>
 </head>
 <body>
-<div id="container" style="margin:auto;width:1000px;border:3px solid lightpink">
+<div class="container">
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
-    <div class="body" style="overflow: hidden">
-        <div class="inner-body" style="padding:20px;overflow: hidden">
-            <div style="background:#BFFFDD; border-radius:10px; border-color: #111111; padding:10px; margin: 10px; ">
-
-                Name: ${productCommand.name} <br/>
-                Description: ${productCommand.description} <br/>
-                Manufacturer: ${productCommand.manufacturer} <br/>
-                Added by user: ${productCommand.createdByUserId} <br/>
-                Price: ${productCommand.price} <br/>
+    <div class="torso">
+        <div class="inner-torso">
+            <div style="background:white; ">
+                <table class="ncart">
+                    <tr>
+                        <td>
+                            Name:
+                        </td>
+                        <td>
+                            ${productCommand.name}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Description:
+                        </td>
+                        <td>
+                            ${productCommand.description}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Manufacturer:
+                        </td>
+                        <td>
+                            ${productCommand.manufacturer}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Added by user:
+                        </td>
+                        <td>
+                            ${productCommand.createdByUserId}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Price:
+                        </td>
+                        <td>
+                            ${productCommand.price}
+                        </td>
+                    </tr>
+                </table>
                 <c:if test="${productCommand.hasImage}">
-                    Image: <img src="/product/image/${productCommand.id}"/>
+                    <img style="max-width:700px;margin-top:12px;margin-bottom: 12px;" src="/product/image/${productCommand.id}"/>
                 </c:if>
                 <form action="/cart/add?productId=${productCommand.id}">
                     <input type="submit" value="Add to cart"/>
@@ -35,7 +71,7 @@
         </div>
     </div>
 
-    <div class="footer" style="text-align: center;background: black;color:white;font-family:'Helvetica CE 35 Thin';">
+    <div class="footer">
         <jsp:include page="${request.contextPath}/footer"></jsp:include>
     </div>
 
