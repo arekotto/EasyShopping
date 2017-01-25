@@ -49,7 +49,9 @@
                     </tr>
                     </c:forEach>
                 </table>
-
+                <form action="/purchase-invoice/createForm">
+                    <input type="submit" name="checkout">
+                </form>
             </div>
         </div>
     </div>

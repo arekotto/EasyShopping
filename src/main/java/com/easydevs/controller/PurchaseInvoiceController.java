@@ -60,7 +60,7 @@ public class PurchaseInvoiceController {
             }
         }
 
-        PurchaseInvoice invoice = (PurchaseInvoice) purchaseInvoiceService.createNewPurchaseInvoice();
+        PurchaseInvoiceCommand invoice = new PurchaseInvoiceCommand();
 
         invoice.setShipToAddressCity(user.getCity());
         invoice.setShipToAddressCountry(user.getCountry());
@@ -68,9 +68,10 @@ public class PurchaseInvoiceController {
         invoice.setUserId(user.getId());
         invoice.setUserName(user.getName());
         invoice.setProductList(productCommandList);
-        invoice.setPrice(invoice.getTotalPrice());
+        invoice.setPrice(invoice.getPrice());
 
         model.addAttribute("productCommandList", productCommandList);
+        model.addAttribute("purchaseInvoiceCommand", invoice);
 
         return "purchase_create";
     }
