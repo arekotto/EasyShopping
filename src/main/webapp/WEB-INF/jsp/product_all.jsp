@@ -35,10 +35,11 @@
                     <form:form cssStyle="width:100%;"
                                action="${request.contextPath}/product/search"
                                commandName="searchCommand">
+                        <form:select path="searchCategory">
+                            <form:options items="${categoryCommandList}" itemLabel="name" itemValue="id" />
+                        </form:select>
                         <form:input path="searchedPhrase"/>
-
                         <input type="submit" class="formbutton" value="Search">
-
                     </form:form>
                 </p>
             </c:if>

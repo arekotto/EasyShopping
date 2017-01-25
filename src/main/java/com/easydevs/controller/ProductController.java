@@ -19,12 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -192,9 +187,11 @@ public class ProductController {
                 productCommandList.add(new ProductCommand(standardProduct));
             }
             model.addAttribute("productCommandList", productCommandList);
+
             model.addAttribute("isOnlyForUser", false);
         }
-
+        List<Category> categoryCommandList = categoryService.getAll();
+        model.addAttribute("categoryCommandList", categoryCommandList);
         model.addAttribute("searchCommand", new SearchCommand());
 
         return "product_all";
