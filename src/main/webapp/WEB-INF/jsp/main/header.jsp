@@ -55,7 +55,6 @@
             <c:choose>
                 <c:when test="${headerCommand.isLoggedIn}">
                     <li><a href="/product/createForm">Add a New Product</a></li>
-                    <li><a href="/category/createForm">Add New Category</a></li>
                     <li><a href="/product/user">My Products</a></li>
                     <li><a href="/cart/view">My Cart</a></li>
                     <li><a href="/user/homepage">${headerCommand.userEmail}</a></li>
