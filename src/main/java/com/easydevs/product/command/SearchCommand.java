@@ -5,6 +5,7 @@ package com.easydevs.product.command;
  */
 public class SearchCommand {
     private String searchedPhrase;
+    private Integer searchCategory;
 
     public SearchCommand() {
     }
@@ -15,6 +16,14 @@ public class SearchCommand {
 
     public String getSearchedPhrase() {
         return searchedPhrase;
+    }
+
+    public Integer getSearchCategory() {
+        return searchCategory;
+    }
+
+    public void setSearchCategory(Integer searchCategory) {
+        this.searchCategory = searchCategory;
     }
 
     public void setSearchedPhrase(String searchedPhrase) {

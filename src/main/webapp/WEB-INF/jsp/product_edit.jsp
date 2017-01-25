@@ -16,14 +16,13 @@
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
-    <div class="body">
-        <div class="inner-body">
+    <div class="torso">
+        <div class="inner-torso">
             <form:form cssStyle="width:50%;margin:0px auto;" action="${request.contextPath}/product/save?productId=${productCommand.id}&addedByUserId=${productCommand.createdByUserId}"
                        commandName="productCommand"
                        method="post"
                        enctype="multipart/form-data">
-                <table>
-
+                <table class="ncart">
                     <tr>
                         <td>
                             <form:label path="name">Product Name:</form:label>

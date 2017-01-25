@@ -19,12 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,11 +123,6 @@ public class ProductController {
     }
 
     private void saveImage(MultipartFile image, long productId) throws IOException {
-        BufferedImage bufferedImage = ImageIO.read(image.getInputStream());
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        ImageIO.write(bufferedImage, "jpg", os);
-        InputStream is = new ByteArrayInputStream(os.toByteArray());
-
         ProductImage productImage = new ProductImage(productId, IOUtils.toByteArray(image.getInputStream()));
         imageService.updateProductImage(productImage);
     }
@@ -197,9 +187,11 @@ public class ProductController {
                 productCommandList.add(new ProductCommand(standardProduct));
             }
             model.addAttribute("productCommandList", productCommandList);
+
             model.addAttribute("isOnlyForUser", false);
         }
-
+        List<Category> categoryCommandList = categoryService.getAll();
+        model.addAttribute("categoryCommandList", categoryCommandList);
         model.addAttribute("searchCommand", new SearchCommand());
 
         return "product_all";
@@ -219,9 +211,7 @@ public class ProductController {
     }
 
     @RequestMapping("/search")
-    public String search(Model model,
-                         @CookieValue("id") String userId,
-                         @ModelAttribute("searchCommand") SearchCommand searchCommand,
+    public String search(@ModelAttribute("searchCommand") SearchCommand searchCommand,
                          RedirectAttributes redirectAttributes) {
 
         List<StandardProduct> productList = productService.search(searchCommand.getSearchedPhrase(), "0");

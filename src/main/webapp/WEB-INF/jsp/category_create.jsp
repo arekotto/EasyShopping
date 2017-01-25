@@ -23,7 +23,7 @@
             </div>
         <form:form style="background:white;padding:12px;"
                 action="${request.contextPath}/category/create" commandName="categoryCreationCommand">
-            <table>
+            <table class="ncart">
                 <tr>
                     <td>
                         <form:label path="name">Name:</form:label>

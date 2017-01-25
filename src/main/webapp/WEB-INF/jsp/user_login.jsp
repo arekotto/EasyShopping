@@ -17,12 +17,11 @@
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
-    <div class="body">
-        <div class="inner-body">
-            <div style="min-height:30px;"></div>
+    <div class="torso">
+        <div class="inner-torso">
         <form:form cssStyle="width:50%;margin:0px auto;" action="${request.contextPath}/user/authenticate"
                    commandName="userLoginCommand">
-                <table>
+                <table class="ncart">
                     <tr>
                         <td>
                             <form:label path="email">Email:</form:label>

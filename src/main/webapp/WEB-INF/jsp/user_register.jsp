@@ -17,7 +17,10 @@
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
-    <div class="body">
+    <div class="torso">
+        <div class="inner-torso">
+
+
         <c:if test="${userRegistrationCommand.isLoginUnavailable}">
             <h1>Login is already taken. Please pick another one.</h1>
         </c:if>
@@ -30,10 +33,9 @@
             <h1>Wrong e-mail address.</h1>
         </c:if>
         <div class="inner-body">
-            <div style="min-height:30px;"></div>
         <form:form cssStyle="width:50%;margin:0px auto;" action="${request.contextPath}/user/create"
                    commandName="userRegistrationCommand">
-            <table>
+            <table class="ncart">
                 <tr>
                     <td>
                         <form:label path="email">Email:</form:label>
@@ -88,7 +90,7 @@
             <input type="submit" class="formbutton" value="Create user">
             </fieldset>
         </form:form>
-            <div style="min-height:30px;"></div>
+    </div>
     </div>
     </div>
     <div class="footer">
