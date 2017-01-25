@@ -128,11 +128,6 @@ public class ProductController {
     }
 
     private void saveImage(MultipartFile image, long productId) throws IOException {
-        BufferedImage bufferedImage = ImageIO.read(image.getInputStream());
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        ImageIO.write(bufferedImage, "jpg", os);
-        InputStream is = new ByteArrayInputStream(os.toByteArray());
-
         ProductImage productImage = new ProductImage(productId, IOUtils.toByteArray(image.getInputStream()));
         imageService.updateProductImage(productImage);
     }
