@@ -43,15 +43,10 @@ public class PurchaseInvoiceController {
     CartService cartService;
 
     @RequestMapping("/createForm")
-    public String showCreateNewForm(Model model) {
+    public String showCreateNewForm(Model model,
+                                    @CookieValue("id") String userId,
+                                    @ModelAttribute("purchaseInvoiceCreationCommand") PurchaseInvoiceCreationCommand purchaseCreationCommand) {
         model.addAttribute("purchaseInvoiceCreationCommand", new PurchaseInvoiceCreationCommand());
-        return "purchase_create";
-    }
-
-    @RequestMapping("/create")
-    public String create(Model model,
-                         @CookieValue("id") String userId,
-                         @ModelAttribute("purchaseInvoiceCreationCommand") PurchaseInvoiceCreationCommand purchaseCreationCommand) {
 
         Cart userCart = cartService.getCartForUser(Long.parseLong(userId));
         StandardUser user = (StandardUser) userService.getUserById(Long.parseLong(userId));
@@ -76,6 +71,38 @@ public class PurchaseInvoiceController {
         invoice.setPrice(invoice.getTotalPrice());
 
         model.addAttribute("productCommandList", productCommandList);
+
+        return "purchase_create";
+    }
+
+    @RequestMapping("/create/{purchaseInvoiceId}")
+    public String create(Model model,
+                         @CookieValue("id") String userId,
+                         @PathVariable Long purchaseInvoiceId,
+                         @ModelAttribute("purchaseInvoiceCreationCommand") PurchaseInvoiceCreationCommand purchaseCreationCommand) {
+
+        PurchaseInvoice invoice  = purchaseInvoiceService.getPurchaseInvoiceById(purchaseInvoiceId);
+
+//        Cart userCart = cartService.getCartForUser(Long.parseLong(userId));
+//        StandardUser user = (StandardUser) userService.getUserById(Long.parseLong(userId));
+//        List<StandardProduct> productCommandList = new ArrayList<>();
+//
+//        if (userCart != null) {
+//            for (Long productId : userCart.getProductIdList()) {
+//                StandardProduct product = (StandardProduct) productService.getProductById(productId);
+//                productCommandList.add(product);
+//
+//            }
+//        }
+//
+//        PurchaseInvoice invoice = (PurchaseInvoice) purchaseInvoiceService.createNewPurchaseInvoice();
+//
+        invoice.setShipToAddressCity(purchaseCreationCommand.getShipToAddressCity());
+        invoice.setShipToAddressCountry(purchaseCreationCommand.getShipToAddressCountry());
+        invoice.setShipToAddressStreet(purchaseCreationCommand.getShipToAddressStreet());
+//        invoice.setPrice(invoice.getTotalPrice());
+//
+//        model.addAttribute("productCommandList", productCommandList);
 
         return "redirect:view/" + invoice.getId();
     }
