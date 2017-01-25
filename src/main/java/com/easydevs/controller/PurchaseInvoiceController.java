@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,12 +46,13 @@ public class PurchaseInvoiceController {
     @RequestMapping("/createForm")
     public String showCreateNewForm(Model model,
                                     @CookieValue("id") String userId,
-                                    @ModelAttribute("purchaseInvoiceCreationCommand") PurchaseInvoiceCreationCommand purchaseCreationCommand) {
+                                    @ModelAttribute("purchaseInvoiceCreationCommand") PurchaseInvoiceCreationCommand purchaseCreationCommand) throws IOException {
         model.addAttribute("purchaseInvoiceCreationCommand", new PurchaseInvoiceCreationCommand());
 
         Cart userCart = cartService.getCartForUser(Long.parseLong(userId));
         StandardUser user = (StandardUser) userService.getUserById(Long.parseLong(userId));
         List<StandardProduct> productCommandList = new ArrayList<>();
+        PurchaseInvoice invoice = purchaseInvoiceService.createNewPurchaseInvoice();
 
         if (userCart != null) {
             for (Long productId : userCart.getProductIdList()) {
@@ -59,8 +61,6 @@ public class PurchaseInvoiceController {
 
             }
         }
-
-        PurchaseInvoiceCommand invoice = new PurchaseInvoiceCommand();
 
         invoice.setShipToAddressCity(user.getCity());
         invoice.setShipToAddressCountry(user.getCountry());
@@ -73,6 +73,8 @@ public class PurchaseInvoiceController {
         model.addAttribute("productCommandList", productCommandList);
         model.addAttribute("purchaseInvoiceCommand", invoice);
 
+        purchaseInvoiceService.updatePurchaseInvoice(invoice);
+
         return "purchase_create";
     }
 
@@ -84,27 +86,6 @@ public class PurchaseInvoiceController {
 
         PurchaseInvoice invoice  = purchaseInvoiceService.getPurchaseInvoiceById(purchaseInvoiceId);
 
-//        Cart userCart = cartService.getCartForUser(Long.parseLong(userId));
-//        StandardUser user = (StandardUser) userService.getUserById(Long.parseLong(userId));
-//        List<StandardProduct> productCommandList = new ArrayList<>();
-//
-//        if (userCart != null) {
-//            for (Long productId : userCart.getProductIdList()) {
-//                StandardProduct product = (StandardProduct) productService.getProductById(productId);
-//                productCommandList.add(product);
-//
-//            }
-//        }
-//
-//        PurchaseInvoice invoice = (PurchaseInvoice) purchaseInvoiceService.createNewPurchaseInvoice();
-//
-        invoice.setShipToAddressCity(purchaseCreationCommand.getShipToAddressCity());
-        invoice.setShipToAddressCountry(purchaseCreationCommand.getShipToAddressCountry());
-        invoice.setShipToAddressStreet(purchaseCreationCommand.getShipToAddressStreet());
-//        invoice.setPrice(invoice.getTotalPrice());
-//
-//        model.addAttribute("productCommandList", productCommandList);
-
         return "redirect:view/" + invoice.getId();
     }
 
@@ -112,10 +93,10 @@ public class PurchaseInvoiceController {
     public String view(Model model, @PathVariable Long invoiceId) {
 
         PurchaseInvoice invoice = purchaseInvoiceService.getPurchaseInvoiceById(invoiceId);
+
         if (invoice != null) {
             model.addAttribute("purchaseInvoiceCommand", new PurchaseInvoiceCommand(invoice));
             return "invoice_view";
-
         }
 
         return "";

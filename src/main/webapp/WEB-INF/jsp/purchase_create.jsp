@@ -60,7 +60,9 @@
                         <br><br>
                     </p>
                 </div>
-                <input type="submit" class="formbutton" value="Create">
+        <form action="/purchase-invoice/create/${purchaseInvoiceCommand.id}">
+            <input type="submit" class="formbutton">
+        </form>
         </div>
     </div>
     <div class="footer">

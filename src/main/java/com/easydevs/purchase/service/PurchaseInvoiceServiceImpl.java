@@ -1,8 +1,5 @@
 package com.easydevs.purchase.service;
 
-import com.easydevs.product.model.Product;
-import com.easydevs.product.model.StandardProduct;
-import com.easydevs.product.service.ProductService;
 import com.easydevs.purchase.model.PurchaseInvoice;
 import com.easydevs.support.DbIdSequence;
 import com.mongodb.BasicDBObject;
