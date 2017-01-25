@@ -128,11 +128,6 @@ public class ProductController {
     }
 
     private void saveImage(MultipartFile image, long productId) throws IOException {
-        BufferedImage bufferedImage = ImageIO.read(image.getInputStream());
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        ImageIO.write(bufferedImage, "jpg", os);
-        InputStream is = new ByteArrayInputStream(os.toByteArray());
-
         ProductImage productImage = new ProductImage(productId, IOUtils.toByteArray(image.getInputStream()));
         imageService.updateProductImage(productImage);
     }
@@ -219,9 +214,7 @@ public class ProductController {
     }
 
     @RequestMapping("/search")
-    public String search(Model model,
-                         @CookieValue("id") String userId,
-                         @ModelAttribute("searchCommand") SearchCommand searchCommand,
+    public String search(@ModelAttribute("searchCommand") SearchCommand searchCommand,
                          RedirectAttributes redirectAttributes) {
 
         List<StandardProduct> productList = productService.search(searchCommand.getSearchedPhrase(), "0");
