@@ -31,6 +31,8 @@ public class AuthFilter extends OncePerRequestFilter{
         add("/user/save");
         add("/product/createForm");
         add("/product/create");
+        add("/product/edit");
+        add("/product/save");
         add("/product/remove");
         add("/product/user");
         add("/cart/view");

@@ -28,5 +28,7 @@ public interface ProductService {
 
     List<Category> getAllCategories();
 
-    List<StandardProduct> search(String searchQuery, String searchCategory);
+    List<StandardProduct> search(String searchQuery, long searchCategory);
+
+    List<StandardProduct> search(String searchQuery);
 }

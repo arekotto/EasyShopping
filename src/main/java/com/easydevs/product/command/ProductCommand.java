@@ -22,7 +22,6 @@ public class ProductCommand {
     }
 
     public ProductCommand(StandardProduct standardProduct) {
-        CategoryService cs = new CategoryService();
         id = standardProduct.getId();
         createdByUserId = standardProduct.getAddedByUserId();
         name = standardProduct.getName();
@@ -31,7 +30,6 @@ public class ProductCommand {
         categoryId = standardProduct.getCategory();
         price = standardProduct.getPrice();
         hasImage = standardProduct.isHasImage();
-        categoryName = cs.getCategoryNameById(this.id);
     }
 
 

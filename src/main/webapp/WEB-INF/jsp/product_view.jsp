@@ -72,9 +72,12 @@
                 <c:if test="${productCommand.hasImage}">
                     <img style="max-width:700px;margin-top:12px;margin-bottom: 12px;" src="/product/image/${productCommand.id}"/>
                 </c:if>
-                <form action="/cart/add?productId=${productCommand.id}">
+                <c:if test="${isUserProduct != null && !isUserProduct}">
+                <form action="/cart/add">
+                    <input type="hidden" name="productId" value="${productCommand.id}"/>
                     <input type="submit" value="Add to cart"/>
                 </form>
+                </c:if>
             </div>
         </div>
     </div>

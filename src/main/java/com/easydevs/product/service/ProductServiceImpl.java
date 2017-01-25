@@ -126,9 +126,24 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<StandardProduct> search(String searchQuery, String searchCategory) {
+    public List<StandardProduct> search(String searchQuery, long searchCategory) {
         log.info("ProductService - searching products by query", searchQuery);
 
+        Query query = new Query(
+                new Criteria().orOperator(
+                        Criteria.where("name").regex(searchQuery, "i"),
+                        Criteria.where("manufacturer").regex(searchQuery, "i")
+                ).andOperator(
+                        Criteria.where("categoryId").is(searchCategory)
+
+                ));
+
+
+        return mongoTemplate.find(query, StandardProduct.class);
+    }
+
+    @Override
+    public List<StandardProduct> search(String searchQuery) {
         Query query = new Query(
                 new Criteria().orOperator(
                         Criteria.where("name").regex(searchQuery, "i"),
@@ -136,8 +151,7 @@ public class ProductServiceImpl implements ProductService {
                 ));
 
 
-        return mongoTemplate.find(query, StandardProduct.class);
-    }
+        return mongoTemplate.find(query, StandardProduct.class);    }
 
     @Override
     public List<Category> getAllCategories() {

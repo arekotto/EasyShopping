@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,6 @@ public class ProductController {
 
 
         StandardProduct newProduct = (StandardProduct) productService.createNewProduct();
-        List<Category> categoryList = categoryService.getAll();
 
         newProduct.setName(productCreationCommand.getName());
         newProduct.setDescription(productCreationCommand.getDescription());
@@ -85,7 +85,9 @@ public class ProductController {
 
         StandardProduct product = (StandardProduct) productService.getProductById(productId);
         if (product.getAddedByUserId() == Long.parseLong(userId)) {
-            model.addAttribute("productCommand", new ProductCommand(product));
+            ProductCommand productCommand = new ProductCommand(product);
+            productCommand.setCategoryName(categoryService.getCategoryNameById(product.getCategory()));
+            model.addAttribute("productCommand", productCommand);
             return "product_edit";
         }
         return "redirect:view/" + product.getId();
@@ -93,7 +95,6 @@ public class ProductController {
 
     @RequestMapping(value = "/save")
     public String save(Model model,
-                       @CookieValue("id") String userId,
                        @RequestParam Integer productId,
                        @RequestParam Integer addedByUserId,
                        @ModelAttribute("productCommand") ProductCommand productCommand,
@@ -119,7 +120,9 @@ public class ProductController {
             }
             productService.updateProduct(product);
 
-            model.addAttribute("productCommand", new ProductCommand(product));
+            ProductCommand productCommand1 = new ProductCommand(product);
+            productCommand1.setCategoryName(categoryService.getCategoryNameById(product.getCategory()));
+            model.addAttribute("productCommand", productCommand1);
         }
         return "redirect:view/" + product.getId();
     }
@@ -130,11 +133,22 @@ public class ProductController {
     }
 
     @RequestMapping("/view/{productId}")
-    public String view(Model model, @PathVariable Long productId) {
+    public String view(Model model, @PathVariable Long productId, HttpServletRequest request,
+                       @CookieValue(value = "id", defaultValue = "") String userIdCookie) {
 
         StandardProduct product = (StandardProduct) productService.getProductById(productId);
         if (product != null) {
-            model.addAttribute("productCommand", new ProductCommand(product));
+            ProductCommand productCommand = new ProductCommand(product);
+            productCommand.setCategoryName(categoryService.getCategoryNameById(product.getCategory()));
+            model.addAttribute("productCommand", productCommand);
+
+            Boolean isRequestVerified = (Boolean) request.getAttribute("isRequestVerified");
+            if (isRequestVerified != null && isRequestVerified && product.getAddedByUserId() == Long.parseLong(userIdCookie)) {
+                model.addAttribute("isUserProduct", true);
+            } else {
+                model.addAttribute("isUserProduct", false);
+            }
+
             return "product_view";
 
         }
@@ -173,7 +187,9 @@ public class ProductController {
         List<StandardProduct> standardProducts = productService.getProductsByUserId(Long.parseLong(userId));
         List<ProductCommand> productCommandList = new ArrayList<>();
         for (StandardProduct standardProduct : standardProducts) {
-            productCommandList.add(new ProductCommand(standardProduct));
+            ProductCommand productCommand = new ProductCommand(standardProduct);
+            productCommand.setCategoryName(categoryService.getCategoryNameById(standardProduct.getCategory()));
+            productCommandList.add(productCommand);
         }
         model.addAttribute("productCommandList", productCommandList);
         model.addAttribute("isOnlyForUser", true);
@@ -186,15 +202,19 @@ public class ProductController {
             List<StandardProduct> standardProducts = productService.getAll();
             List<ProductCommand> productCommandList = new ArrayList<>();
             for (StandardProduct standardProduct : standardProducts) {
-                productCommandList.add(new ProductCommand(standardProduct));
+                ProductCommand productCommand = new ProductCommand(standardProduct);
+                productCommand.setCategoryName(categoryService.getCategoryNameById(standardProduct.getCategory()));
+                productCommandList.add(productCommand);
             }
             model.addAttribute("productCommandList", productCommandList);
 
             model.addAttribute("isOnlyForUser", false);
         }
+        if (!model.containsAttribute("searchCommand")) {
+            model.addAttribute("searchCommand", new SearchCommand());
+        }
         List<Category> categoryCommandList = categoryService.getAll();
         model.addAttribute("categoryCommandList", categoryCommandList);
-        model.addAttribute("searchCommand", new SearchCommand());
 
         return "product_all";
     }
@@ -216,13 +236,22 @@ public class ProductController {
     public String search(@ModelAttribute("searchCommand") SearchCommand searchCommand,
                          RedirectAttributes redirectAttributes) {
 
-        List<StandardProduct> productList = productService.search(searchCommand.getSearchedPhrase(), "0");
+        List<StandardProduct> productList;
+        Integer searchedCategoryId = searchCommand.getSearchCategory();
+        if (searchedCategoryId != null && searchedCategoryId != -1) {
+            productList = productService.search(searchCommand.getSearchedPhrase(), searchedCategoryId);
+        } else {
+            productList = productService.search(searchCommand.getSearchedPhrase());
+        }
         List<ProductCommand> productCommandList = new ArrayList<>();
         for (StandardProduct standardProduct : productList) {
-            productCommandList.add(new ProductCommand(standardProduct));
+            ProductCommand productCommand = new ProductCommand(standardProduct);
+            productCommand.setCategoryName(categoryService.getCategoryNameById(standardProduct.getCategory()));
+            productCommandList.add(productCommand);
         }
         redirectAttributes.addFlashAttribute("productCommandList", productCommandList);
         redirectAttributes.addFlashAttribute("isOnlyForUser", false);
+        redirectAttributes.addFlashAttribute("searchCommand", searchCommand);
 
         return "redirect:all" ;
     }

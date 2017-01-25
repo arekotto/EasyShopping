@@ -22,6 +22,8 @@
                        commandName="productCommand"
                        method="post"
                        enctype="multipart/form-data">
+                <form:input path="category" disabled="true" type="hidden"/>
+
                 <table class="ncart">
                     <tr>
                         <td>
@@ -34,10 +36,10 @@
                     </tr>
                     <tr>
                         <td>
-                            <form:label path="category">Product Category:</form:label>
+                            <form:label path="categoryName">Product Category:</form:label>
                         </td>
                         <td>
-                            <form:input path="category" disabled="true"/>
+                            <form:input path="categoryName" disabled="true"/>
                         </td>
                     </tr>
                     <tr>
