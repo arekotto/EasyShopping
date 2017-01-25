@@ -41,7 +41,15 @@ public class PurchaseInvoiceCommand {
 
     public void setProductList(List<StandardProduct> productList) { this.productList = productList; }
 
-    public double getPrice() { return price; }
+    public double getPrice() {
+        double price = 0;
+
+        for (StandardProduct product: productList) {
+            price += product.getPrice();
+        }
+
+        return price;
+    }
 
     public void setPrice(double price) { this.price = price; }
 
