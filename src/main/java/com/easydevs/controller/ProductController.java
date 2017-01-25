@@ -219,9 +219,7 @@ public class ProductController {
     }
 
     @RequestMapping("/search")
-    public String search(Model model,
-                         @CookieValue("id") String userId,
-                         @ModelAttribute("searchCommand") SearchCommand searchCommand,
+    public String search(@ModelAttribute("searchCommand") SearchCommand searchCommand,
                          RedirectAttributes redirectAttributes) {
 
         List<StandardProduct> productList = productService.search(searchCommand.getSearchedPhrase(), "0");
