@@ -63,7 +63,7 @@
                                         Manufacturer: </br>
                                             ${productCommand.manufacturer}</br>
                                         Category: </br>
-                                            ${productCommand.category}
+                                            ${productCommand.categoryName}
                                     </td>
                                 </tr>
                                 <tr>

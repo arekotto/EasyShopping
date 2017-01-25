@@ -20,4 +20,21 @@ public class CategoryService {
         categoryCommandList.add(new Category(3, "Jewelry"));
         return categoryCommandList;
     }
+
+    public String getCategoryNameById(Long id){
+        switch(id.intValue()){
+            case -1:
+                return "Any";
+            case 0:
+                return "Creams";
+            case 1:
+                return "Perfums";
+            case 2:
+                return "Undergarments";
+            case 3:
+                return "Jewelry";
+            default:
+                return "Unknown category.";
+        }
+    }
 }

@@ -1,10 +1,11 @@
 package com.easydevs.product.command;
 
 import com.easydevs.product.model.StandardProduct;
-
+import com.easydevs.product.service.CategoryService;
 /**
  * Created by Arek on 07.01.2017.
  */
+
 public class ProductCommand {
 
     private long id;
@@ -14,12 +15,14 @@ public class ProductCommand {
     private String manufacturer;
     private double price;
     private long categoryId;
+    private String categoryName;
     private boolean hasImage;
 
     public ProductCommand() {
     }
 
     public ProductCommand(StandardProduct standardProduct) {
+        CategoryService cs = new CategoryService();
         id = standardProduct.getId();
         createdByUserId = standardProduct.getAddedByUserId();
         name = standardProduct.getName();
@@ -28,6 +31,7 @@ public class ProductCommand {
         categoryId = standardProduct.getCategory();
         price = standardProduct.getPrice();
         hasImage = standardProduct.isHasImage();
+        categoryName = cs.getCategoryNameById(this.id);
     }
 
 
@@ -94,4 +98,8 @@ public class ProductCommand {
     public void setHasImage(boolean hasImage) {
         this.hasImage = hasImage;
     }
+
+    public String getCategoryName() { return categoryName; }
+
+    public void setCategoryName(String category) { this.categoryName = category; }
 }
