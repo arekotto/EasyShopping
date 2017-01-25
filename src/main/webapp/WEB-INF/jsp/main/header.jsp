@@ -57,6 +57,7 @@
                     <li><a href="/product/createForm">Add a New Product</a></li>
                     <li><a href="/product/user">My Products</a></li>
                     <li><a href="/cart/view">My Cart</a></li>
+                    <li><a href="/purchase-invoice/view-all">My Orders</a></li>
                     <li><a href="/user/homepage">${headerCommand.userEmail}</a></li>
                     <li><a href="/user/logout">Log out</a></li>
                 </c:when>

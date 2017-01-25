@@ -34,7 +34,6 @@ public class PurchaseInvoice {
         this.shipToAddressCity = user.getCity();
         this.shipToAddressCountry = user.getCountry();
         this.shipToAddressStreet = user.getStreet();
-        this.price = this.getTotalPrice();
     }
 
     public long getId() {
@@ -91,15 +90,15 @@ public class PurchaseInvoice {
 
     public void setUserName(String userName) { this.userName = userName; }
 
-    public void setProductList(List<StandardProduct> productLise) { this.productList = productList; }
+    public void setProductList(List<StandardProduct> productList) { this.productList = productList; }
 
-    public double getTotalPrice() {
+    public void calculateCurrentPrice() {
         double totalPrice = 0;
 
         for (StandardProduct standardProduct: this.productList) {
             totalPrice += standardProduct.getPrice();
         }
 
-        return totalPrice;
+        this.price = totalPrice;
     }
 }

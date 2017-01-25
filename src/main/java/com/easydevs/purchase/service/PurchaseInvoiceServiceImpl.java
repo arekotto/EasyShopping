@@ -50,6 +50,12 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
 
     }
 
+    @Override
+    public List<PurchaseInvoice> getPurchaseInvoiceListByUserId(long userId) {
+        Query query = new Query(Criteria.where("userId").is(userId));
+        return  mongoTemplate.find(query, PurchaseInvoice.class);
+    }
+
     private Long getNewIdAndInc() {
         log.info("PurchaseInvoiceService - getNewIdAndInc");
 
@@ -68,7 +74,7 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
         DBObject dbDoc = new BasicDBObject();
         mongoTemplate.getConverter().write(userIdSequence, dbDoc);
         Update update = Update.fromDBObject(dbDoc);
-        mongoTemplate.upsert(new Query(), update, DbIdSequence.class);
+        mongoTemplate.upsert(new Query(), update, DbIdSequence.class, INVOICE_ID_SEQUENCE_COLLECTION_NAME);
 
         return currentId;
     }

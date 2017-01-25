@@ -43,60 +43,67 @@ public class PurchaseInvoiceController {
     @Autowired
     CartService cartService;
 
-    @RequestMapping("/createForm")
+    @RequestMapping("/create")
     public String showCreateNewForm(Model model,
                                     @CookieValue("id") String userId,
                                     @ModelAttribute("purchaseInvoiceCreationCommand") PurchaseInvoiceCreationCommand purchaseCreationCommand) throws IOException {
-        model.addAttribute("purchaseInvoiceCreationCommand", new PurchaseInvoiceCreationCommand());
 
-        Cart userCart = cartService.getCartForUser(Long.parseLong(userId));
-        StandardUser user = (StandardUser) userService.getUserById(Long.parseLong(userId));
-        List<StandardProduct> productCommandList = new ArrayList<>();
-        PurchaseInvoice invoice = purchaseInvoiceService.createNewPurchaseInvoice();
+        long userIdLong = Long.parseLong(userId);
+        Cart userCart = cartService.getCartForUser(userIdLong);
 
-        if (userCart != null) {
+        if (userCart != null && userCart.getProductIdList() != null && !userCart.getProductIdList().isEmpty()) {
+            PurchaseInvoice invoice = purchaseInvoiceService.createNewPurchaseInvoice();
+            StandardUser user = (StandardUser) userService.getUserById(userIdLong);
+            List<StandardProduct> productList = new ArrayList<>();
+
             for (Long productId : userCart.getProductIdList()) {
                 StandardProduct product = (StandardProduct) productService.getProductById(productId);
-                productCommandList.add(product);
+                productList.add(product);
 
             }
+            invoice.setShipToAddressCity(user.getCity());
+            invoice.setShipToAddressCountry(user.getCountry());
+            invoice.setShipToAddressStreet(user.getStreet());
+            invoice.setUserId(user.getId());
+            invoice.setUserName(user.getName());
+            invoice.setProductList(productList);
+            invoice.calculateCurrentPrice();
+
+            model.addAttribute("purchaseInvoiceCommand", invoice);
+
+            purchaseInvoiceService.updatePurchaseInvoice(invoice);
+
+            userCart.resetCart();
+            cartService.updateCartForUser(userIdLong, userCart);
+
+            return "redirect:view/" + invoice.getId();
+
         }
 
-        invoice.setShipToAddressCity(user.getCity());
-        invoice.setShipToAddressCountry(user.getCountry());
-        invoice.setShipToAddressStreet(user.getStreet());
-        invoice.setUserId(user.getId());
-        invoice.setUserName(user.getName());
-        invoice.setProductList(productCommandList);
-        invoice.setPrice(invoice.getPrice());
 
-        model.addAttribute("productCommandList", productCommandList);
-        model.addAttribute("purchaseInvoiceCommand", invoice);
 
-        purchaseInvoiceService.updatePurchaseInvoice(invoice);
-
-        return "purchase_create";
+        return "redirect:../homepage";
     }
 
-    @RequestMapping("/create/{purchaseInvoiceId}")
+    @RequestMapping("/view-all")
     public String create(Model model,
-                         @CookieValue("id") String userId,
-                         @PathVariable Long purchaseInvoiceId,
-                         @ModelAttribute("purchaseInvoiceCreationCommand") PurchaseInvoiceCreationCommand purchaseCreationCommand) {
+                         @CookieValue("id") String userId) {
 
-        PurchaseInvoice invoice  = purchaseInvoiceService.getPurchaseInvoiceById(purchaseInvoiceId);
+        model.addAttribute("purchaseInvoiceCommandList", purchaseInvoiceService.getPurchaseInvoiceListByUserId(Long.parseLong(userId)));
 
-        return "redirect:view/" + invoice.getId();
+
+        return "purchase_all";
     }
 
-    @RequestMapping("/view/invoiceId")
+    @RequestMapping("/view/{invoiceId}")
     public String view(Model model, @PathVariable Long invoiceId) {
 
         PurchaseInvoice invoice = purchaseInvoiceService.getPurchaseInvoiceById(invoiceId);
 
         if (invoice != null) {
-            model.addAttribute("purchaseInvoiceCommand", new PurchaseInvoiceCommand(invoice));
-            return "invoice_view";
+            invoice.calculateCurrentPrice();
+            model.addAttribute("purchaseInvoiceCommand", invoice);
+            return "purchase_view";
         }
 
         return "";

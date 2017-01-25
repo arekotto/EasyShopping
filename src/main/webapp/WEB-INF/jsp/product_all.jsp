@@ -69,11 +69,11 @@
                             <tr>
                                 <c:if test="${!isOnlyForUser}">
 
-                                <td style="vertical-align:top; padding:8px;" align="center">
-                                    <form action="/product/view/${productCommand.id}">
-                                        <input type="submit" value="Details"/>
-                                    </form>
-                                </td>
+                                    <td style="vertical-align:top; padding:8px;" align="center">
+                                        <form action="/product/view/${productCommand.id}">
+                                            <input type="submit" value="Details"/>
+                                        </form>
+                                    </td>
                                 </c:if>
                                 <td style="vertical-align:top; padding:8px;" align="center">
                                     <c:choose>
@@ -91,15 +91,16 @@
                             </form>
                         </span>
                                         </c:when>
-                                        <c:otherwise>
+                                        <c:when test="${!productCommand.shouldHideAddToCartButton}">
+
+
                             <span>
                                 <form action="/cart/add">
                                     <input type="hidden" name="productId" value="${productCommand.id}"/>
                                     <input type="submit" value="Add to cart"/>
                                 </form>
                             </span>
-                                            <%--<a href="/cart/add?productId=${productCommand.id}">Add to cart</a>--%>
-                                        </c:otherwise>
+                                        </c:when>
                                     </c:choose>
                                 </td>
                             </tr>

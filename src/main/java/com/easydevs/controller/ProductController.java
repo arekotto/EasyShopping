@@ -197,13 +197,16 @@ public class ProductController {
     }
 
     @RequestMapping("/all")
-    public String viewAll(Model model) {
+    public String viewAll(Model model, @CookieValue(value = "id", defaultValue = "") String userId) {
         if (!model.containsAttribute("productCommandList")) {
             List<StandardProduct> standardProducts = productService.getAll();
             List<ProductCommand> productCommandList = new ArrayList<>();
             for (StandardProduct standardProduct : standardProducts) {
                 ProductCommand productCommand = new ProductCommand(standardProduct);
                 productCommand.setCategoryName(categoryService.getCategoryNameById(standardProduct.getCategory()));
+                if (userId.equals(String.valueOf(productCommand.getCreatedByUserId()))) {
+                    productCommand.setShouldHideAddToCartButton(true);
+                }
                 productCommandList.add(productCommand);
             }
             model.addAttribute("productCommandList", productCommandList);

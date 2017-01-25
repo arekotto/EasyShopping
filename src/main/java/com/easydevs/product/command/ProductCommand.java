@@ -17,6 +17,7 @@ public class ProductCommand {
     private long categoryId;
     private String categoryName;
     private boolean hasImage;
+    private boolean shouldHideAddToCartButton = false;
 
     public ProductCommand() {
     }
@@ -100,4 +101,12 @@ public class ProductCommand {
     public String getCategoryName() { return categoryName; }
 
     public void setCategoryName(String category) { this.categoryName = category; }
+
+    public boolean isShouldHideAddToCartButton() {
+        return shouldHideAddToCartButton;
+    }
+
+    public void setShouldHideAddToCartButton(boolean shouldHideAddToCartButton) {
+        this.shouldHideAddToCartButton = shouldHideAddToCartButton;
+    }
 }
