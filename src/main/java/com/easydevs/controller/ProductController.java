@@ -41,7 +41,9 @@ public class ProductController {
 
     @RequestMapping("/createForm")
     public String showCreateNewForm(Model model) {
+        List<Category> categoryCommandList = categoryService.getAll();
         model.addAttribute("productCreationCommand", new ProductCreationCommand());
+        model.addAttribute("categoryCommandList", categoryCommandList);
         return "product_create";
     }
 

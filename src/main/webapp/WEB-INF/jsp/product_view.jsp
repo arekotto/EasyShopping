@@ -38,6 +38,14 @@
                     </tr>
                     <tr>
                         <td>
+                            Category:
+                        </td>
+                        <td>
+                            ${productCommand.categoryName}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                             Manufacturer:
                         </td>
                         <td>

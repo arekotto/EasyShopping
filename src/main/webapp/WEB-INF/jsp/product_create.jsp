@@ -58,7 +58,9 @@
                             <form:label path="category">Product Category:</form:label>
                         </td>
                         <td>
-                            <form:input path="category"/>
+                            <form:select path="category">
+                                <form:options items="${categoryCommandList}" itemLabel="name" itemValue="id" />
+                            </form:select>
                         </td>
                     </tr>
                     <tr>
