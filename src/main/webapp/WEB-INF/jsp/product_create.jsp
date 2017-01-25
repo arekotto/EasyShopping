@@ -26,7 +26,7 @@
                    commandName="productCreationCommand"
                    method="post"
                    enctype="multipart/form-data">
-                <table class="ncart">
+                <table class="">
                     <tr>
                         <td>
                             <form:label path="name">Product Name:</form:label>
@@ -58,7 +58,9 @@
                             <form:label path="category">Product Category:</form:label>
                         </td>
                         <td>
-                            <form:input path="category"/>
+                            <form:select path="category">
+                                <form:options items="${categoryCommandList}" itemLabel="name" itemValue="id" />
+                            </form:select>
                         </td>
                     </tr>
                     <tr>
