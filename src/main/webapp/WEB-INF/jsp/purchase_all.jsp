@@ -22,54 +22,53 @@
             <div class="title">
                 All Purchase Invoices
             </div>
-        </div>
-        <c:forEach var="purchaseInvoiceCommand" items="${purchaseInvoiceCommandList}">
-
-        <div class="news" style="float: right;">
-            <h5 class="news-header">Issued for:<br>
-            </h5>
-            <h6 class="news-body">
-                ${purchaseInvoiceCommand.userName}<br>
-                ${purchaseInvoiceCommand.shipToAddressCountry}<br>
-                ${purchaseInvoiceCommand.shipToAddressCity}<br>
-                ${purchaseInvoiceCommand.shipToAddressStreet}<br>
-            </h6>
-        </div>
-        <table class="cart" style="width:100%; background:white;">
-            <tr>
-                <th>Item name</th>
-                <th>Description</th>
-                <th>Manufacturer</th>
-                <th>Price</th>
-                <th></th>
-                <th></th>
-            </tr>
-            <c:forEach var="productCommand" items="${purchaseInvoiceCommand.productList}">
-                <tr>
-                    <td>${productCommand.name}</td>
-                    <td>${productCommand.description}</td>
-                    <td>${productCommand.manufacturer}</td>
-                    <td>${productCommand.price} $</td>
-                </tr>
+            <c:forEach var="purchaseInvoiceCommand" items="${purchaseInvoiceCommandList}">
+            <div style="background: white;margin-bottom: 8px;">
+                <div style="float: right;">
+                    <h5 class="news-header">Issued for:<br>
+                    </h5>
+                    <h6 class="news-body">
+                            ${purchaseInvoiceCommand.userName}<br>
+                            ${purchaseInvoiceCommand.shipToAddressCountry}<br>
+                            ${purchaseInvoiceCommand.shipToAddressCity}<br>
+                            ${purchaseInvoiceCommand.shipToAddressStreet}<br>
+                    </h6>
+                </div>
+                <table class="cart" style="width:100%; background:white;">
+                    <tr>
+                        <th>Item name</th>
+                        <th>Description</th>
+                        <th>Manufacturer</th>
+                        <th>Price</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <c:forEach var="productCommand" items="${purchaseInvoiceCommand.productList}">
+                        <tr>
+                            <td>${productCommand.name}</td>
+                            <td>${productCommand.description}</td>
+                            <td>${productCommand.manufacturer}</td>
+                            <td>${productCommand.price} $</td>
+                        </tr>
+                    </c:forEach>
+                </table>
+                <div style="float:right">
+                    <p clss="news-body">
+                        <br>
+                        Total price ${purchaseInvoiceCommand.price} $
+                        <br><br>
+                    </p>
+                </div>
+                <div style="clear:both;"></div>
+                <br/>
+                <br/>
+            </div>
             </c:forEach>
-        </table>
-        <div class="news" style="float:right">
-            <p clss="news-body">
-                <br>
-                Total price ${purchaseInvoiceCommand.price} $
-                <br><br>
-            </p>
         </div>
-            <br/>
-            <br/>
-        </c:forEach>
-
     </div>
-</div>
-<div class="footer">
-    <jsp:include page="${request.contextPath}/footer"></jsp:include>
-</div>
-
+    <div class="footer">
+        <jsp:include page="${request.contextPath}/footer"></jsp:include>
+    </div>
 </div>
 </body>
 </html>
