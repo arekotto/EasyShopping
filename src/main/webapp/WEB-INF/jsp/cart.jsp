@@ -49,9 +49,11 @@
                     </tr>
                     </c:forEach>
                 </table>
-                <form action="/purchase-invoice/create">
-                    <input type="submit" name="checkout">
-                </form>
+                <c:if test="${!empty productCommandList}">
+                    <form action="/purchase-invoice/create">
+                        <input type="submit" value="Buy">
+                    </form>
+                </c:if>
             </div>
         </div>
     </div>

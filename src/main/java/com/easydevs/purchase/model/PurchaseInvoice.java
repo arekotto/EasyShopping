@@ -99,6 +99,6 @@ public class PurchaseInvoice {
             totalPrice += standardProduct.getPrice();
         }
 
-        this.price = totalPrice;
+        this.price = Math.round(totalPrice * 100.0) / 100.0;
     }
 }
