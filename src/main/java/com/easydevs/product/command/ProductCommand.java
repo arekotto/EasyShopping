@@ -1,7 +1,11 @@
 package com.easydevs.product.command;
 
+import com.easydevs.product.model.Review;
 import com.easydevs.product.model.StandardProduct;
 import com.easydevs.product.service.CategoryService;
+
+import java.util.List;
+
 /**
  * Created by Arek on 07.01.2017.
  */
@@ -18,6 +22,7 @@ public class ProductCommand {
     private String categoryName;
     private boolean hasImage;
     private boolean shouldHideAddToCartButton = false;
+    private List<Review> reviews;
 
     public ProductCommand() {
     }
@@ -31,6 +36,7 @@ public class ProductCommand {
         categoryId = standardProduct.getCategory();
         price = standardProduct.getPrice();
         hasImage = standardProduct.isHasImage();
+        reviews = standardProduct.getReviews();
     }
 
 
@@ -109,4 +115,8 @@ public class ProductCommand {
     public void setShouldHideAddToCartButton(boolean shouldHideAddToCartButton) {
         this.shouldHideAddToCartButton = shouldHideAddToCartButton;
     }
+
+    public List<Review> getReviews() { return reviews; }
+
+    public void setReviews(List<Review> reviews) { this.reviews = reviews; }
 }

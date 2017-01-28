@@ -2,9 +2,11 @@ package com.easydevs.controller;
 
 import com.easydevs.product.command.ProductCommand;
 import com.easydevs.product.command.ProductCreationCommand;
+import com.easydevs.product.command.ReviewCommand;
 import com.easydevs.product.command.SearchCommand;
 import com.easydevs.product.model.Category;
 import com.easydevs.product.model.ProductImage;
+import com.easydevs.product.model.Review;
 import com.easydevs.product.model.StandardProduct;
 import com.easydevs.product.service.CategoryService;
 import com.easydevs.product.service.ImageService;
@@ -138,15 +140,38 @@ public class ProductController {
 
         StandardProduct product = (StandardProduct) productService.getProductById(productId);
         if (product != null) {
+            Long userId = Long.parseLong(userIdCookie);
+
             ProductCommand productCommand = new ProductCommand(product);
             productCommand.setCategoryName(categoryService.getCategoryNameById(product.getCategory()));
+
+            ReviewCommand reviewCommand = new ReviewCommand();
+//            reviewCommand.setUserId(Long.parseLong(userIdCookie));
+            int[] ratings = new int[]{1, 2, 3, 4, 5};
+
             model.addAttribute("productCommand", productCommand);
+            model.addAttribute("reviewCommand", reviewCommand);
+            model.addAttribute("ratings", ratings);
 
             Boolean isRequestVerified = (Boolean) request.getAttribute("isRequestVerified");
-            if (isRequestVerified != null && isRequestVerified && product.getAddedByUserId() == Long.parseLong(userIdCookie)) {
+            if (isRequestVerified != null && isRequestVerified && product.getAddedByUserId() == userId) {
                 model.addAttribute("isUserProduct", true);
             } else {
                 model.addAttribute("isUserProduct", false);
+            }
+
+            boolean isReviewedByUser = product.isReviewedByUserId(userId);
+            if (isReviewedByUser) {
+                model.addAttribute("isReviewed", true);
+            } else {
+                model.addAttribute("isReviewed", false);
+            }
+
+            boolean isHasReviews = product.isHasReviews();
+            if (isHasReviews) {
+                model.addAttribute("hasReviews", true);
+            } else {
+                model.addAttribute("hasReviews", false);
             }
 
             return "product_view";
@@ -154,6 +179,21 @@ public class ProductController {
         }
 
         return "";
+    }
+
+    @RequestMapping(value="/review")
+    public String rateProduct(Model model, Long productId, ReviewCommand reviewCommand,
+                            @CookieValue(value = "id", defaultValue = "") String userIdCookie) {
+        Review review = new Review();
+
+        review.setUserId(Long.parseLong(userIdCookie));
+        review.setRating(reviewCommand.getRating());
+        review.setReviewText(reviewCommand.getReviewText());
+
+        this.productService.rateProduct(productId, review);
+        model.addAttribute("isReviewed", true);
+
+        return "redirect:view/" + productId;
     }
 
     @ResponseBody

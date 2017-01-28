@@ -1,5 +1,7 @@
 package com.easydevs.product.model;
 
+import java.util.List;
+
 /**
  * Created by Arek on 02.01.2017.
  */
@@ -14,6 +16,7 @@ public class StandardProduct implements Product {
     private long categoryId;
     private String categoryName;
     private boolean hasImage = false;
+    private List<Review> reviews;
 
     public StandardProduct(){
 
@@ -79,4 +82,12 @@ public class StandardProduct implements Product {
     public void setHasImage(boolean hasImage) {
         this.hasImage = hasImage;
     }
+
+    public List<Review> getReviews() { return reviews; }
+
+    public void setReviews(List<Review> reviews) { this.reviews = reviews; }
+
+    public boolean isHasReviews() { return this.getReviews() != null && !this.getReviews().isEmpty(); }
+
+    public boolean isReviewedByUserId(Long userId) { return this.isHasReviews() && this.getReviews().contains(userId); }
 }

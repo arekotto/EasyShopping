@@ -2,8 +2,11 @@ package com.easydevs.product.service;
 
 import com.easydevs.product.model.Category;
 import com.easydevs.product.model.Product;
+import com.easydevs.product.model.Review;
 import com.easydevs.product.model.StandardProduct;
 import com.easydevs.support.DbIdSequence;
+import com.easydevs.user.UserService;
+import com.easydevs.user.model.StandardUser;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
@@ -18,6 +21,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -32,6 +36,9 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     @Qualifier("contentMongoTemplate")
     private MongoTemplate mongoTemplate;
+
+    @Autowired
+    private UserService userService;
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
     private final String PRODUCT_ID_SEQUENCE_COLLECTION_NAME = "productIdSequence";
@@ -94,6 +101,28 @@ public class ProductServiceImpl implements ProductService {
         Update update = Update.fromDBObject(dbDoc);
 
         mongoTemplate.upsert(query, update, StandardProduct.class);
+    }
+
+    @Override
+    public void rateProduct(long productId, Review review) {
+        log.info("ProductService - rateProduct", productId, review.toString());
+
+        StandardUser user = (StandardUser) this.userService.getUserById(review.getUserId());
+        StandardProduct updatedProduct = (StandardProduct) this.getProductById(productId);
+
+        review.setUserName(user.getName());
+        List<Review> reviews;
+
+        if (updatedProduct.isHasReviews()) {
+            reviews = updatedProduct.getReviews();
+        } else {
+            reviews = new ArrayList<Review>();
+        }
+
+        reviews.add(review);
+        updatedProduct.setReviews(reviews);
+
+        this.updateProduct(updatedProduct);
     }
 
     @Override

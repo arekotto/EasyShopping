@@ -3,6 +3,7 @@ package com.easydevs.product.service;
 
 import com.easydevs.product.model.Category;
 import com.easydevs.product.model.Product;
+import com.easydevs.product.model.Review;
 import com.easydevs.product.model.StandardProduct;
 //import com.sun.xml.internal.bind.api.impl.NameConverter;
 
@@ -15,6 +16,8 @@ public interface ProductService {
     Product getProductById(long productId);
 
     Product createNewProduct();
+
+    void rateProduct(long productId, Review review);
 
     void updateProduct(Product product);
 
