@@ -148,7 +148,7 @@ public class ProductController {
             ReviewCommand reviewCommand = new ReviewCommand();
 //            reviewCommand.setUserId(Long.parseLong(userIdCookie));
             int[] ratings = new int[]{1, 2, 3, 4, 5};
-
+            productCommand.setAverageRating(product.countAverageRating());
             model.addAttribute("productCommand", productCommand);
             model.addAttribute("reviewCommand", reviewCommand);
             model.addAttribute("ratings", ratings);
@@ -160,7 +160,7 @@ public class ProductController {
                 model.addAttribute("isUserProduct", false);
             }
 
-            boolean isReviewedByUser = product.isReviewedByUserId(userId);
+            Boolean isReviewedByUser = product.isReviewedByUserId(userId);
             if (isReviewedByUser) {
                 model.addAttribute("isReviewed", true);
             } else {
@@ -229,6 +229,7 @@ public class ProductController {
         for (StandardProduct standardProduct : standardProducts) {
             ProductCommand productCommand = new ProductCommand(standardProduct);
             productCommand.setCategoryName(categoryService.getCategoryNameById(standardProduct.getCategory()));
+            productCommand.setAverageRating(standardProduct.countAverageRating());
             productCommandList.add(productCommand);
         }
         model.addAttribute("productCommandList", productCommandList);
@@ -247,6 +248,7 @@ public class ProductController {
                 if (userId.equals(String.valueOf(productCommand.getCreatedByUserId()))) {
                     productCommand.setShouldHideAddToCartButton(true);
                 }
+                productCommand.setAverageRating(standardProduct.countAverageRating());
                 productCommandList.add(productCommand);
             }
             model.addAttribute("productCommandList", productCommandList);
@@ -289,6 +291,7 @@ public class ProductController {
         List<ProductCommand> productCommandList = new ArrayList<>();
         for (StandardProduct standardProduct : productList) {
             ProductCommand productCommand = new ProductCommand(standardProduct);
+            productCommand.setAverageRating(standardProduct.countAverageRating());
             productCommand.setCategoryName(categoryService.getCategoryNameById(standardProduct.getCategory()));
             productCommandList.add(productCommand);
         }

@@ -89,5 +89,27 @@ public class StandardProduct implements Product {
 
     public boolean isHasReviews() { return this.getReviews() != null && !this.getReviews().isEmpty(); }
 
-    public boolean isReviewedByUserId(Long userId) { return this.isHasReviews() && this.getReviews().contains(userId); }
+    public boolean isReviewedByUserId(Long userId) {
+        boolean isReviewed = false;
+
+        if (this.isHasReviews()) {
+            for (Review review : this.getReviews()) {
+                isReviewed = review.getUserId() == userId;
+            }
+        }
+
+        return isReviewed;
+    }
+
+    public double countAverageRating() {
+        if (!this.isHasReviews()) return 0;
+
+        int sum = 0;
+
+        for (Review review: this.getReviews()) {
+            sum += review.getRating();
+        }
+
+        return (double) sum / this.getReviews().size();
+    }
 }

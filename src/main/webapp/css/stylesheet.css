@@ -64,7 +64,11 @@ table {
 }
 
 .item{
-    border: 1px solid silver; height:200px; width:306px;vertical-align: text-top;background:white;float:left;margin-left:6px;margin-right:6px;margin-bottom:12px;
+    border: 1px solid silver; height:280px; width:306px;vertical-align: text-top;background:white;float:left;margin-left:6px;margin-right:6px;margin-bottom:12px;
+}
+
+.item-small {
+    border: 1px solid silver; height:120px; width:306px;vertical-align: text-top;background:white;float:left;margin-left:6px;margin-right:6px;margin-bottom:12px;
 }
 
 .container{

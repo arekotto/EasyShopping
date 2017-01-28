@@ -52,7 +52,7 @@
                             <tr>
                                 <td>
                                     <c:if test="${productCommand.hasImage}">
-                                        <img style="max-width:150px;" src="/product/image/${productCommand.id}"/>
+                                        <img style="max-width:150px; max-height: 150px;" src="/product/image/${productCommand.id}"/>
                                     </c:if>
                                 </td>
                                 <td style="vertical-align:top; padding:8px;">
@@ -63,13 +63,14 @@
                                     Manufacturer: </br>
                                         ${productCommand.manufacturer}</br>
                                     Category: </br>
-                                        ${productCommand.categoryName}
+                                        ${productCommand.categoryName} <br>
+                                    Rating: <br>
+                                        ${productCommand.averageRating}
                                 </td>
                             </tr>
                             <tr>
                                 <c:if test="${!isOnlyForUser}">
-
-                                    <td style="vertical-align:top; padding:8px;" align="center">
+                                    <td style="padding:8px;" align="center">
                                         <form action="/product/view/${productCommand.id}">
                                             <input type="submit" value="Details"/>
                                         </form>

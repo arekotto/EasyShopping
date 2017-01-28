@@ -70,6 +70,14 @@
                                 ${productCommand.price}
                             </td>
                         </tr>
+                        <tr>
+                            <td>
+                                Rating:
+                            </td>
+                            <td>
+                                ${productCommand.averageRating}
+                            </td>
+                        </tr>
                     </table>
                     <c:if test="${productCommand.hasImage}">
                         <img style="max-width:700px;margin-top:12px;margin-bottom: 12px;"
@@ -82,13 +90,12 @@
                         </form>
                     </c:if>
                 </div>
-                <c:if test="${!isReviewed} || ${isUserProduct}">
+                <c:if test="${!isReviewed && !isUserProduct}">
                     <div style="float:right; background: white">
                         <div class="news-header">
                             Write review
                         </div>
                         <div class="news-body">
-
                             <form:form cssStyle="width:50%;margin:10px auto;"
                                        action="/product/review"
                                        commandName="reviewCommand">
@@ -112,11 +119,11 @@
             <div class="cart">
                 <c:if test="${hasReviews}">
                     <c:forEach var="review" items="${productCommand.reviews}">
-                        <div class="item">
+                        <div class="item-small" style="background:white;">
                             <tr>
                                 <td> Rated by:</td>
                                 <td> ${review.userName} <br></td>
-                                <td> ${review.rating} <br></td>
+                                <td>Rate: ${review.rating} <br><br></td>
                                 <td> ${review.reviewText} <br></td>
                             </tr>
                         </div>

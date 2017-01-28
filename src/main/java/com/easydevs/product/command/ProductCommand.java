@@ -23,6 +23,7 @@ public class ProductCommand {
     private boolean hasImage;
     private boolean shouldHideAddToCartButton = false;
     private List<Review> reviews;
+    private double averageRating;
 
     public ProductCommand() {
     }
@@ -119,4 +120,9 @@ public class ProductCommand {
     public List<Review> getReviews() { return reviews; }
 
     public void setReviews(List<Review> reviews) { this.reviews = reviews; }
+
+    public double getAverageRating() { return averageRating; }
+
+    public void setAverageRating(double rating) { averageRating = rating; }
+
 }
