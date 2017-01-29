@@ -11,6 +11,7 @@ public class UserStandardCommand {
     private String street;
     private String country;
     private String city;
+    private boolean isEmailVerified;
 
     public UserStandardCommand() {
     }
@@ -21,7 +22,7 @@ public class UserStandardCommand {
         street = standardUser.getStreet();
         country = standardUser.getCountry();
         city = standardUser.getCity();
-
+        isEmailVerified = standardUser.isEmailVerified();
     }
 
     public String getName() {
@@ -62,5 +63,13 @@ public class UserStandardCommand {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public boolean getIsEmailVerified() {
+        return isEmailVerified;
+    }
+
+    public void setIsEmailVerified(boolean emailVerified) {
+        isEmailVerified = emailVerified;
     }
 }

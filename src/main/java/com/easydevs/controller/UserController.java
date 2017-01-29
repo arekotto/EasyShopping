@@ -3,6 +3,7 @@ package com.easydevs.controller;
 import com.easydevs.auth.AuthenticationResult;
 import com.easydevs.auth.AuthenticationService;
 import com.easydevs.auth.Encryptor;
+import com.easydevs.user.EmailVerificationService;
 import com.easydevs.user.UserPasswordService;
 import com.easydevs.user.UserService;
 import com.easydevs.user.UserType;
@@ -10,12 +11,11 @@ import com.easydevs.user.command.UserLoginCommand;
 import com.easydevs.user.command.UserRegistrationCommand;
 import com.easydevs.user.command.UserStandardCommand;
 import com.easydevs.user.model.StandardUser;
+import com.easydevs.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
@@ -36,6 +36,9 @@ public class UserController {
 
     @Autowired
     private UserPasswordService userPasswordService;
+
+    @Autowired
+    private EmailVerificationService emailVerificationService;
 
     @RequestMapping("/register")
     public String showRegister(Model model,
@@ -83,6 +86,8 @@ public class UserController {
 
             userService.updateUser(newUser);
 
+            emailVerificationService.beginVerificationProcess(newUser);
+
             response.addCookie(createNewCookie("id", String.valueOf(newUser.getId())));
             response.addCookie(createNewCookie("token", newUser.getToken()));
             return "redirect:homepage";
@@ -129,6 +134,15 @@ public class UserController {
         model.addAttribute("userStandardCommand", new UserStandardCommand(user));
 
         return "/user_homepage";
+    }
+
+    @RequestMapping("send-new-verification-email")
+    public String sendNewVerificationEmail(@CookieValue(value = "id", defaultValue = "") String userIdCookie) {
+        StandardUser user = (StandardUser) userService.getUserById(Long.parseLong(userIdCookie));
+        if (user != null && !user.isEmailVerified()) {
+            emailVerificationService.beginVerificationProcess(user);
+        }
+        return "redirect:homepage";
     }
 
     @RequestMapping("/login")
@@ -190,6 +204,34 @@ public class UserController {
             redirectAttributes.addFlashAttribute("userLoginCommand", userLoginCommand);
             return "redirect:login";
         }
+    }
+
+    @RequestMapping("/verify-email")
+    public String verifyEmail(Model model,
+                              @RequestParam Long userId,
+                              @RequestParam String verificationToken) {
+
+        StandardUser user = (StandardUser) userService.getUserById(userId);
+        if (user != null) {
+            if (user.isEmailVerified()) {
+                model.addAttribute("isEmailVerified", false);
+                model.addAttribute("isEmailAlreadyVerified", true);
+            } else {
+                if (user.getEmailVerificationToken().equals(verificationToken)) {
+                    user.setEmailVerified(true);
+                    userService.updateUser(user);
+                    model.addAttribute("isEmailVerified", true);
+                    model.addAttribute("isEmailAlreadyVerified", false);
+
+                }
+            }
+        } else {
+            model.addAttribute("isEmailVerified", false);
+            model.addAttribute("isEmailAlreadyVerified", false);
+
+        }
+
+        return "user_email_verification";
     }
 
     private Cookie createNewCookie(String key, String value) {

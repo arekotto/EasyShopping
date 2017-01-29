@@ -11,6 +11,9 @@ import com.easydevs.product.model.StandardProduct;
 import com.easydevs.product.service.CategoryService;
 import com.easydevs.product.service.ImageService;
 import com.easydevs.product.service.ProductService;
+import com.easydevs.user.UserService;
+import com.easydevs.user.model.StandardUser;
+import com.easydevs.user.model.User;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -42,8 +45,15 @@ public class ProductController {
     @Autowired
     private ImageService imageService;
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping("/createForm")
-    public String showCreateNewForm(Model model) {
+    public String showCreateNewForm(Model model, @CookieValue("id") String userId) {
+        StandardUser user = (StandardUser) userService.getUserById(Long.parseLong(userId));
+        if (user != null && !user.isEmailVerified()) {
+            return "user_email_not_verified_warn";
+        }
         List<Category> categoryCommandList = categoryService.getAll();
         model.addAttribute("productCreationCommand", new ProductCreationCommand());
         model.addAttribute("categoryCommandList", categoryCommandList);
@@ -56,7 +66,10 @@ public class ProductController {
                          @ModelAttribute("productCreationCommand") ProductCreationCommand productCreationCommand,
                          MultipartHttpServletRequest request) throws IOException {
 
-
+        StandardUser user = (StandardUser) userService.getUserById(Long.parseLong(userId));
+        if (user != null && !user.isEmailVerified()) {
+            return "user_email_not_verified_warn";
+        }
 
         StandardProduct newProduct = (StandardProduct) productService.createNewProduct();
 
