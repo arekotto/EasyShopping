@@ -64,6 +64,7 @@ public class RouterController {
         headerCommand.setIsLoggedIn(true);
         headerCommand.setUserName(user.getName());
         headerCommand.setUserEmail(user.getEmail());
+        headerCommand.setIsAdmin(user.getIsAdmin());
         return headerCommand;
     }
 }

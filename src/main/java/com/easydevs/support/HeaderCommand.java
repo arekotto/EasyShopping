@@ -7,6 +7,7 @@ public class HeaderCommand {
     private boolean isUserLoggedIn = false;
     private String userName;
     private String userEmail;
+    private boolean isAdmin;
 
     public String getUserName() {
         return userName;
@@ -27,6 +28,12 @@ public class HeaderCommand {
     public boolean getIsLoggedIn() {
         return isUserLoggedIn;
     }
+
+    public boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) { this.isAdmin = isAdmin; }
 
     public void setIsLoggedIn(boolean isLoggedIn) {
         this.isUserLoggedIn = isLoggedIn;

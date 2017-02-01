@@ -17,6 +17,7 @@ public class StandardUser implements User {
     private Long tokenValidationTimeStamp;
     private String emailVerificationToken;
     private boolean isEmailVerified = false;
+    private boolean isAdmin;
 
     public StandardUser(){}
 
@@ -81,6 +82,10 @@ public class StandardUser implements User {
 
     public String getCountry() {
         return this.country;
+    }
+
+    public boolean getIsAdmin() {
+        return this.isAdmin;
     }
 
     public Long getTokenValidationTimeStamp() {

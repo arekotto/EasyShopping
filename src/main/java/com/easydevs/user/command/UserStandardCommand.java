@@ -12,6 +12,7 @@ public class UserStandardCommand {
     private String country;
     private String city;
     private boolean isEmailVerified;
+    private boolean isAdmin;
 
     public UserStandardCommand() {
     }
@@ -59,6 +60,10 @@ public class UserStandardCommand {
 
     public String getCity() {
         return city;
+    }
+
+    public boolean getIsAdmin() {
+        return isAdmin;
     }
 
     public void setCity(String city) {
