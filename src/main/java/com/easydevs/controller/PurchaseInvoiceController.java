@@ -54,6 +54,9 @@ public class PurchaseInvoiceController {
         if (userCart != null && userCart.getProductIdList() != null && !userCart.getProductIdList().isEmpty()) {
             PurchaseInvoice invoice = purchaseInvoiceService.createNewPurchaseInvoice();
             StandardUser user = (StandardUser) userService.getUserById(userIdLong);
+            if (user != null && !user.isEmailVerified()) {
+                return "user_email_not_verified_warn";
+            }
             List<StandardProduct> productList = new ArrayList<>();
 
             for (Long productId : userCart.getProductIdList()) {

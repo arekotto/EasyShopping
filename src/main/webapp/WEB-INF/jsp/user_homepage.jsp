@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: arekotto
@@ -23,7 +24,12 @@
                 <div class="title">
                         User info
                 </div>
+            <c:if test="${!userStandardCommand.isEmailVerified}" >
                 <div style="background:white; ">
+                    A verification email has been sent to your address.
+                </div>
+            </c:if>
+            <div style="background:white; ">
                     <form:form cssStyle="width:50%;margin:0px auto;" action="${request.contextPath}/user/edit"
                                commandName="userStandardCommand">
                         <%--Email: ${userStandardCommand.email}--%>

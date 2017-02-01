@@ -15,6 +15,8 @@ public class StandardUser implements User {
     private String city;
     private String token;
     private Long tokenValidationTimeStamp;
+    private String emailVerificationToken;
+    private boolean isEmailVerified = false;
 
     public StandardUser(){}
 
@@ -83,6 +85,22 @@ public class StandardUser implements User {
 
     public Long getTokenValidationTimeStamp() {
         return this.tokenValidationTimeStamp;
+    }
+
+    public String getEmailVerificationToken() {
+        return emailVerificationToken;
+    }
+
+    public void setEmailVerificationToken(String emailVerificationToken) {
+        this.emailVerificationToken = emailVerificationToken;
+    }
+
+    public boolean isEmailVerified() {
+        return isEmailVerified;
+    }
+
+    public void setEmailVerified(boolean emailVerified) {
+        isEmailVerified = emailVerified;
     }
 
     @Override
