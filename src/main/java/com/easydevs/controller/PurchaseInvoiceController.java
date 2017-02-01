@@ -9,6 +9,7 @@ import com.easydevs.purchase.model.Cart;
 import com.easydevs.purchase.model.PurchaseInvoice;
 import com.easydevs.purchase.service.CartService;
 import com.easydevs.purchase.service.PurchaseInvoiceService;
+import com.easydevs.user.EmailService;
 import com.easydevs.user.UserService;
 import com.easydevs.user.model.StandardUser;
 import com.easydevs.user.model.User;
@@ -42,6 +43,9 @@ public class PurchaseInvoiceController {
 
     @Autowired
     CartService cartService;
+
+    @Autowired
+    EmailService emailService;
 
     @RequestMapping("/create")
     public String showCreateNewForm(Model model,
@@ -79,6 +83,8 @@ public class PurchaseInvoiceController {
             userCart.resetCart();
             cartService.updateCartForUser(userIdLong, userCart);
 
+            emailService.sendEmail(user.getEmail(), "Purchase Confirmation", getPurchaseEmailBody(invoice ,user.getName()));
+
             return "redirect:view/" + invoice.getId();
 
         }
@@ -112,4 +118,19 @@ public class PurchaseInvoiceController {
         return "";
     }
 
+    private String getPurchaseEmailBody(PurchaseInvoice invoice, String userName) {
+
+        String body;
+
+        body = "Hello " + userName + "!\n\n";
+        body = body.concat("This is a confirmation email of your purchase from the EasyShopping store. Below are the items you have acquired:\n\n");
+
+        for (StandardProduct standardProduct : invoice.getProductList()) {
+            body = body.concat(standardProduct.getDescriptionForEmail());
+        }
+
+        body = body.concat("\n\nThank you for shopping with us!\n\nThe EazyDevs Team\n");
+        System.out.println(body);
+        return body;
+    }
 }

@@ -18,14 +18,35 @@ public class EmailServiceImpl implements EmailService {
 
 
     @Override
-    public void sendVerificationEmail(Long userId, String userEmail, String verificationToken) {
+    public void sendVerificationEmail(Long userId, String emailAddress, String verificationToken) {
 
-        SimpleMailMessage crunchifyMsg = new SimpleMailMessage();
-        crunchifyMsg.setFrom(COMPANY_ADDRESS);
-        crunchifyMsg.setTo(userEmail);
-        crunchifyMsg.setSubject("Email Verification");
-        crunchifyMsg.setText("https://{host}/user/verify-email?userId=" + userId + "&verificationToken=" + verificationToken);
-        crunchifymail.send(crunchifyMsg);
+        String emailContent = "https://{host}/user/verify-email?userId=" + userId + "&verificationToken=" + verificationToken;
+        sendEmail(emailAddress, "Email Verification", emailContent);
 
+
+//        SimpleMailMessage crunchifyMsg = new SimpleMailMessage();
+//        crunchifyMsg.setFrom(COMPANY_ADDRESS);
+//        crunchifyMsg.setTo(emailAddress);
+//        crunchifyMsg.setSubject("Email Verification");
+//        crunchifyMsg.setText("https://{host}/user/verify-email?userId=" + userId + "&verificationToken=" + verificationToken);
+//        crunchifymail.send(crunchifyMsg);
+
+    }
+
+    @Override
+    public void sendEmail(String emailAddress, String emailSubject, String emailContent) {
+
+        // multithreading
+
+        Runnable emailTask = () -> {
+            SimpleMailMessage crunchifyMsg = new SimpleMailMessage();
+            crunchifyMsg.setFrom(COMPANY_ADDRESS);
+            crunchifyMsg.setTo(emailAddress);
+            crunchifyMsg.setSubject(emailSubject);
+            crunchifyMsg.setText(emailContent);
+            crunchifymail.send(crunchifyMsg);
+        };
+
+        new Thread(emailTask).start();
     }
 }

@@ -112,4 +112,12 @@ public class StandardProduct implements Product {
 
         return (double) sum / this.getReviews().size();
     }
+
+    public String getDescriptionForEmail() {
+        return
+                "name: " + name +
+                ", manufacturer: " + manufacturer +
+                ", description: " + description +
+                ", price: " + price + '\n';
+    }
 }
