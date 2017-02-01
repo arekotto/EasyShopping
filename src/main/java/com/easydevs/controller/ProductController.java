@@ -136,7 +136,7 @@ public class ProductController {
 
     @RequestMapping("/view/{productId}")
     public String view(Model model, @PathVariable Long productId, HttpServletRequest request,
-                       @CookieValue(value = "id", defaultValue = "") String userIdCookie) {
+                       @CookieValue(value = "id", defaultValue = "0") String userIdCookie) {
 
         StandardProduct product = (StandardProduct) productService.getProductById(productId);
         if (product != null) {
@@ -161,7 +161,7 @@ public class ProductController {
             }
 
             Boolean isReviewedByUser = product.isReviewedByUserId(userId);
-            if (isReviewedByUser) {
+            if (isReviewedByUser || userId == 0) {
                 model.addAttribute("isReviewed", true);
             } else {
                 model.addAttribute("isReviewed", false);
