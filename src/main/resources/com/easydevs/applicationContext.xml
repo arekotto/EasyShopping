@@ -15,6 +15,7 @@
     <context:component-scan base-package="com.easydevs.auth"/>
     <context:component-scan base-package="com.easydevs.product.service"/>
     <context:component-scan base-package="com.easydevs.purchase.service"/>
+    <context:component-scan base-package="com.easydevs.news"/>
 
     <!--<bean id="userService" class="com.easydevs.user.UserServiceImpl"/>-->
     <!--<bean id="userService" class="com.easydevs.user.UserServiceImpl"/>-->

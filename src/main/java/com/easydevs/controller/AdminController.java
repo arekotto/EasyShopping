@@ -1,5 +1,7 @@
 package com.easydevs.controller;
 
+import com.easydevs.news.News;
+import com.easydevs.news.NewsService;
 import com.easydevs.product.command.ProductCommand;
 import com.easydevs.product.model.StandardProduct;
 import com.easydevs.purchase.model.Cart;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -25,6 +28,9 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private NewsService newsService;
 
     @RequestMapping("/main")
     public String adminMain(Model model, @CookieValue("id") String userId) {
@@ -45,9 +51,16 @@ public class AdminController {
         return "redirect:deleteuser";
     }
 
-    @RequestMapping("/createnews")
-    public String createNews(Model model) {
+    @RequestMapping("/addnews")
+    public String addNews(Model model) {
+        News newsCommand = new News();
+        model.addAttribute("newsCommand", newsCommand);
+        return "admin/admin_add_news";
+    }
 
-        return "redirect:createnews";
+    @RequestMapping("/createnews")
+    public String createNews(Model model, @ModelAttribute ("newsCommand") News newNews) {
+        newsService.insertNews(newNews);
+        return "redirect:main";
     }
 }

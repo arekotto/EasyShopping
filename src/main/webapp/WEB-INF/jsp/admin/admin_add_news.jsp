@@ -23,13 +23,13 @@
             </div>
             <form:form style="background:white; padding:8px;"
                        action="${request.contextPath}/admin/createnews"
-                       commandName="newsCreationCommand"
+                       commandName="newsCommand"
                        method="post"
                        enctype="multipart/form-data">
                 <table class="ncart">
                     <tr>
                         <td>
-                            <form:label path="name">Title</form:label>
+                            <form:label path="title">Title:</form:label>
                         </td>
                         <td>
                             <form:input path="title"/>

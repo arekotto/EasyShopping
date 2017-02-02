@@ -56,7 +56,7 @@ public class RouterController {
 
     @RequestMapping("/home")
     public String retrieveHomePage() {
-        return "home";
+        return "redirect:/";
     }
 
     private HeaderCommand getHeaderCommand(StandardUser user) {

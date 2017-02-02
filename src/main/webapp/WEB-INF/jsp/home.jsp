@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrzej
@@ -17,17 +18,19 @@
     </div>
     <div class="torso">
         <div class="inner-torso">
+<c:forEach var="newsCommand" items="${newsCommandList}">
             <div class="news">
                 <div class="news-header">
-                    Radek Potyka kicked out of University of Silesia.
+                        ${newsCommand.title}
                 </div>
                 <div class="news-body">
-                    Integer fermentum, enim nec dignissim bibendum, justo arcu finibus nisi, ac sollicitudin ante sapien aliquet diam. Aliquam congue augue a elit faucibus sodales. Nullam hendrerit lacus quis nisl aliquam rhoncus. Aliquam porta vel nibh commodo ultricies. Nullam vel enim risus. Nullam sodales erat justo, eu tempus diam vehicula quis. Donec sed semper nulla. Integer egestas elementum tellus, a gravida lorem porttitor quis. Vestibulum vitae tellus eu lacus ultricies volutpat vel vel ante. In quis volutpat diam. Nullam at nisi at lacus porttitor pretium.
+                        ${newsCommand.content}
                 </div>
                 <div class="news-footer">
-                    Anna Maria Wesołowska 16.03.2012
+                        ${newsCommand.author}
                 </div>
             </div>
+</c:forEach>
             <div class="news">
                 <div class="news-header">
                     New promotion.
