@@ -45,6 +45,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<StandardUser> getAllUsers(){
+        log.info("UserService.getAllUsers");
+        Query query = new Query();
+        List<StandardUser> usersList = mongoTemplate.find(query, StandardUser.class);
+
+        return usersList;
+    }
+
+    @Override
     public User getUserByEmail (String email) {
         log.info("UserService.getUserByLogin", email);
 

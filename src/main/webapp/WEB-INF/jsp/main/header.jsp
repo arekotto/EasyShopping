@@ -68,7 +68,7 @@
             </c:choose>
 <c:choose>
     <c:when test="${headerCommand.isAdmin}">
-        <li><a href="/user/register">Admin panel</a></li>
+        <li><a href="/admin/main">Admin panel</a></li>
     </c:when>
 </c:choose>
 
