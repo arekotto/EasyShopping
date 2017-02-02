@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrzej
@@ -17,7 +18,42 @@
     </div>
     <div class="torso">
         <div class="inner-torso">
-Add news
+            <div class="title">
+                Add news
+            </div>
+            <form:form style="background:white; padding:8px;"
+                       action="${request.contextPath}/admin/createnews"
+                       commandName="newsCreationCommand"
+                       method="post"
+                       enctype="multipart/form-data">
+                <table class="ncart">
+                    <tr>
+                        <td>
+                            <form:label path="name">Title</form:label>
+                        </td>
+                        <td>
+                            <form:input path="title"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <form:label path="content">Content:</form:label>
+                        </td>
+                        <td>
+                            <form:textarea path="content" rows="5"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <form:label path="author">Author:</form:label>
+                        </td>
+                        <td>
+                            <form:input path="author"/>
+                        </td>
+                    </tr>
+                </table>
+                <input type="submit" class="formbutton" value="Create">
+            </form:form>
         </div>
     </div>
     <div class="footer">

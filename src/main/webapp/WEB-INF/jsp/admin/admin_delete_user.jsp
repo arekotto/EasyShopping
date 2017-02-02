@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Andrzej
@@ -26,18 +27,24 @@
 
                 <table class="cart" style="width:100%">
                     <tr>
-                        <th>Item name</th>
-                        <th>Description</th>
-                        <th>Manufacturer</th>
-                        <th>Price</th>
+                        <th>User name</th>
+                        <th>User e-mail</th>
+                        <th></th>
+                        <th></th>
                         <th></th>
                         <th></th>
                     </tr>
-                    <c:forEach var="users" items="${users}">
+                    <c:forEach var="user" items="${users}">
                         <tr>
-                            <td>${users.name}</td>
-                            <td>${users.email}</td>
-                            <td>${users.isEmailVerified}</td>
+                            <td>${user.id}</td>
+                            <td>${user.name}</td>
+                            <td>${user.email}</td>
+                            <td>
+                                <form action="/admin/remove">
+                                <input type="hidden" name="remove" value="${user.id}"/>
+                                <input style="color: red;" type="submit" value="Delete user"/>
+                            </form>
+                            </td>
                         </tr>
                     </c:forEach>
                 </table>

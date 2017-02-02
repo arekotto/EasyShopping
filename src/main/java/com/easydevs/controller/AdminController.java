@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +39,15 @@ public class AdminController {
         return "admin/admin_delete_user";
     }
 
-    @RequestMapping("/addnews")
-    public String addNews(Model model, @CookieValue("id") String userId) {
+    @RequestMapping("/remove")
+    public String removeUser(Model model, @RequestParam("remove") long userId) {
+        userService.removeUser(userId);
+        return "redirect:deleteuser";
+    }
 
-        return "admin/admin_add_news";
+    @RequestMapping("/createnews")
+    public String createNews(Model model) {
+
+        return "redirect:createnews";
     }
 }

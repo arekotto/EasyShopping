@@ -1,5 +1,7 @@
 package com.easydevs.user;
 
+import com.easydevs.product.model.Product;
+import com.easydevs.product.model.StandardProduct;
 import com.easydevs.user.model.StandardUser;
 import com.easydevs.user.model.TempUser;
 import com.easydevs.user.model.User;
@@ -51,6 +53,14 @@ public class UserServiceImpl implements UserService {
         List<StandardUser> usersList = mongoTemplate.find(query, StandardUser.class);
 
         return usersList;
+    }
+
+    @Override
+    public void removeUser(long userId) {
+        log.info("ProductService - removeProduct", userId);
+
+        Query query = new Query(Criteria.where("id").is(userId));
+        mongoTemplate.findAndRemove(query, StandardUser.class);
     }
 
     @Override
