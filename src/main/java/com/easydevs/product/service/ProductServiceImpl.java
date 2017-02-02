@@ -5,8 +5,10 @@ import com.easydevs.product.model.Product;
 import com.easydevs.product.model.Review;
 import com.easydevs.product.model.StandardProduct;
 import com.easydevs.support.DbIdSequence;
+import com.easydevs.user.EmailService;
 import com.easydevs.user.UserService;
 import com.easydevs.user.model.StandardUser;
+import com.easydevs.user.model.User;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
@@ -39,6 +41,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EmailService emailService;
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
     private final String PRODUCT_ID_SEQUENCE_COLLECTION_NAME = "productIdSequence";
@@ -121,6 +126,13 @@ public class ProductServiceImpl implements ProductService {
 
         reviews.add(review);
         updatedProduct.setReviews(reviews);
+
+        StandardUser sendMailToUser = (StandardUser) userService.getUserById(updatedProduct.getAddedByUserId());
+        String addressSendMailTo = sendMailToUser.getEmail();
+        String subject = "Your product- " + updatedProduct.getName() + "was rated";
+        String message = review.toString();
+
+        emailService.sendEmail(addressSendMailTo, subject, message);
 
         this.updateProduct(updatedProduct);
     }
