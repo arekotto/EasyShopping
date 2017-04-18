@@ -25,7 +25,6 @@ public class NewsServiceImpl implements NewsService {
     @Qualifier("contentMongoTemplate")
     private MongoTemplate mongoTemplate;
 
-    private Logger log = LoggerFactory.getLogger(this.getClass());
     private final String NEWS_ID_SEQUENCE_COLLECTION_NAME = "newsIdSequence";
 
     @Override
