@@ -29,6 +29,8 @@ public class AuthFilter extends OncePerRequestFilter{
         add("/user/homepage");
         add("/user/edit");
         add("/user/save");
+        add("/user/edit-password");
+        add("/user/save-password");
         add("/product/createForm");
         add("/product/create");
         add("/product/edit");
@@ -67,11 +69,8 @@ public class AuthFilter extends OncePerRequestFilter{
             }
         }
         boolean verified = requestVerificationService.verifyRequest(request);
-        if (verified) {
-            request.setAttribute("isRequestVerified", true);
-        } else {
-            request.setAttribute("isRequestVerified", false);
-        }
+        request.setAttribute("isRequestVerified", verified);
+
 
         if (verified && authenticationUrls.contains(requestURI)) {
             response.sendRedirect("/user/homepage");

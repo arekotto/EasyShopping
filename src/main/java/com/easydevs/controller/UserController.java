@@ -7,6 +7,7 @@ import com.easydevs.user.EmailVerificationService;
 import com.easydevs.user.UserPasswordService;
 import com.easydevs.user.UserService;
 import com.easydevs.user.UserType;
+import com.easydevs.user.command.UserChangePasswordCommand;
 import com.easydevs.user.command.UserLoginCommand;
 import com.easydevs.user.command.UserRegistrationCommand;
 import com.easydevs.user.command.UserStandardCommand;
@@ -122,9 +123,59 @@ public class UserController {
         return "redirect:homepage";
     }
 
+    @RequestMapping("/edit-password")
+    public String showEditEmail(Model model, @CookieValue(value = "id") String userIdCookie) {
+        if (!model.containsAttribute("userChangePasswordCommand")) {
+            model.addAttribute("userChangePasswordCommand", new UserChangePasswordCommand());
+        }
+        return "/user_edit_password";
+    }
+
+    @RequestMapping("/save-password")
+    public String savePassword(@CookieValue(value = "id") String userIdCookie,
+                               HttpServletResponse response,
+                               RedirectAttributes redirectAttributes,
+                       @ModelAttribute("userChangePasswordCommand") UserChangePasswordCommand userChangePasswordCommand) {
+
+        if (!userChangePasswordCommand.getNewPassword().equals(userChangePasswordCommand.getNewPasswordRetyped())) {
+            UserChangePasswordCommand newUserChangePasswordCommand = new UserChangePasswordCommand();
+            newUserChangePasswordCommand.setErrorMessage("Passwords don't match.");
+            redirectAttributes.addFlashAttribute("userChangePasswordCommand", newUserChangePasswordCommand);
+            return "redirect:edit-password";
+        }
+        if (!authenticationService.isPasswordFormatCorrect(userChangePasswordCommand.getNewPassword())) {
+            UserChangePasswordCommand newUserChangePasswordCommand = new UserChangePasswordCommand();
+            newUserChangePasswordCommand.setErrorMessage("The new password is too short.");
+            redirectAttributes.addFlashAttribute("userChangePasswordCommand", newUserChangePasswordCommand);
+            return "redirect:edit-password";
+        }
+
+        Long userId = Long.parseLong(userIdCookie);
+        StandardUser user = (StandardUser) userService.getUserById(userId);
+        AuthenticationResult authResult = authenticationService.login(user.getEmail(), userChangePasswordCommand.getCurrentPassword());
+        if(!authResult.getSuccessful()) {
+            UserChangePasswordCommand newUserChangePasswordCommand = new UserChangePasswordCommand();
+            newUserChangePasswordCommand.setErrorMessage("The password you have entered is incorrect.");
+            redirectAttributes.addFlashAttribute("userChangePasswordCommand", newUserChangePasswordCommand);
+            return "redirect:edit-password";
+        }
+        userPasswordService.insertOrUpdatePassword(
+                userId,
+                new Encryptor().encryptWithMD5(userChangePasswordCommand.getNewPassword()));
+
+        authResult = authenticationService.login(user.getEmail(), userChangePasswordCommand.getNewPassword());
+        user.setToken(authResult.getToken());
+        user.setTokenValidationStamp(System.currentTimeMillis());
+        userService.updateUser(user);
+
+        response.addCookie(createNewCookie("token", authResult.getToken()));
+
+        return "redirect:homepage";
+    }
+
+
     @RequestMapping("/homepage")
     public String showUser(Model model,
-                           HttpServletResponse response,
                            @CookieValue(value = "id", defaultValue = "") String userIdCookie,
                            @CookieValue(value = "token", defaultValue = "") String userTokenCookie) {
 
