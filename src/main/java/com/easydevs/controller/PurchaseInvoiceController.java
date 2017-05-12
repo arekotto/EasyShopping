@@ -32,6 +32,8 @@ import java.util.List;
 @RequestMapping("/purchase-invoice")
 public class PurchaseInvoiceController {
 
+    final static String JSP_PATH_PREFIX = "purchase/";
+
     @Autowired
     PurchaseInvoiceService purchaseInvoiceService;
 
@@ -59,7 +61,7 @@ public class PurchaseInvoiceController {
             PurchaseInvoice invoice = purchaseInvoiceService.createNewPurchaseInvoice();
             StandardUser user = (StandardUser) userService.getUserById(userIdLong);
             if (user != null && !user.isEmailVerified()) {
-                return "user_email_not_verified_warn";
+                return UserController.JSP_PATH_PREFIX + "user_email_not_verified_warn";
             }
             List<StandardProduct> productList = new ArrayList<>();
 
@@ -101,7 +103,7 @@ public class PurchaseInvoiceController {
         model.addAttribute("purchaseInvoiceCommandList", purchaseInvoiceService.getPurchaseInvoiceListByUserId(Long.parseLong(userId)));
 
 
-        return "purchase_all";
+        return JSP_PATH_PREFIX + "purchase_all";
     }
 
     @RequestMapping("/view/{invoiceId}")
@@ -112,7 +114,7 @@ public class PurchaseInvoiceController {
         if (invoice != null) {
             invoice.calculateCurrentPrice();
             model.addAttribute("purchaseInvoiceCommand", invoice);
-            return "purchase_view";
+            return JSP_PATH_PREFIX + "purchase_view";
         }
 
         return "";

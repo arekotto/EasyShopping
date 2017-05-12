@@ -24,6 +24,8 @@ import java.util.List;
 @RequestMapping("/cart")
 public class CartController {
 
+    final static String JSP_PATH_PREFIX = "cart/";
+
     @Autowired
     CartService cartService;
 
@@ -43,7 +45,7 @@ public class CartController {
             }
         }
         model.addAttribute("productCommandList", productCommandList);
-        return "cart";
+        return JSP_PATH_PREFIX + "cart";
     }
 
     @RequestMapping("/add")

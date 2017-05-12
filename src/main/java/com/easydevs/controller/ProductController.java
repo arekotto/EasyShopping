@@ -36,6 +36,8 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
+    final static String JSP_PATH_PREFIX = "product/";
+
     @Autowired
     private ProductService productService;
 
@@ -52,12 +54,12 @@ public class ProductController {
     public String showCreateNewForm(Model model, @CookieValue("id") String userId) {
         StandardUser user = (StandardUser) userService.getUserById(Long.parseLong(userId));
         if (user != null && !user.isEmailVerified()) {
-            return "user_email_not_verified_warn";
+            return UserController.JSP_PATH_PREFIX + "user_email_not_verified_warn";
         }
         List<Category> categoryCommandList = categoryService.getAll();
         model.addAttribute("productCreationCommand", new ProductCreationCommand());
         model.addAttribute("categoryCommandList", categoryCommandList);
-        return "product_create";
+        return JSP_PATH_PREFIX + "product_create";
     }
 
     @RequestMapping("/create")
@@ -68,7 +70,7 @@ public class ProductController {
 
         StandardUser user = (StandardUser) userService.getUserById(Long.parseLong(userId));
         if (user != null && !user.isEmailVerified()) {
-            return "user_email_not_verified_warn";
+            return UserController.JSP_PATH_PREFIX + "user_email_not_verified_warn";
         }
 
         StandardProduct newProduct = (StandardProduct) productService.createNewProduct();
@@ -103,7 +105,7 @@ public class ProductController {
             ProductCommand productCommand = new ProductCommand(product);
             productCommand.setCategoryName(categoryService.getCategoryNameById(product.getCategory()));
             model.addAttribute("productCommand", productCommand);
-            return "product_edit";
+            return JSP_PATH_PREFIX + "product_edit";
         }
         return "redirect:view/" + product.getId();
     }
@@ -187,7 +189,7 @@ public class ProductController {
                 model.addAttribute("hasReviews", false);
             }
 
-            return "product_view";
+            return JSP_PATH_PREFIX + "product_view";
 
         }
 
@@ -247,7 +249,7 @@ public class ProductController {
         }
         model.addAttribute("productCommandList", productCommandList);
         model.addAttribute("isOnlyForUser", true);
-        return "product_all";
+        return JSP_PATH_PREFIX + "product_all";
     }
 
     @RequestMapping("/all")
@@ -274,7 +276,7 @@ public class ProductController {
         List<Category> categoryCommandList = categoryService.getAll();
         model.addAttribute("categoryCommandList", categoryCommandList);
 
-        return "product_all";
+        return JSP_PATH_PREFIX + "product_all";
     }
 
     @RequestMapping("/{category}")
@@ -287,7 +289,7 @@ public class ProductController {
         }
 
         model.addAttribute("productCommandList", productCommandList);
-        return "product_all";
+        return JSP_PATH_PREFIX + "product_all";
     }
 
     @RequestMapping("/search")

@@ -7,10 +7,7 @@ import com.easydevs.user.EmailVerificationService;
 import com.easydevs.user.UserPasswordService;
 import com.easydevs.user.UserService;
 import com.easydevs.user.UserType;
-import com.easydevs.user.command.UserChangePasswordCommand;
-import com.easydevs.user.command.UserLoginCommand;
-import com.easydevs.user.command.UserRegistrationCommand;
-import com.easydevs.user.command.UserStandardCommand;
+import com.easydevs.user.command.*;
 import com.easydevs.user.model.StandardUser;
 import com.easydevs.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
+    final static String JSP_PATH_PREFIX = "user/";
 
     @Autowired
     private AuthenticationService authenticationService;
@@ -52,7 +51,7 @@ public class UserController {
             model.addAttribute("userRegistrationCommand", new UserRegistrationCommand());
         }
 
-        return "user_register";
+        return JSP_PATH_PREFIX + "user_register";
     }
 
     @RequestMapping("/create")
@@ -106,7 +105,7 @@ public class UserController {
     public String showEdit(Model model, @CookieValue(value = "id") String userIdCookie) {
         StandardUser user = (StandardUser) userService.getUserById(Long.parseLong(userIdCookie));
         model.addAttribute("userStandardCommand", new UserStandardCommand(user));
-        return "/user_edit";
+        return JSP_PATH_PREFIX + "user_edit";
     }
 
     @RequestMapping("/save")
@@ -123,12 +122,51 @@ public class UserController {
         return "redirect:homepage";
     }
 
+    @RequestMapping("/edit-email")
+    public String showEditEmail(Model model) {
+        if (!model.containsAttribute("userChangeEmailCommand")) {
+            model.addAttribute("userChangeEmailCommand", new UserChangeEmailCommand());
+        }
+        return JSP_PATH_PREFIX + "user_edit_email";
+    }
+
+    @RequestMapping("/save-email")
+    public String saveEmail(@CookieValue(value = "id") String userIdCookie,
+                            RedirectAttributes redirectAttributes,
+                            @ModelAttribute("userChangeEmailCommand") UserChangeEmailCommand userChangeEmailCommand) {
+
+        String newEmail = userChangeEmailCommand.getNewEmail();
+        boolean isEmailUnavailable = userService.getUserByEmail(newEmail) != null;
+        boolean isEmailFormatIncorrect = !authenticationService.isEmailFormatCorrect(newEmail);
+
+        if (isEmailUnavailable) {
+            userChangeEmailCommand.setErrorMessage("This email is already taken. Please use a different one.");
+            redirectAttributes.addFlashAttribute("userChangeEmailCommand", userChangeEmailCommand);
+            return "redirect:edit-email";
+        }
+
+        if (isEmailFormatIncorrect) {
+            userChangeEmailCommand.setErrorMessage("The email you have entered seems to be of incorrect format.");
+            redirectAttributes.addFlashAttribute("userChangeEmailCommand", userChangeEmailCommand);
+            return "redirect:edit-email";
+        }
+
+        StandardUser user = (StandardUser) userService.getUserById(Long.parseLong(userIdCookie));
+        user.setEmailVerified(false);
+        user.setEmail(newEmail);
+
+        emailVerificationService.beginVerificationProcess(user);
+
+        return "redirect:homepage";
+    }
+
+
     @RequestMapping("/edit-password")
-    public String showEditEmail(Model model, @CookieValue(value = "id") String userIdCookie) {
+    public String showEditPassword(Model model, @CookieValue(value = "id") String userIdCookie) {
         if (!model.containsAttribute("userChangePasswordCommand")) {
             model.addAttribute("userChangePasswordCommand", new UserChangePasswordCommand());
         }
-        return "/user_edit_password";
+        return JSP_PATH_PREFIX + "user_edit_password";
     }
 
     @RequestMapping("/save-password")
@@ -184,7 +222,7 @@ public class UserController {
         StandardUser user = (StandardUser) userService.getUserById(userId);
         model.addAttribute("userStandardCommand", new UserStandardCommand(user));
 
-        return "/user_homepage";
+        return JSP_PATH_PREFIX + "user_homepage";
     }
 
     @RequestMapping("send-new-verification-email")
@@ -206,7 +244,7 @@ public class UserController {
             model.addAttribute("userLoginCommand", new UserLoginCommand());
         }
 
-        return "/user_login";
+        return JSP_PATH_PREFIX + "user_login";
     }
 
     @RequestMapping("/logout")
@@ -282,7 +320,7 @@ public class UserController {
 
         }
 
-        return "user_email_verification";
+        return JSP_PATH_PREFIX + "user_email_verification";
     }
 
     private Cookie createNewCookie(String key, String value) {

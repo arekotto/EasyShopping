@@ -79,6 +79,9 @@
                         <form action="${request.contextPath}/user/edit-password">
                             <input style="margin-bottom: 10px;" type="submit" value="Change Password"/>
                         </form>
+                        <form action="${request.contextPath}/user/edit-email">
+                            <input style="margin-bottom: 10px;" type="submit" value="Change Email"/>
+                        </form>
                     </form:form>
                 </div>
         </div>
