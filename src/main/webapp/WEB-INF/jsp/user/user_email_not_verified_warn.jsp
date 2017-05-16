@@ -18,13 +18,12 @@
     </div>
     <div class="torso">
         <div class="inner-torso">
-            <div class="title">
-                Email Verification
-            </div>
-            <div style="background: white;padding:12px;">
-                Please verify your email first. A verification email has been sent to your address.<br/>
+            <div>
+                <div class="alert alert-danger">
+                    Please verify your email first. A verification email has been sent to your address.
+                </div>
                 <form action="/user/send-new-verification-email">
-                    <input type="submit" value="Send New">
+                    <input class="btn btn-default" type="submit" value="Send New Email">
                 </form>
             </div>
         </div>
@@ -32,7 +31,6 @@
     <div class="footer">
         <jsp:include page="${request.contextPath}/footer"></jsp:include>
     </div>
-
 </div>
 </body>
 </html>

@@ -18,20 +18,22 @@
     </div>
     <div class="torso">
         <div class="inner-torso">
-            <div class="title">
-                Email Verification
-            </div>
-            <div style="background: white;padding:12px;">
-
+            <div>
                 <c:choose>
                     <c:when test="${isEmailVerified}">
-                        Your email has been successfully verified.
+                        <div class="alert alert-dismissible alert-success">
+                            Your email has been successfully verified.
+                        </div>
                     </c:when>
                     <c:when test="${isEmailAlreadyVerified}">
-                        No need, your email is already verified
+                        <div class="alert alert-info">
+                            Your email was already verified
+                        </div>
                     </c:when>
                     <c:otherwise>
-                        Your email could not be verified
+                        <div class="alert alert-danger">
+                            Your email could not be verified
+                        </div>
                     </c:otherwise>
                 </c:choose>
             </div>
@@ -40,7 +42,6 @@
     <div class="footer">
         <jsp:include page="${request.contextPath}/footer"></jsp:include>
     </div>
-
 </div>
 </body>
 </html>
