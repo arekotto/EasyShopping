@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
-  User: Andrzej
+  User: Janek
   Date: 2016-12-08
   Time: 18:08
   To change this template use File | Settings | File Templates.
@@ -17,85 +17,74 @@
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
-    <div class="torso">
-        <div class="inner-torso">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <c:if test="${userRegistrationCommand.isLoginUnavailable}">
+                <h1>
+                    <p class="text-danger">
+                        Login name is already taken. Please pick another one.
+                    </p>
+                </h1>
+            </c:if>
 
+            <c:if test="${userRegistrationCommand.isPasswordFormatIncorrect}">
+                <h1>
+                    <p class="text-danger">Password is too short.
+                    </p>
+                </h1>
+            </c:if>
 
-        <c:if test="${userRegistrationCommand.isLoginUnavailable}">
-            <h1>Login is already taken. Please pick another one.</h1>
-        </c:if>
-
-        <c:if test="${userRegistrationCommand.isPasswordFormatIncorrect}">
-            <h1>Password is too short.</h1>
-        </c:if>
-
-        <c:if test="${userRegistrationCommand.isEmailIncorrect}">
-            <h1>Wrong e-mail address.</h1>
-        </c:if>
-        <div class="inner-body">
-        <form:form cssStyle="width:50%;margin:0px auto;" action="${request.contextPath}/user/create"
-                   commandName="userRegistrationCommand">
-            <table class="ncart">
-                <tr>
-                    <td>
-                        <form:label path="email">Email:</form:label>
-                    </td>
-                    <td>
-                        <form:input path="email"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <form:label path="password">Password:</form:label>
-                    </td>
-                    <td>
-                        <form:input path="password" type="password"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <form:label path="name">Name:</form:label>
-
-                    </td>
-                    <td>
-                        <form:input path="name"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <form:label path="street">Street:</form:label>
-                    </td>
-                    <td>
-                        <form:input path="street"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <form:label path="city">City:</form:label>
-
-                    </td>
-                    <td>
-                        <form:input path="city"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <form:label path="country">Country:</form:label>
-                    </td>
-                    <td>
-                        <form:input path="country"/>
-                    </td>
-                </tr>
-            </table>
-            <input type="submit" class="formbutton" value="Create user">
-            </fieldset>
-        </form:form>
+            <c:if test="${userRegistrationCommand.isEmailIncorrect}">
+                <h1>
+                    <p class="text-danger">Wrong e-mail address.
+                    </p>
+                </h1>
+            </c:if>
+            <form:form action="${request.contextPath}/user/create" commandName="userRegistrationCommand">
+            <form class="form-horizontal">
+                <div class="form-group row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <form:input path="email" type="text" class="form-control" placeholder="Email"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <form:input path="password" type="password" class="form-control" placeholder="Password"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <form:input path="name" type="text" class="form-control" placeholder="Name"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <form:input path="street" type="text" class="form-control" placeholder="Street"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <form:input path="city" type="text" class="form-control" placeholder="City"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <form:input path="country" type="text" class="form-control" placeholder="Country"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-2 col-md-offset-5">
+                        <input type="submit" class="btn btn-default" value="Create user">
+                    </div>
+                </div>
+                </form:form>
+            </form>
+        </div>
     </div>
-    </div>
-    </div>
-    <div class="footer">
-        <jsp:include page="${request.contextPath}/footer"></jsp:include>
-    </div>
+</div>
+<div class="footer">
+    <jsp:include page="${request.contextPath}/footer"></jsp:include>
+</div>
 </div>
 </body>
 </html>
