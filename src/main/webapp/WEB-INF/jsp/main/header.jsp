@@ -9,72 +9,49 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link href="/css/stylesheet.css" rel="stylesheet">
-    <style>
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #333;
-        }
-
-        li {
-            float: left;
-            border-right:1px solid #bbb;
-        }
-
-        li:last-child {
-            border-right: none;
-        }
-
-        li a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-
-        li a:hover:not(.active) {
-            background-color: #111;
-        }
-
-        .active {
-            background-color: #4CAF50;
-        }
-    </style>
+    <link data-require="bootstrap@*" data-semver="4.0.5" rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"/>
+    <link data-require="bootstrap-css@*" data-semver="4.0.0-alpha.4" rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css"/>
+    <script data-require="bootstrap@*" data-semver="4.0.5"
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://bootswatch.com/darkly/bootstrap.min.css"/>
 </head>
 <body>
 <div>
-    <div>
-        <img src="/img/banner.jpg"></img>
-        <ul style="font-family: Helvetica-Condensed-Light-Li;">
-            <li><a class="active" href="/home">Home</a></li>
-            <li><a href="/product/all">Products</a></li>
-            <c:choose>
-                <c:when test="${headerCommand.isLoggedIn}">
-                    <li><a href="/product/createForm">Add Product</a></li>
-                    <li><a href="/product/user">My Products</a></li>
-                    <li><a href="/cart/view">Cart</a></li>
-                    <li><a href="/purchase-invoice/view-all">Orders</a></li>
-                    <li><a href="/user/homepage">${headerCommand.userEmail}</a></li>
-                    <li><a href="/user/logout">Log out</a></li>
-                </c:when>
-                <c:otherwise>
-                    <li><a href="/user/login">Log in</a></li>
-                    <li><a href="/user/register">Register</a></li>
-                </c:otherwise>
-            </c:choose>
-<c:choose>
-    <c:when test="${headerCommand.isAdmin}">
-        <li><a href="/admin/main">Admin panel</a></li>
-    </c:when>
-</c:choose>
-
-            <%--<li style="float:right"><a href="#about">Admin Panel</a></li>--%>
-        </ul>
-
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <div class="jumbotron">
+                <h1>Easy Shopping</h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <div class="btn-group" role="group" aria-label="...">
+                <a class="btn btn-default" role="button" href="/home">Home</a>
+                <a class="btn btn-default" role="button" href="/product/all">Products</a>
+                <c:choose>
+                    <c:when test="${headerCommand.isLoggedIn}">
+                        <a class="btn btn-default" role="button" href="/product/createForm">Add Product</a>
+                        <a class="btn btn-default" role="button" href="/product/user">My Products</a>
+                        <a class="btn btn-default" role="button" href="/cart/view">Cart</a>
+                        <a class="btn btn-default" role="button" href="/purchase-invoice/view-all">Orders</a>
+                        <a class="btn btn-default" role="button" href="/user/homepage">${headerCommand.userEmail}</a>
+                        <a class="btn btn-default" role="button" href="/user/logout">Log out</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a class="btn btn-default" role="button" href="/user/login">Log in</a>
+                        <a class="btn btn-default" role="button" href="/user/register">Register</a>
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${headerCommand.isAdmin}">
+                        <a class="btn btn-default" role="button" href="/admin/main">Admin panel</a>
+                    </c:when>
+                </c:choose>
+            </div>
+        </div>
     </div>
 </div>
 </body>
