@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
-  User: Andrzej
+  User: Janek
   Date: 2016-12-08
   Time: 18:25
   To change this template use File | Settings | File Templates.
@@ -19,6 +19,7 @@
 </head>
 <body>
 <div>
+    <h3></h3>
     <div class="row">
         <div class="col-md-12 text-center">
             <div class="jumbotron">
@@ -54,5 +55,6 @@
         </div>
     </div>
 </div>
+<h3></h3>
 </body>
 </html>
