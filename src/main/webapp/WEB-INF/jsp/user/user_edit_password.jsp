@@ -11,6 +11,12 @@
 <html>
 <head>
     <title>Change Password</title>
+    <style>
+        .input-group-addon {
+            min-width: 150px;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -19,47 +25,32 @@
     </div>
     <div class="torso">
         <div class="inner-torso">
-            <div class="title">
-                Change Password
-            </div>
-            <div style="background:white; ">
+            <div  class="form-horizontal">
                 <c:if test="${not empty userChangePasswordCommand.errorMessage}">
                     <br/>
-                    <h3 style="color:red; text-align:center;">${userChangePasswordCommand.errorMessage}</h3>
+                    <div class="alert alert-danger">${userChangePasswordCommand.errorMessage}</div>
                     <br/>
                 </c:if>
-                <form:form cssStyle="width:50%;margin:0px auto;" action="${request.contextPath}/user/save-password"
-                           commandName="userChangePasswordCommand">
-                    <table class="ncart">
-                        <tr>
-                            <td>
-                                <form:label path="currentPassword">Current Password:</form:label>
-
-                            </td>
-                            <td>
-                                <form:input path="currentPassword" type="password"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <form:label path="newPassword">New Password:</form:label>
-                            </td>
-                            <td>
-                                <form:input path="newPassword" type="password"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <form:label path="newPasswordRetyped">Retype New Password:</form:label>
-
-                            </td>
-                            <td>
-                                <form:input path="newPasswordRetyped" type="password"/>
-                            </td>
-                        </tr>
-
-                    </table>
-                    <input style="margin-bottom: 10px;" type="submit" class="formbutton" value="Save">
+                <form:form action="${request.contextPath}/user/save-password" commandName="userChangePasswordCommand">
+                    <div class="form-group row">
+                        <div class="input-group col-md-6 col-md-offset-3">
+                            <span class="input-group-addon">Current Password:</span>
+                            <form:input path="currentPassword" class="form-control" type="password"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="input-group col-md-6 col-md-offset-3">
+                            <span class="input-group-addon">New Password:</span>
+                            <form:input path="newPassword" class="form-control" type="password"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="input-group col-md-6 col-md-offset-3">
+                            <span class="input-group-addon">Retype New Password:</span>
+                            <form:input path="newPasswordRetyped" class="form-control" type="password"/>
+                        </div>
+                    </div>
+                    <input type="submit" class="formbutton btn btn-default" value="Save">
                 </form:form>
             </div>
         </div>

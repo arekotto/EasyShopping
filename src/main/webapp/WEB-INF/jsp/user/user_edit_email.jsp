@@ -11,6 +11,12 @@
 <html>
 <head>
     <title>Change Email</title>
+    <style>
+        .input-group-addon {
+            min-width:150px;
+            text-align:left;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -19,29 +25,22 @@
     </div>
     <div class="torso">
         <div class="inner-torso">
-            <div class="title">
-                Change Email
-            </div>
-            <div style="background:white; ">
+            <div class="form-horizontal">
                 <c:if test="${not empty userChangeEmailCommand.errorMessage}">
                     <br/>
-                    <h3 style="color:red; text-align:center;">${userChangeEmailCommand.errorMessage}</h3>
+                    <div class="alert alert-danger">
+                            ${userChangeEmailCommand.errorMessage}
+                    </div>
                     <br/>
                 </c:if>
-                <form:form cssStyle="width:50%;margin:0px auto;" action="${request.contextPath}/user/save-email"
-                           commandName="userChangeEmailCommand">
-                    <table class="ncart">
-                        <tr>
-                            <td>
-                                <form:label path="newEmail">New Email:</form:label>
-
-                            </td>
-                            <td>
-                                <form:input path="newEmail"/>
-                            </td>
-                        </tr>
-                    </table>
-                    <input style="margin-bottom: 10px;" type="submit" class="formbutton" value="Save">
+                <form:form action="${request.contextPath}/user/save-email" commandName="userChangeEmailCommand">
+                    <div class="form-group row">
+                        <div class="input-group col-md-6 col-md-offset-3">
+                            <span class="input-group-addon">New Email:</span>
+                            <form:input path="newEmail" class="form-control"/>
+                        </div>
+                    </div>
+                    <input type="submit" class="formbutton btn btn-default" value="Save">
                 </form:form>
             </div>
         </div>

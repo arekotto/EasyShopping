@@ -10,6 +10,12 @@
 <html>
 <head>
     <title>Change Info</title>
+    <style>
+        .input-group-addon {
+            min-width:150px;
+            text-align:left;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -18,49 +24,33 @@
     </div>
     <div class="torso">
         <div class="inner-torso">
-            <div class="title">
-                    Edit user info
-            </div>
-            <div style="background:white; ">
-                <form:form cssStyle="width:50%;margin:0px auto;" action="${request.contextPath}/user/save"
-                           commandName="userStandardCommand">
-                    <table class="ncart">
-                        <tr>
-                            <td>
-                                <form:label path="name">Name:</form:label>
-
-                            </td>
-                            <td>
-                                <form:input path="name"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <form:label path="street">Street:</form:label>
-                            </td>
-                            <td>
-                                <form:input path="street"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <form:label path="city">City:</form:label>
-
-                            </td>
-                            <td>
-                                <form:input path="city"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <form:label path="country">Country:</form:label>
-                            </td>
-                            <td>
-                                <form:input path="country"/>
-                            </td>
-                        </tr>
-                    </table>
-                    <input style="margin-bottom: 10px;" type="submit" class="formbutton" value="Save">
+            <div class="form-horizontal">
+                <form:form action="${request.contextPath}/user/save" commandName="userStandardCommand">
+                    <div class="form-group row">
+                        <div class="input-group col-md-6 col-md-offset-3">
+                            <span class="input-group-addon">Name:</span>
+                            <form:input path="name" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="input-group col-md-6 col-md-offset-3">
+                            <span class="input-group-addon">Street:</span>
+                            <form:input path="street" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="input-group col-md-6 col-md-offset-3">
+                            <span class="input-group-addon">City:</span>
+                            <form:input path="city" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="input-group col-md-6 col-md-offset-3">
+                            <span class="input-group-addon">Country:</span>
+                            <form:input path="country" class="form-control"/>
+                        </div>
+                    </div>
+                    <input type="submit" class="formbutton btn btn-default" value="Save">
                 </form:form>
             </div>
         </div>

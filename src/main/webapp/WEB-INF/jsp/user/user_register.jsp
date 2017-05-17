@@ -20,25 +20,21 @@
     <div class="row">
         <div class="col-lg-12 text-center">
             <c:if test="${userRegistrationCommand.isLoginUnavailable}">
-                <h1>
-                    <p class="text-danger">
-                        Login name is already taken. Please pick another one.
-                    </p>
-                </h1>
+                <div class="alert alert-danger">
+                    Login name is already taken. Please pick another one.
+                </div>
             </c:if>
 
             <c:if test="${userRegistrationCommand.isPasswordFormatIncorrect}">
-                <h1>
-                    <p class="text-danger">Password is too short.
-                    </p>
-                </h1>
+                <div class="alert alert-danger">
+                    Password is too short.
+                </div>
             </c:if>
 
             <c:if test="${userRegistrationCommand.isEmailIncorrect}">
-                <h1>
-                    <p class="text-danger">Wrong e-mail address.
-                    </p>
-                </h1>
+                <div class="alert alert-danger">
+                    Wrong e-mail address.
+                </div>
             </c:if>
             <form:form action="${request.contextPath}/user/create" commandName="userRegistrationCommand">
             <form class="form-horizontal">

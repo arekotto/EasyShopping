@@ -38,9 +38,9 @@
                 </div>
                 </form:form>
                 <c:if test="${userLoginCommand.isLoginFailed}">
-                    <h3>
-                        <p class="text-danger"> Login has failed!</p>
-                    </h3>
+                    <div class="alert alert-danger">
+                        Login has failed!
+                    </div>
                 </c:if>
             </form>
         </div>
