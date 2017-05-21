@@ -3,6 +3,8 @@ package com.easydevs.controller;
 import com.easydevs.auth.AuthenticationResult;
 import com.easydevs.auth.AuthenticationService;
 import com.easydevs.auth.Encryptor;
+import com.easydevs.purchase.model.Cart;
+import com.easydevs.purchase.service.CartService;
 import com.easydevs.user.EmailVerificationService;
 import com.easydevs.user.UserPasswordService;
 import com.easydevs.user.UserService;
@@ -40,6 +42,9 @@ public class UserController {
     @Autowired
     private EmailVerificationService emailVerificationService;
 
+    @Autowired
+    private CartService cartService;
+
     @RequestMapping("/register")
     public String showRegister(Model model,
                                HttpServletResponse response,
@@ -57,6 +62,7 @@ public class UserController {
     @RequestMapping("/create")
     public String createNewUser(RedirectAttributes redirectAttributes,
                                 HttpServletResponse response,
+                                @CookieValue(value = "tempId", defaultValue = "") String tempUserId,
                                 @ModelAttribute("userRegistrationCommand") UserRegistrationCommand userRegistrationCommand) {
 
 
@@ -86,6 +92,17 @@ public class UserController {
 
             emailVerificationService.beginVerificationProcess(newUser);
 
+            if (!tempUserId.isEmpty()) {
+                long tempUserIdLong = Long.parseLong(tempUserId);
+                Cart tempCart = cartService.getCartForUser(tempUserIdLong, true);
+                if (tempCart != null) {
+                    Cart newCart = cartService.createNewCart(newUser.getId(), false);
+                    tempCart.getProductIdList().forEach(newCart::addToCart);
+                    cartService.updateCartForUser(newUser.getId(), newCart);
+                }
+            }
+
+            response.addCookie(createNewCookie("tempId", null));
             response.addCookie(createNewCookie("id", String.valueOf(newUser.getId())));
             response.addCookie(createNewCookie("token", newUser.getToken()));
             return "redirect:homepage";
@@ -260,37 +277,54 @@ public class UserController {
             userService.updateUser(user);
         }
         response.addCookie(createNewCookie("id", null));
+        response.addCookie(createNewCookie("tempId", null));
         response.addCookie(createNewCookie("token", null));
         return "redirect:login";
     }
 
     @RequestMapping("/authenticate")
     public String authenticateUser(
-            Model model,
             HttpServletResponse response,
+            @CookieValue(value = "tempId", defaultValue = "") String tempUserId,
             @ModelAttribute("userLoginCommand")UserLoginCommand userLoginCommand,
             RedirectAttributes redirectAttributes) {
 
         AuthenticationResult authResult = authenticationService.login(userLoginCommand.getEmail(), userLoginCommand.getPassword());
 
-        if (authResult.getSuccessful()) {
+        if (!authResult.getSuccessful()) {
 
-            StandardUser user = (StandardUser) userService.getUserByEmail(userLoginCommand.getEmail());
-
-            user.setToken(authResult.getToken());
-            user.setTokenValidationStamp(System.currentTimeMillis());
-
-            userService.updateUser(user);
-
-            response.addCookie(createNewCookie("id", String.valueOf(user.getId())));
-            response.addCookie(createNewCookie("token", user.getToken()));
-
-            return "redirect:homepage";
-        } else {
             userLoginCommand.setIsLoginFailed(true);
             redirectAttributes.addFlashAttribute("userLoginCommand", userLoginCommand);
             return "redirect:login";
+
         }
+
+        StandardUser user = (StandardUser) userService.getUserByEmail(userLoginCommand.getEmail());
+
+        user.setToken(authResult.getToken());
+        user.setTokenValidationStamp(System.currentTimeMillis());
+
+        userService.updateUser(user);
+
+        if (!tempUserId.isEmpty()) {
+            long tempUserIdLong = Long.parseLong(tempUserId);
+            Cart tempCart = cartService.getCartForUser(tempUserIdLong, true);
+            if (tempCart != null) {
+                Cart currentCart = cartService.getCartForUser(user.getId(), false);
+                if (currentCart == null) {
+                    currentCart = cartService.createNewCart(user.getId(), false);
+                }
+                tempCart.getProductIdList().forEach(currentCart::addToCart);
+                cartService.updateCartForUser(user.getId(), currentCart);
+            }
+        }
+
+        response.addCookie(createNewCookie("tempId", null));
+        response.addCookie(createNewCookie("id", String.valueOf(user.getId())));
+        response.addCookie(createNewCookie("token", user.getToken()));
+
+        return "redirect:homepage";
+
     }
 
     @RequestMapping("/verify-email")

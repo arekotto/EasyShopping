@@ -37,7 +37,7 @@ public class CartServiceImpl implements CartService {
     public Cart getCartForUser(long userId, boolean isTemp) {
 
         Query query = new Query(Criteria.where("userId").is(userId).andOperator(
-                Criteria.where("isTemp").is(true)
+                Criteria.where("isTemp").is(isTemp)
         ));
         List<Cart> cartList = mongoTemplate.find(query, Cart.class);
         if (cartList.size() == 1) {
@@ -47,10 +47,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void updateCartForUser(long userId, Cart cart, boolean isTemp) {
-        Query query = new Query(Criteria.where("userId").is(userId).andOperator(
-                Criteria.where("isTemp").is(true)
-        ));
+    public void updateCartForUser(long userId, Cart cart) {
+        Query query = new Query(Criteria.where("userId").is(userId));
         DBObject dbDoc = new BasicDBObject();
         mongoTemplate.getConverter().write(cart, dbDoc);
         Update update = Update.fromDBObject(dbDoc);

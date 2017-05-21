@@ -83,7 +83,7 @@ public class PurchaseInvoiceController {
             purchaseInvoiceService.updatePurchaseInvoice(invoice);
 
             userCart.resetCart();
-            cartService.updateCartForUser(userIdLong, userCart, false);
+            cartService.updateCartForUser(userIdLong, userCart);
 
             emailService.sendEmail(user.getEmail(), "Purchase Confirmation", getPurchaseEmailBody(invoice ,user.getName()));
 

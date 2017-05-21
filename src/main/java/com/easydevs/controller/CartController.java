@@ -31,13 +31,13 @@ public class CartController {
     final static String JSP_PATH_PREFIX = "cart/";
 
     @Autowired
-    CartService cartService;
+    private CartService cartService;
 
     @Autowired
-    ProductService productService;
+    private ProductService productService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping("/view")
     public String view(Model model,
@@ -95,7 +95,7 @@ public class CartController {
         }
         if (productService.getProductById(productId) != null) {
             userCart.addToCart(productId);
-            cartService.updateCartForUser(userIdLong, userCart, !isRequestVerified);
+            cartService.updateCartForUser(userIdLong, userCart);
 
         }
 
@@ -123,7 +123,7 @@ public class CartController {
         Cart userCart = cartService.getCartForUser(userIdLong, !isRequestVerified);
         if (userCart != null) {
             userCart.removeFromCart(productId);
-            cartService.updateCartForUser(userIdLong, userCart, !isRequestVerified);
+            cartService.updateCartForUser(userIdLong, userCart);
         }
 
         return "redirect:view";

@@ -11,5 +11,5 @@ public interface CartService {
 
     Cart getCartForUser(long userId, boolean isTemp);
 
-    void updateCartForUser(long userId, Cart cart, boolean isTemp);
+    void updateCartForUser(long userId, Cart cart);
 }
