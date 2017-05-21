@@ -19,7 +19,7 @@
             <div class="title">
                 Admin panel
             </div>
-            <div style="background:white; width:920px;padding:20px;">
+            <div>
                 <a href="/admin/deleteuser">Users</a>
                 <a href="/admin/addnews">News</a>
             </div>

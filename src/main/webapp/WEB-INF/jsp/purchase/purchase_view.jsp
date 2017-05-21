@@ -33,7 +33,7 @@
                 ${purchaseInvoiceCommand.shipToAddressStreet}<br>
             </h6>
         </div>
-        <table class="cart" style="width:100%; background:white;">
+        <table class="cart">
             <tr>
                 <th>Item name</th>
                 <th>Description</th>

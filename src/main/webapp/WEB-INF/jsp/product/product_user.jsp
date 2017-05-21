@@ -5,6 +5,9 @@
   Date: 18.01.2017
   Time: 22:42
   To change this template use File | Settings | File Templates.
+
+  CZY TEN PLIK JEST W OGÓLE POTRZEBNY????
+
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -20,22 +23,22 @@
     <div class="body">
         <div class="inner-body">
 
-    <c:forEach var="productCommand" items="${productCommandList}">
-        <a href="/product/view/${productCommand.id}">
-            Product:
-        </a><br/>
-        ${productCommand.name}<br/>
-        ${productCommand.description}<br/>
-        ${productCommand.manufacturer}<br/>
-        <a href="/product/remove?productId=${productCommand.id}" style="color:red">Remove</a><br/><br/>
+            <c:forEach var="productCommand" items="${productCommandList}">
+                <a href="/product/view/${productCommand.id}">
+                    Product:
+                </a><br/>
+                ${productCommand.name}<br/>
+                ${productCommand.description}<br/>
+                ${productCommand.manufacturer}<br/>
+                <a href="/product/remove?productId=${productCommand.id}" style="color:red">Remove</a><br/><br/>
 
 
-    </c:forEach>
+            </c:forEach>
         </div>
-</div>
-<div class="footer">
-    <jsp:include page="${request.contextPath}/footer"></jsp:include>
-</div>
+    </div>
+    <div class="footer">
+        <jsp:include page="${request.contextPath}/footer"></jsp:include>
+    </div>
 
 </div>
 </body>

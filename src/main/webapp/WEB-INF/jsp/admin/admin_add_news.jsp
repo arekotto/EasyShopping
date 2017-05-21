@@ -21,8 +21,7 @@
             <div class="title">
                 Add news
             </div>
-            <form:form style="background:white; padding:8px;"
-                       action="${request.contextPath}/admin/createnews"
+            <form:form action="${request.contextPath}/admin/createnews"
                        commandName="newsCommand"
                        method="post"
                        enctype="multipart/form-data">

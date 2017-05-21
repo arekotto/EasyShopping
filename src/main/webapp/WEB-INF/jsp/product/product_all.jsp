@@ -44,15 +44,15 @@
                     </p>
                 </c:if>
             </div>
-            <div style="clear: both;"></div>
-            <div style="background:white;">
+            <div>
                 <c:forEach var="productCommand" items="${productCommandList}">
                     <div class="item">
                         <table style="width:250px;">
                             <tr>
                                 <td>
                                     <c:if test="${productCommand.hasImage}">
-                                        <img style="max-width:150px; max-height: 150px;" src="/product/image/${productCommand.id}"/>
+                                        <img style="max-width:150px; max-height: 150px;"
+                                             src="/product/image/${productCommand.id}"/>
                                     </c:if>
                                 </td>
                                 <td style="vertical-align:top; padding:8px;">

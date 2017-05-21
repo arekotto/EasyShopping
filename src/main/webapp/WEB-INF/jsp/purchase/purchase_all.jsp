@@ -23,7 +23,7 @@
                 All Purchase Invoices
             </div>
             <c:forEach var="purchaseInvoiceCommand" items="${purchaseInvoiceCommandList}">
-            <div style="background: white;margin-bottom: 8px;">
+            <div>
                 <div style="float: right;">
                     <h5 class="news-header">Issued for:<br>
                     </h5>
@@ -34,7 +34,7 @@
                             ${purchaseInvoiceCommand.shipToAddressStreet}<br>
                     </h6>
                 </div>
-                <table class="cart" style="width:100%; background:white;">
+                <table class="cart">
                     <tr>
                         <th>Item name</th>
                         <th>Description</th>

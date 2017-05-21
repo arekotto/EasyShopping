@@ -10,74 +10,67 @@
 <html>
 <head>
     <title>Add a new product</title>
+    <style>
+        .input-group-addon {
+            min-width:150px;
+            text-align:left;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
-    <div class="torso">
-        <div class="inner-torso">
-            <div class="title">
+    <div>
+        <div>
+            <h3 class="title">
                 Add item
-            </div>
-        <form:form style="background:white; padding:8px;"
-                   action="${request.contextPath}/product/create"
+            </h3>
+        <form:form action="${request.contextPath}/product/create"
                    commandName="productCreationCommand"
                    method="post"
                    enctype="multipart/form-data">
-                <table class="ncart">
-                    <tr>
-                        <td>
-                            <form:label path="name">Product Name:</form:label>
-
-                        </td>
-                        <td>
-                            <form:input path="name"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <form:label path="description">Description:</form:label>
-
-                        </td>
-                        <td>
-                            <form:textarea path="description" rows="5"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <form:label path="manufacturer">Manufacturer:</form:label>
-                        </td>
-                        <td>
-                            <form:input path="manufacturer"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <form:label path="category">Product Category:</form:label>
-                        </td>
-                        <td>
-                            <form:select path="category">
+                <div class="form-horizontal">
+                    <div class="form-group row">
+                        <div class="input-group col-md-6 col-md-offset-3">
+                            <span class="input-group-addon">Product Name:</span>
+                            <form:input path="name" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="input-group col-md-6 col-md-offset-3">
+                            <span class="input-group-addon">Description:</span>
+                            <form:textarea path="description" rows="3" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="input-group col-md-6 col-md-offset-3">
+                            <span class="input-group-addon">Manufacturer:</span>
+                            <form:input path="manufacturer" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="input-group col-md-6 col-md-offset-3">
+                            <span class="input-group-addon">Product Category:</span>
+                            <form:select path="category" class="form-control" style="height:auto;">
                                 <form:options items="${categoryCommandList}" itemLabel="name" itemValue="id" />
                             </form:select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <form:label path="price">Price:</form:label>
-                        </td>
-                        <td>
-                            <form:input type="number" step="0.01" path="price"/>
-                        </td>
-                    </tr>
-                </table>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="input-group col-md-6 col-md-offset-3">
+                            <span class="input-group-addon">Price:</span>
+                            <form:input type="number" step="0.01" path="price" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
                 <p>
                     <label>Upload an Image:</label>
-                    <input type="file" name="image" id="fileToUpload">
+                    <input type="file" name="image" id="fileToUpload" class="btn btn-default">
                     <br>
                 </p>
-                    <input type="submit" class="formbutton" value="Create">
+                    <input type="submit" class="formbutton btn btn-default" value="Create">
         </form:form>
         </div>
     </div>

@@ -11,131 +11,119 @@
 <html>
 <head>
     <title>View Product</title>
+    <style>
+        .input-group-addon {
+            min-width:100px;
+            text-align:left;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
     <div class="header">
         <jsp:include page="${request.contextPath}/header"></jsp:include>
     </div>
-    <div class="torso">
-        <div class="inner-torso">
-            <div>
-                <div style="float:left">
-                    <table class="cart" style="background:white;">
-                        <tr>
-                            <td>
-                                Name:
-                            </td>
-                            <td>
-                                ${productCommand.name}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Description:
-                            </td>
-                            <td>
-                                ${productCommand.description}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Category:
-                            </td>
-                            <td>
-                                ${productCommand.categoryName}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Manufacturer:
-                            </td>
-                            <td>
-                                ${productCommand.manufacturer}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Added by user:
-                            </td>
-                            <td>
-                                ${productCommand.createdByUserId}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Price:
-                            </td>
-                            <td>
-                                ${productCommand.price}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Rating:
-                            </td>
-                            <td>
-                                ${productCommand.averageRating}
-                            </td>
-                        </tr>
-                    </table>
-                    <c:if test="${productCommand.hasImage}">
-                        <img style="max-width:700px;margin-top:12px;margin-bottom: 12px;"
-                             src="/product/image/${productCommand.id}"/>
-                    </c:if>
-                    <c:if test="${isUserProduct != null && !isUserProduct}">
-                        <form action="/cart/add">
-                            <input type="hidden" name="productId" value="${productCommand.id}"/>
-                            <input type="submit" value="Add to cart"/>
-                        </form>
-                    </c:if>
-                </div>
-                <c:if test="${!isReviewed && !isUserProduct}">
-                    <div style="float:right; background: white">
-                        <div class="news-header">
-                            Write review
-                        </div>
-                        <div class="news-body">
-                            <form:form cssStyle="width:50%;margin:10px auto;"
-                                       action="/product/review"
-                                       commandName="reviewCommand">
-                                <form:select path="rating" style="float:left">
-                                    <form:options items="${ratings}"/>
-                                </form:select>
-                                <form:textarea path="reviewText" rows="5"></form:textarea>
-                                <input type="hidden" name="reviewCommand" value="${reviewCommand}">
-                                <input type="hidden" name="productId" value="${productCommand.id}">
-                                <input type="submit" class="formButton" value="Send Review">
-                            </form:form>
-                        </div>
-                    </div>
+    <div class="row">
+        <div class="panel panel-default col-md-6 col-md-offset-1">
+            <div class="panel-heading">
+                <h2>
+                    ${productCommand.name}
+                </h2>
+            </div>
+            <div class="panel-body">
+                <p>
+                    Description:
+                    ${productCommand.description}
+                </p>
+                <p>
+                    Category:
+                    ${productCommand.categoryName}
+                </p>
+                <p>
+                    Manufacturer:
+                    ${productCommand.manufacturer}
+                </p>
+                <p>
+                    Added by user:
+                    ${productCommand.createdByUserId}
+                </p>
+                <p>
+                    Price:
+                    ${productCommand.price}
+                </p>
+                <p>
+                    Rating:
+                    ${productCommand.averageRating}
+                </p>
+                <c:if test="${productCommand.hasImage}">
+                    <img class="img-fluid" src="/product/image/${productCommand.id}"/>
+                </c:if>
+                <c:if test="${isUserProduct != null && !isUserProduct}">
+                    <form action="/cart/add">
+                        <input type="hidden" name="productId" value="${productCommand.id}"
+                               class="btn btn-default"/>
+                        <input type="submit" value="Add to cart" class="btn btn-default"/>
+                    </form>
                 </c:if>
             </div>
         </div>
-    </div>
-    <div class="torso">
-        <div class="inner-torso">
-            <div class="title"> Reviews:</div>
-            <div class="cart">
-                <c:if test="${hasReviews}">
-                    <c:forEach var="review" items="${productCommand.reviews}">
-                        <div class="item-small" style="background:white;">
-                            <tr>
-                                <td> Rated by:</td>
-                                <td> ${review.userName} <br></td>
-                                <td>Rate: ${review.rating} <br><br></td>
-                                <td> ${review.reviewText} <br></td>
-                            </tr>
+
+        <div class="col-md-4">
+            <c:if test="${!isReviewed && !isUserProduct}">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Write a review
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+                            <form:form action="/product/review"
+                                       commandName="reviewCommand">
+                                <div class="form-group row">
+                                    <div class="input-group col-md-10 col-md-offset-1">
+                                        <span class="input-group-addon">Rating:</span>
+                                        <form:select path="rating" class="form-control" style="height:auto;">
+                                            <form:options items="${ratings}"/>
+                                        </form:select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="input-group col-md-10 col-md-offset-1">
+                                        <span class="input-group-addon">Description:</span>
+                                        <form:textarea path="reviewText" rows="5" class="form-control"></form:textarea>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="reviewCommand" value="${reviewCommand}"
+                                       class="btn btn-default">
+                                <input type="hidden" name="productId" value="${productCommand.id}"
+                                       class="btn btn-default">
+                                <input type="submit" class="formButton btn btn-default" value="Send Review">
+                            </form:form>
                         </div>
-                    </c:forEach>
-                </c:if>
+                    </div>
+                </div>
+            </c:if>
+            <div class="torso">
+                <div class="panel panel-default">
+                    <div class="panel-heading"> Reviews:</div>
+                    <div class="panel-body">
+                        <c:if test="${hasReviews}">
+                            <c:forEach var="review" items="${productCommand.reviews}">
+                                <div>
+                                    <p>Rated by: ${review.userName}</p>
+                                    <p>Rate: ${review.rating}</p>
+                                    <p>~ ${review.reviewText}</p>
+                                    <br>
+                                </div>
+                            </c:forEach>
+                        </c:if>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <div class="footer">
         <jsp:include page="${request.contextPath}/footer"></jsp:include>
     </div>
-
 </div>
 </body>
 </html>

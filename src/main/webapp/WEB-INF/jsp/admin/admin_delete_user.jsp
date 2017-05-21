@@ -23,7 +23,7 @@
             </div>
 
 
-            <div style="background: white;padding:12px;">
+            <div>
 
                 <table class="cart" style="width:100%">
                     <tr>
