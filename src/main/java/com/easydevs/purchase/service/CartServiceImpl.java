@@ -29,14 +29,16 @@ public class CartServiceImpl implements CartService {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
     @Override
-    public Cart createNewCart(long userId) {
-        return new Cart(userId, new ArrayList<>());
+    public Cart createNewCart(long userId, boolean isTemp) {
+        return new Cart(userId, new ArrayList<>(), isTemp);
     }
 
     @Override
-    public Cart getCartForUser(long userId) {
+    public Cart getCartForUser(long userId, boolean isTemp) {
 
-        Query query = new Query(Criteria.where("userId").is(userId));
+        Query query = new Query(Criteria.where("userId").is(userId).andOperator(
+                Criteria.where("isTemp").is(true)
+        ));
         List<Cart> cartList = mongoTemplate.find(query, Cart.class);
         if (cartList.size() == 1) {
             return cartList.get(0);
@@ -45,9 +47,10 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void updateCartForUser(long userId, Cart cart) {
-        Query query = new Query(Criteria.where("userId").is(cart.getUserId()));
-
+    public void updateCartForUser(long userId, Cart cart, boolean isTemp) {
+        Query query = new Query(Criteria.where("userId").is(userId).andOperator(
+                Criteria.where("isTemp").is(true)
+        ));
         DBObject dbDoc = new BasicDBObject();
         mongoTemplate.getConverter().write(cart, dbDoc);
         Update update = Update.fromDBObject(dbDoc);

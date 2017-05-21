@@ -57,8 +57,6 @@ public class UserController {
     @RequestMapping("/create")
     public String createNewUser(RedirectAttributes redirectAttributes,
                                 HttpServletResponse response,
-                                @CookieValue(value = "id", defaultValue = "") String userIdCookie,
-                                @CookieValue(value = "token", defaultValue = "") String userTokenCookie,
                                 @ModelAttribute("userRegistrationCommand") UserRegistrationCommand userRegistrationCommand) {
 
 

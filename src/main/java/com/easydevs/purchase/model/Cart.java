@@ -12,10 +12,20 @@ public class Cart {
 
     private long userId;
     private List<Long> productIdList;
+    private boolean isTemp;
+
+    public Cart() {
+    }
 
     public Cart(long userId, List<Long> productIdList) {
         this.userId = userId;
         this.productIdList = productIdList;
+    }
+
+    public Cart(long userId, List<Long> productIdList, boolean isTemp) {
+        this.userId = userId;
+        this.productIdList = productIdList;
+        this.isTemp = isTemp;
     }
 
     public long getUserId() {
@@ -34,7 +44,15 @@ public class Cart {
         this.productIdList.clear();
     }
 
-//
+    public boolean getIsTemp() {
+        return isTemp;
+    }
+
+    public void setIsTemp(boolean isTemp) {
+        this.isTemp = isTemp;
+    }
+
+    //
 //    public void resetCart() {
 //        this.productIdList.clear();
 //    }

@@ -22,4 +22,6 @@ public interface UserService {
 
     void removeUser(long userId);
 
+    long getNewIdForTempUser();
+
 }

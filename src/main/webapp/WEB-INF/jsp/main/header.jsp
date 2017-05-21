@@ -36,7 +36,6 @@
                     <c:when test="${headerCommand.isLoggedIn}">
                         <a class="btn btn-default" role="button" href="/product/createForm">Add Product</a>
                         <a class="btn btn-default" role="button" href="/product/user">My Products</a>
-                        <a class="btn btn-default" role="button" href="/cart/view">Cart</a>
                         <a class="btn btn-default" role="button" href="/purchase-invoice/view-all">Orders</a>
                         <a class="btn btn-default" role="button" href="/user/homepage">${headerCommand.userEmail}</a>
                         <a class="btn btn-default" role="button" href="/user/logout">Log out</a>
@@ -46,6 +45,7 @@
                         <a class="btn btn-default" role="button" href="/user/register">Register</a>
                     </c:otherwise>
                 </c:choose>
+                <a class="btn btn-default" role="button" href="/cart/view">Cart</a>
                 <c:choose>
                     <c:when test="${headerCommand.isAdmin}">
                         <a class="btn btn-default" role="button" href="/admin/main">Admin panel</a>

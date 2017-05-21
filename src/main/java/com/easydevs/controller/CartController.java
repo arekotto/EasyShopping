@@ -6,6 +6,7 @@ import com.easydevs.product.model.StandardProduct;
 import com.easydevs.product.service.ProductService;
 import com.easydevs.purchase.model.Cart;
 import com.easydevs.purchase.service.CartService;
+import com.easydevs.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,11 +36,29 @@ public class CartController {
     @Autowired
     ProductService productService;
 
-    @RequestMapping("/view")
-    public String view(Model model, @CookieValue("id") String userId) {
+    @Autowired
+    UserService userService;
 
-        Cart userCart = cartService.getCartForUser(Long.parseLong(userId));
+    @RequestMapping("/view")
+    public String view(Model model,
+                       @CookieValue(value = "id", defaultValue = "") String userId,
+                       @CookieValue(value = "tempId", defaultValue = "") String tempUserId,
+                       HttpServletRequest request) {
+
         List<ProductCommand> productCommandList = new ArrayList<>();
+        Boolean isRequestVerified = (Boolean) request.getAttribute("isRequestVerified");
+
+        long userIdLong;
+        if (isRequestVerified) {
+            userIdLong = Long.parseLong(userId);
+        } else if(!tempUserId.isEmpty()){
+            userIdLong = Long.parseLong(tempUserId);
+        } else {
+            model.addAttribute("productCommandList", productCommandList);
+            return JSP_PATH_PREFIX + "cart";
+        }
+
+        Cart userCart = cartService.getCartForUser(userIdLong, !isRequestVerified);
 
         if (userCart != null) {
             for (Long productId : userCart.getProductIdList()) {
@@ -49,32 +71,67 @@ public class CartController {
     }
 
     @RequestMapping("/add")
-    public String add(Model model, @CookieValue("id") String userId, @RequestParam Long productId) {
+    public String add(HttpServletRequest request,
+                      HttpServletResponse response,
+                      @CookieValue(value = "id", defaultValue = "") String userId,
+                      @CookieValue(value = "tempId", defaultValue = "") String tempUserId,
+                      @RequestParam Long productId) {
 
-        long userIdLong = Long.parseLong(userId);
-        Cart userCart = cartService.getCartForUser(userIdLong);
+        Boolean isRequestVerified = (Boolean) request.getAttribute("isRequestVerified");
+
+        long userIdLong;
+        if (isRequestVerified) {
+            userIdLong = Long.parseLong(userId);
+        } else if (!tempUserId.isEmpty()) {
+            userIdLong = Long.parseLong(tempUserId);
+        } else {
+            userIdLong = userService.getNewIdForTempUser();
+            response.addCookie(createNewCookie("tempId", String.valueOf(userIdLong)));
+        }
+
+        Cart userCart = cartService.getCartForUser(userIdLong, !isRequestVerified);
         if (userCart == null) {
-            userCart = cartService.createNewCart(userIdLong);
+            userCart = cartService.createNewCart(userIdLong, !isRequestVerified);
         }
         if (productService.getProductById(productId) != null) {
             userCart.addToCart(productId);
-            cartService.updateCartForUser(userIdLong, userCart);
+            cartService.updateCartForUser(userIdLong, userCart, !isRequestVerified);
 
         }
-
 
         return "redirect:view";
     }
 
+
     @RequestMapping("/remove")
-    public String remove(Model model, @CookieValue("id") String userId, @RequestParam Long productId) {
-        long userIdLong = Long.parseLong(userId);
-        Cart userCart = cartService.getCartForUser(userIdLong);
+    public String remove(@CookieValue(value = "id", defaultValue = "") String userId,
+                         @CookieValue(value = "tempId", defaultValue = "") String tempUserId,
+                         @RequestParam Long productId,
+                         HttpServletRequest request) {
+
+        Boolean isRequestVerified = (Boolean) request.getAttribute("isRequestVerified");
+
+        long userIdLong;
+        if (isRequestVerified) {
+            userIdLong = Long.parseLong(userId);
+        } else if (!tempUserId.isEmpty()) {
+            userIdLong = Long.parseLong(tempUserId);
+        } else {
+            return "redirect:view";
+        }
+
+        Cart userCart = cartService.getCartForUser(userIdLong, !isRequestVerified);
         if (userCart != null) {
             userCart.removeFromCart(productId);
-            cartService.updateCartForUser(userIdLong, userCart);
+            cartService.updateCartForUser(userIdLong, userCart, !isRequestVerified);
         }
 
         return "redirect:view";
+    }
+
+    private Cookie createNewCookie(String key, String value) {
+        Cookie cookie = new Cookie(key, value);
+        cookie.setPath("/");
+        return cookie;
     }
 }

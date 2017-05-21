@@ -55,7 +55,7 @@ public class PurchaseInvoiceController {
                                     @ModelAttribute("purchaseInvoiceCreationCommand") PurchaseInvoiceCreationCommand purchaseCreationCommand) throws IOException {
 
         long userIdLong = Long.parseLong(userId);
-        Cart userCart = cartService.getCartForUser(userIdLong);
+        Cart userCart = cartService.getCartForUser(userIdLong, false);
 
         if (userCart != null && userCart.getProductIdList() != null && !userCart.getProductIdList().isEmpty()) {
             PurchaseInvoice invoice = purchaseInvoiceService.createNewPurchaseInvoice();
@@ -83,7 +83,7 @@ public class PurchaseInvoiceController {
             purchaseInvoiceService.updatePurchaseInvoice(invoice);
 
             userCart.resetCart();
-            cartService.updateCartForUser(userIdLong, userCart);
+            cartService.updateCartForUser(userIdLong, userCart, false);
 
             emailService.sendEmail(user.getEmail(), "Purchase Confirmation", getPurchaseEmailBody(invoice ,user.getName()));
 

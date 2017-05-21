@@ -7,9 +7,9 @@ import com.easydevs.purchase.model.Cart;
  */
 public interface CartService {
 
-    Cart createNewCart(long userId);
+    Cart createNewCart(long userId, boolean isTemp);
 
-    Cart getCartForUser(long userId);
+    Cart getCartForUser(long userId, boolean isTemp);
 
-    void updateCartForUser(long userId, Cart cart);
+    void updateCartForUser(long userId, Cart cart, boolean isTemp);
 }

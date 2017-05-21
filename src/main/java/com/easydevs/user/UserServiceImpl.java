@@ -90,6 +90,11 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public long getNewIdForTempUser() {
+        return getNewIdAndInc();
+    }
+
     private Long getNewIdAndInc() {
         List<DbIdSequence> userIdSequenceList = mongoTemplate.find(new Query(), DbIdSequence.class, USER_ID_SEQUENCE_COLLECTION_NAME);
 
