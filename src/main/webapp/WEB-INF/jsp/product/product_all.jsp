@@ -19,95 +19,90 @@
     </div>
     <div class="torso">
         <div class="inner-torso">
-            <div class="title" style="float:left;">
+            <div class="row">
                 <c:choose>
                     <c:when test="${isOnlyForUser}">
-                        My Products
+                        <h3>
+                            My Products
+                        </h3>
                     </c:when>
                     <c:otherwise>
-                        Product List
+                        <h3>
+                            Product List
+                        </h3>
                     </c:otherwise>
                 </c:choose>
             </div>
-            <div style="float:right;">
-                <c:if test="${!isOnlyForUser}">
-                    <p>
-                        <form:form cssStyle="width:100%;"
-                                   action="${request.contextPath}/product/search"
-                                   commandName="searchCommand">
-                            <form:select path="searchCategory">
+            <div class="row">
+                <div class="input-group col-md-3" role="group">
+                    <c:if test="${!isOnlyForUser}">
+                        <form:form action="${request.contextPath}/product/search" commandName="searchCommand">
+                            <form:select path="searchCategory" class="form-control" style="height:auto;">
                                 <form:options items="${categoryCommandList}" itemLabel="name" itemValue="id"/>
                             </form:select>
-                            <form:input path="searchedPhrase"/>
-                            <input type="submit" class="formbutton" value="Search">
+                            <form:input path="searchedPhrase" class="form-control"/>
+                            <span class="input-group-btn">
+                                <input type="submit" class="formbutton btn btn-default" value="Search">
+                            </span>
                         </form:form>
-                    </p>
-                </c:if>
-            </div>
-            <div>
-                <c:forEach var="productCommand" items="${productCommandList}">
-                    <div class="item">
-                        <table style="width:250px;">
-                            <tr>
-                                <td>
+                    </c:if>
+                </div>
+                <div class="col-md-9">
+                    <c:forEach var="productCommand" items="${productCommandList}">
+                        <div class="well">
+                            <div class="row">
+                                <div class="col-md-4">
                                     <c:if test="${productCommand.hasImage}">
                                         <img style="max-width:150px; max-height: 150px;"
+                                             class="img-thumbnail"
                                              src="/product/image/${productCommand.id}"/>
                                     </c:if>
-                                </td>
-                                <td style="vertical-align:top; padding:8px;">
-                                    Name: </br>
-                                        ${productCommand.name}</br>
-                                    Description: </br>
-                                        ${productCommand.description}</br>
-                                    Manufacturer: </br>
-                                        ${productCommand.manufacturer}</br>
-                                    Category: </br>
-                                        ${productCommand.categoryName} <br>
-                                    Rating: <br>
-                                        ${productCommand.averageRating}
-                                </td>
-                            </tr>
-                            <tr>
-                                <c:if test="${!isOnlyForUser}">
-                                    <td style="padding:8px;" align="center">
+                                </div>
+                                <div class="col-md-8">
+                                    <p>Name: ${productCommand.name}</p>
+                                    <p>Description: ${productCommand.description}</p>
+                                    <p>Manufacturer: ${productCommand.manufacturer}</p>
+                                    <p>Category: ${productCommand.categoryName}</p>
+                                    <p>Rating: ${productCommand.averageRating}</p>
+
+                                    <c:if test="${!isOnlyForUser}">
                                         <form action="/product/view/${productCommand.id}">
-                                            <input type="submit" value="Details"/>
+                                            <input class="btn btn-default" type="submit" value="Details"/>
                                         </form>
-                                    </td>
-                                </c:if>
-                                <td style="vertical-align:top; padding:8px;" align="center">
+                                    </c:if>
+
                                     <c:choose>
                                         <c:when test="${isOnlyForUser}">
-                        <span>
-                            <form action="/product/remove">
-                                <input type="hidden" name="productId" value="${productCommand.id}"/>
-                                <input type="submit" value="Remove" style="color:red;"/>
-                            </form>
-                        </span>
+                                        <span>
+                                            <form action="/product/remove">
+                                                <input type="hidden" name="productId"
+                                                       value="${productCommand.id}"/>
+                                                <input class="btn btn-default" type="submit" value="Remove"/>
+                                            </form>
+                                           </span>
                                             <span>
-                            <form action="/product/edit">
-                                <input type="hidden" name="productId" value="${productCommand.id}"/>
-                                <input type="submit" value="Edit" style="color:darkgoldenrod"/>
-                            </form>
-                        </span>
+                                             <form action="/product/edit">
+                                                 <input type="hidden" name="productId" value="${productCommand.id}"/>
+                                                 <input class="btn btn-default" type="submit" value="Edit"/>
+                                              </form>
+                                           </span>
                                         </c:when>
                                         <c:when test="${!productCommand.shouldHideAddToCartButton}">
-
-
-                            <span>
-                                <form action="/cart/add">
-                                    <input type="hidden" name="productId" value="${productCommand.id}"/>
-                                    <input type="submit" value="Add to cart"/>
-                                </form>
-                            </span>
+                                            <span>
+                                               <form action="/cart/add">
+                                                   <input class="btn btn-default" type="hidden" name="productId"
+                                                          value="${productCommand.id}"/>
+                                                   <input class="btn btn-default" type="submit"
+                                                          value="Add to cart"/>
+                                             </form>
+                                           </span>
                                         </c:when>
                                     </c:choose>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </c:forEach>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
             </div>
         </div>
     </div>

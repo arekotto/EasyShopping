@@ -19,50 +19,50 @@
     </div>
     <div class="torso">
         <div class="inner-torso">
-            <div class="title">
+            <h3 class="title">
                 All Purchase Invoices
-            </div>
+            </h3>
             <c:forEach var="purchaseInvoiceCommand" items="${purchaseInvoiceCommandList}">
-            <div>
-                <div style="float: right;">
-                    <h5 class="news-header">Issued for:<br>
-                    </h5>
-                    <h6 class="news-body">
-                            ${purchaseInvoiceCommand.userName}<br>
-                            ${purchaseInvoiceCommand.shipToAddressCountry}<br>
-                            ${purchaseInvoiceCommand.shipToAddressCity}<br>
-                            ${purchaseInvoiceCommand.shipToAddressStreet}<br>
-                    </h6>
+                <div class="row">
+                    <div class="col md-8">
+                        <table class="table table-striped table-hover">
+                            <tr>
+                                <th>Item name</th>
+                                <th>Description</th>
+                                <th>Manufacturer</th>
+                                <th>Price</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            <c:forEach var="productCommand" items="${purchaseInvoiceCommand.productList}">
+                                <tr>
+                                    <td>${productCommand.name}</td>
+                                    <td>${productCommand.description}</td>
+                                    <td>${productCommand.manufacturer}</td>
+                                    <td>${productCommand.price} $</td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Issued for:<br>
+                        </h5>
+                        <h6>
+                            <p>${purchaseInvoiceCommand.userName}</p>
+                            <p>${purchaseInvoiceCommand.shipToAddressCountry}</p>
+                            <p>${purchaseInvoiceCommand.shipToAddressCity}</p>
+                            <p>${purchaseInvoiceCommand.shipToAddressStreet}</p>
+                        </h6>
+                    </div>
                 </div>
-                <table class="cart">
-                    <tr>
-                        <th>Item name</th>
-                        <th>Description</th>
-                        <th>Manufacturer</th>
-                        <th>Price</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    <c:forEach var="productCommand" items="${purchaseInvoiceCommand.productList}">
-                        <tr>
-                            <td>${productCommand.name}</td>
-                            <td>${productCommand.description}</td>
-                            <td>${productCommand.manufacturer}</td>
-                            <td>${productCommand.price} $</td>
-                        </tr>
-                    </c:forEach>
-                </table>
-                <div style="float:right">
-                    <p clss="news-body">
-                        <br>
+                <div class="row">
+                    <h3>
                         Total price ${purchaseInvoiceCommand.price} $
-                        <br><br>
-                    </p>
+                    </h3>
                 </div>
                 <div style="clear:both;"></div>
                 <br/>
                 <br/>
-            </div>
             </c:forEach>
         </div>
     </div>

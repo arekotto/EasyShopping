@@ -18,14 +18,14 @@
     </div>
     <div class="torso">
         <div class="inner-torso">
-            <div class="title">
+            <h3>
                 Add news
-            </div>
+            </h3>
             <form:form action="${request.contextPath}/admin/createnews"
                        commandName="newsCommand"
                        method="post"
                        enctype="multipart/form-data">
-                <table class="ncart">
+                <table class="table table-striped table-hover">
                     <tr>
                         <td>
                             <form:label path="title">Title:</form:label>
@@ -51,7 +51,7 @@
                         </td>
                     </tr>
                 </table>
-                <input type="submit" class="formbutton" value="Create">
+                <input type="submit" class="formbutton btn btn-default" value="Create">
             </form:form>
         </div>
     </div>

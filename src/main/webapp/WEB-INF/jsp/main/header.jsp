@@ -15,7 +15,7 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css"/>
     <script data-require="bootstrap@*" data-semver="4.0.5"
             src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://bootswatch.com/darkly/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css"/>
 </head>
 <body>
 <div>

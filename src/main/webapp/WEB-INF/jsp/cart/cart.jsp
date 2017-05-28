@@ -18,12 +18,11 @@
     </div>
     <div class="torso">
         <div class="inner-torso">
-            <div class="title">
+            <h3>
                 My cart
-            </div>
+            </h3>
             <div>
-
-                <table class="cart" style="width:100%">
+                <table class="table table-striped table-hover">
                     <tr>
                         <th>Item name</th>
                         <th>Description</th>
@@ -39,19 +38,19 @@
                         <td>${productCommand.manufacturer}</td>
                         <td>${productCommand.price}</td>
                         <td><form action="/product/view/${productCommand.id}">
-                            <input type="submit" value="Details" />
+                            <input type="submit" class="btn btn-default" value="Details" />
                         </form></td>
                         <td>
                             <form action="/cart/remove">
-                                <input type="hidden" name="productId" value="${productCommand.id}"/>
-                                <input style="color: red;" type="submit" value="Remove From Cart"/>
+                                <input type="hidden" class="btn btn-default" name="productId" value="${productCommand.id}"/>
+                                <input type="submit" class="btn btn-default" value="Remove From Cart"/>
                             </form></td>
                     </tr>
                     </c:forEach>
                 </table>
                 <c:if test="${!empty productCommandList}">
                     <form action="/purchase-invoice/create">
-                        <input type="submit" value="Buy">
+                        <input class="btn btn-default" type="submit" value="Buy">
                     </form>
                 </c:if>
             </div>
@@ -60,7 +59,6 @@
     <div class="footer">
         <jsp:include page="${request.contextPath}/footer"></jsp:include>
     </div>
-
 </div>
 </body>
 </html>

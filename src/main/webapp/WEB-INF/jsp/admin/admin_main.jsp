@@ -16,12 +16,12 @@
     </div>
     <div class="torso">
         <div class="inner-torso">
-            <div class="title">
+            <h3 class="title">
                 Admin panel
-            </div>
+            </h3>
             <div>
-                <a href="/admin/deleteuser">Users</a>
-                <a href="/admin/addnews">News</a>
+                <a class="btn btn-default" href="/admin/deleteuser">Users</a>
+                <a class="btn btn-default" href="/admin/addnews">News</a>
             </div>
         </div>
     </div>

@@ -18,20 +18,15 @@
     </div>
     <div class="torso">
         <div class="inner-torso">
-            <div class="title">
+            <h3>
                 Users
-            </div>
-
-
+            </h3>
             <div>
-
-                <table class="cart" style="width:100%">
+                <table class="table table-striped table-hover" style="width:100%">
                     <tr>
+                        <th>User id</th>
                         <th>User name</th>
                         <th>User e-mail</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
                         <th></th>
                     </tr>
                     <c:forEach var="user" items="${users}">
@@ -41,16 +36,14 @@
                             <td>${user.email}</td>
                             <td>
                                 <form action="/admin/remove">
-                                <input type="hidden" name="remove" value="${user.id}"/>
-                                <input style="color: red;" type="submit" value="Delete user"/>
-                            </form>
+                                    <input class="btn btn-default" type="hidden" name="remove" value="${user.id}"/>
+                                    <input class="btn btn-danger" type="submit" value="Delete user"/>
+                                </form>
                             </td>
                         </tr>
                     </c:forEach>
                 </table>
             </div>
-
-
         </div>
     </div>
     <div class="footer">
