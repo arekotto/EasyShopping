@@ -16,11 +16,12 @@ public class EmailServiceImpl implements EmailService {
 
     private final String COMPANY_ADDRESS = "easyydeve@gmail.com";
 
+    private final String HOST_ADDRESS = "89.77.244.32:80";
 
     @Override
     public void sendVerificationEmail(Long userId, String emailAddress, String verificationToken) {
 
-        String emailContent = "https://{host}/user/verify-email?userId=" + userId + "&verificationToken=" + verificationToken;
+        String emailContent = "https://" + HOST_ADDRESS + "/user/verify-email?userId=" + userId + "&verificationToken=" + verificationToken;
         sendEmail(emailAddress, "Email Verification", emailContent);
 
 
