@@ -30,6 +30,11 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
     private Logger log = LoggerFactory.getLogger(this.getClass());
     private final String INVOICE_ID_SEQUENCE_COLLECTION_NAME = "invoiceIdSequence";
 
+    /**
+     *
+     * @param id the id
+     * @return
+     */
     @Override
     public PurchaseInvoice getPurchaseInvoiceById(Long id) {
         log.info("PurchaseInvoiceService - getPurchaseInvoiceById", id);
@@ -43,6 +48,10 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public PurchaseInvoice createNewPurchaseInvoice() {
 
@@ -50,12 +59,21 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
 
     }
 
+    /**
+     *
+     * @param userId the user id
+     * @return
+     */
     @Override
     public List<PurchaseInvoice> getPurchaseInvoiceListByUserId(long userId) {
         Query query = new Query(Criteria.where("userId").is(userId));
         return  mongoTemplate.find(query, PurchaseInvoice.class);
     }
 
+    /**
+     *
+     * @return
+     */
     private Long getNewIdAndInc() {
         log.info("PurchaseInvoiceService - getNewIdAndInc");
 
@@ -79,6 +97,10 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
         return currentId;
     }
 
+    /**
+     *
+     * @param invoice the invoice
+     */
     @Override
     public void updatePurchaseInvoice(PurchaseInvoice invoice) {
         log.info("PurchaseInvoiceService - updatePurchaseInvoice", invoice.toString());
@@ -92,6 +114,10 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
         mongoTemplate.upsert(query, update, PurchaseInvoice.class);
     }
 
+    /**
+     *
+     * @param invoice the invoice
+     */
     @Override
     public void removePurchaseInvoice(PurchaseInvoice invoice) {
         log.info("PurchaseInvoiceService - removePurchaseInvoice", invoice.getId());

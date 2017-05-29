@@ -29,6 +29,10 @@ public class ImageServiceImpl implements ImageService {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
+    /**
+     *
+     * @param productImage the product image
+     */
     @Override
     public void updateProductImage(ProductImage productImage) {
         log.info("ProductService - updateProduct", productImage);
@@ -42,6 +46,11 @@ public class ImageServiceImpl implements ImageService {
         mongoTemplate.upsert(query, update, ProductImage.class);
     }
 
+    /**
+     *
+     * @param productId the product id
+     * @return
+     */
     @Override
     public ProductImage getProductImage(long productId) {
 
@@ -54,6 +63,10 @@ public class ImageServiceImpl implements ImageService {
         }
     }
 
+    /**
+     *
+     * @param productId the product id
+     */
     @Override
     public void removeProductImage(long productId) {
         Query query = new Query(Criteria.where("id").is(productId));

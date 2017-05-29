@@ -33,6 +33,11 @@ public class UserServiceImpl implements UserService {
     private Logger log = LoggerFactory.getLogger(this.getClass());
     private final String USER_ID_SEQUENCE_COLLECTION_NAME = "userIdSequence";
 
+    /**
+     *
+     * @param userId the user id
+     * @return
+     */
     @Override
     public User getUserById(long userId) {
         log.info("UserService.getUser", userId);
@@ -46,6 +51,10 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<StandardUser> getAllUsers(){
         log.info("UserService.getAllUsers");
@@ -55,6 +64,10 @@ public class UserServiceImpl implements UserService {
         return usersList;
     }
 
+    /**
+     *
+     * @param userId the user id
+     */
     @Override
     public void removeUser(long userId) {
         log.info("ProductService - removeProduct", userId);
@@ -63,6 +76,11 @@ public class UserServiceImpl implements UserService {
         mongoTemplate.findAndRemove(query, StandardUser.class);
     }
 
+    /**
+     *
+     * @param email the email
+     * @return
+     */
     @Override
     public User getUserByEmail (String email) {
         log.info("UserService.getUserByLogin", email);
@@ -77,6 +95,11 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     *
+     * @param userType the user type
+     * @return
+     */
     @Override
     public User createNewUser(UserType userType) {
 
@@ -90,6 +113,10 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public long getNewIdForTempUser() {
         return getNewIdAndInc();
@@ -116,6 +143,10 @@ public class UserServiceImpl implements UserService {
         return currentId;
     }
 
+    /**
+     *
+     * @param user the user
+     */
     @Override
     public void updateUser(User user) {
         log.info("UserService.updateUser", user);

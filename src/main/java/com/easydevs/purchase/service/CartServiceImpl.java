@@ -28,11 +28,24 @@ public class CartServiceImpl implements CartService {
     private MongoTemplate mongoTemplate;
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
+
+    /**
+     *
+     * @param userId the user id
+     * @param isTemp the is temp
+     * @return
+     */
     @Override
     public Cart createNewCart(long userId, boolean isTemp) {
         return new Cart(userId, new ArrayList<>(), isTemp);
     }
 
+    /**
+     *
+     * @param userId the user id
+     * @param isTemp the is temp
+     * @return
+     */
     @Override
     public Cart getCartForUser(long userId, boolean isTemp) {
 
@@ -46,6 +59,11 @@ public class CartServiceImpl implements CartService {
         return null;
     }
 
+    /**
+     *
+     * @param userId the user id
+     * @param cart   the cart
+     */
     @Override
     public void updateCartForUser(long userId, Cart cart) {
         Query query = new Query(Criteria.where("userId").is(userId));

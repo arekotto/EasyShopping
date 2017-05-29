@@ -25,8 +25,17 @@ public class TestController {
     @Autowired
     private UserService userService;
 
+    /**
+     * The Log.
+     */
     Logger log = LoggerFactory.getLogger(this.getClass());
 
+    /**
+     * Create user string.
+     *
+     * @param login the login
+     * @return the string
+     */
     @RequestMapping(path = "/user/create")
     @ResponseBody
     public String createUser(@RequestParam String login) {
@@ -37,6 +46,12 @@ public class TestController {
         return "Created user: " + user;
     }
 
+    /**
+     * Gets user.
+     *
+     * @param userId the user id
+     * @return the user
+     */
     @RequestMapping(path = "user/{userId}")
     @ResponseBody
     public String getUser(@PathVariable Integer userId) {
@@ -44,6 +59,13 @@ public class TestController {
         return "Found user: " + user;
     }
 
+    /**
+     * Update user string.
+     *
+     * @param userId   the user id
+     * @param newLogin the new login
+     * @return the string
+     */
     @RequestMapping(path = "user/update/{userId}")
     @ResponseBody
     public String updateUser(@PathVariable Integer userId, @RequestParam String newLogin) {

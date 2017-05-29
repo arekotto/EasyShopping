@@ -36,6 +36,9 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
+    /**
+     * The constant JSP_PATH_PREFIX.
+     */
     final static String JSP_PATH_PREFIX = "product/";
 
     @Autowired
@@ -50,6 +53,13 @@ public class ProductController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Show create new form string.
+     *
+     * @param model  the model
+     * @param userId the user id
+     * @return the string
+     */
     @RequestMapping("/createForm")
     public String showCreateNewForm(Model model, @CookieValue("id") String userId) {
         StandardUser user = (StandardUser) userService.getUserById(Long.parseLong(userId));
@@ -62,6 +72,16 @@ public class ProductController {
         return JSP_PATH_PREFIX + "product_create";
     }
 
+    /**
+     * Create string.
+     *
+     * @param model                  the model
+     * @param userId                 the user id
+     * @param productCreationCommand the product creation command
+     * @param request                the request
+     * @return the string
+     * @throws IOException the io exception
+     */
     @RequestMapping("/create")
     public String create(Model model,
                          @CookieValue("id") String userId,
@@ -97,6 +117,14 @@ public class ProductController {
         return "redirect:view/" + newProduct.getId();
     }
 
+    /**
+     * Show edit form string.
+     *
+     * @param model     the model
+     * @param userId    the user id
+     * @param productId the product id
+     * @return the string
+     */
     @RequestMapping("/edit")
     public String showEditForm(Model model, @CookieValue("id") String userId, @RequestParam Integer productId) {
 
@@ -110,6 +138,17 @@ public class ProductController {
         return "redirect:view/" + product.getId();
     }
 
+    /**
+     * Save string.
+     *
+     * @param model          the model
+     * @param productId      the product id
+     * @param addedByUserId  the added by user id
+     * @param productCommand the product command
+     * @param request        the request
+     * @return the string
+     * @throws IOException the io exception
+     */
     @RequestMapping(value = "/save")
     public String save(Model model,
                        @RequestParam Integer productId,
@@ -149,6 +188,15 @@ public class ProductController {
         imageService.updateProductImage(productImage);
     }
 
+    /**
+     * View string.
+     *
+     * @param model        the model
+     * @param productId    the product id
+     * @param request      the request
+     * @param userIdCookie the user id cookie
+     * @return the string
+     */
     @RequestMapping("/view/{productId}")
     public String view(Model model, @PathVariable Long productId, HttpServletRequest request,
                        @CookieValue(value = "id", defaultValue = "0") String userIdCookie) {
@@ -196,6 +244,15 @@ public class ProductController {
         return "";
     }
 
+    /**
+     * Rate product string.
+     *
+     * @param model         the model
+     * @param productId     the product id
+     * @param reviewCommand the review command
+     * @param userIdCookie  the user id cookie
+     * @return the string
+     */
     @RequestMapping(value="/review")
     public String rateProduct(Model model, Long productId, ReviewCommand reviewCommand,
                             @CookieValue(value = "id", defaultValue = "") String userIdCookie) {
@@ -211,6 +268,13 @@ public class ProductController {
         return "redirect:view/" + productId;
     }
 
+    /**
+     * View image byte [ ].
+     *
+     * @param model     the model
+     * @param productId the product id
+     * @return the byte [ ]
+     */
     @ResponseBody
     @RequestMapping(value = "/image/{productId}", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] viewImage(Model model, @PathVariable Long productId) {
@@ -223,6 +287,14 @@ public class ProductController {
         return new byte[0];
     }
 
+    /**
+     * Remove string.
+     *
+     * @param model     the model
+     * @param userId    the user id
+     * @param productId the product id
+     * @return the string
+     */
     @RequestMapping("/remove")
     public String remove(Model model, @CookieValue("id") String userId, @RequestParam Integer productId) {
 
@@ -237,6 +309,13 @@ public class ProductController {
         return "redirect:view/" + productId;
     }
 
+    /**
+     * View users string.
+     *
+     * @param model  the model
+     * @param userId the user id
+     * @return the string
+     */
     @RequestMapping("/user")
     public String viewUsers(Model model, @CookieValue("id") String userId) {
         List<StandardProduct> standardProducts = productService.getProductsByUserId(Long.parseLong(userId));
@@ -252,6 +331,13 @@ public class ProductController {
         return JSP_PATH_PREFIX + "product_all";
     }
 
+    /**
+     * View all string.
+     *
+     * @param model  the model
+     * @param userId the user id
+     * @return the string
+     */
     @RequestMapping("/all")
     public String viewAll(Model model, @CookieValue(value = "id", defaultValue = "") String userId) {
         if (!model.containsAttribute("productCommandList")) {
@@ -279,6 +365,13 @@ public class ProductController {
         return JSP_PATH_PREFIX + "product_all";
     }
 
+    /**
+     * View by category string.
+     *
+     * @param model      the model
+     * @param categoryId the category id
+     * @return the string
+     */
     @RequestMapping("/{category}")
     public String viewByCategory(Model model, @PathVariable long categoryId) {
         List<StandardProduct> standardProducts = productService.getProductsByCategory(categoryId);
@@ -292,6 +385,13 @@ public class ProductController {
         return JSP_PATH_PREFIX + "product_all";
     }
 
+    /**
+     * Search string.
+     *
+     * @param searchCommand      the search command
+     * @param redirectAttributes the redirect attributes
+     * @return the string
+     */
     @RequestMapping("/search")
     public String search(@ModelAttribute("searchCommand") SearchCommand searchCommand,
                          RedirectAttributes redirectAttributes) {

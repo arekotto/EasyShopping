@@ -15,6 +15,11 @@ public class RequestVerificationServiceImpl implements RequestVerificationServic
     @Autowired
     private AuthenticationService authenticationService;
 
+    /**
+     *
+     * @param request the request
+     * @return
+     */
     @Override
     public boolean verifyRequest(HttpServletRequest request) {
         String token = "";

@@ -21,7 +21,6 @@ import java.util.List;
 /**
  * Created by Andrzej on 2017-02-01.
  */
-
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -32,12 +31,26 @@ public class AdminController {
     @Autowired
     private NewsService newsService;
 
+    /**
+     * Admin main string.
+     *
+     * @param model  the model
+     * @param userId the user id
+     * @return the string
+     */
     @RequestMapping("/main")
     public String adminMain(Model model, @CookieValue("id") String userId) {
 
         return "admin/admin_main";
     }
 
+    /**
+     * Delete user string.
+     *
+     * @param model  the model
+     * @param userId the user id
+     * @return the string
+     */
     @RequestMapping("/deleteuser")
     public String deleteUser(Model model, @CookieValue("id") String userId) {
         List<StandardUser> users = userService.getAllUsers();
@@ -45,12 +58,25 @@ public class AdminController {
         return "admin/admin_delete_user";
     }
 
+    /**
+     * Remove user string.
+     *
+     * @param model  the model
+     * @param userId the user id
+     * @return the string
+     */
     @RequestMapping("/remove")
     public String removeUser(Model model, @RequestParam("remove") long userId) {
         userService.removeUser(userId);
         return "redirect:deleteuser";
     }
 
+    /**
+     * Add news string.
+     *
+     * @param model the model
+     * @return the string
+     */
     @RequestMapping("/addnews")
     public String addNews(Model model) {
         News newsCommand = new News();
@@ -58,6 +84,13 @@ public class AdminController {
         return "admin/admin_add_news";
     }
 
+    /**
+     * Create news string.
+     *
+     * @param model   the model
+     * @param newNews the new news
+     * @return the string
+     */
     @RequestMapping("/createnews")
     public String createNews(Model model, @ModelAttribute ("newsCommand") News newNews) {
         newsService.insertNews(newNews);

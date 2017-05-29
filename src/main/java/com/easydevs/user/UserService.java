@@ -10,18 +10,56 @@ import java.util.List;
  */
 public interface UserService {
 
+    /**
+     * Gets user by id.
+     *
+     * @param userId the user id
+     * @return the user by id
+     */
     User getUserById(long userId);
 
+    /**
+     * Gets user by email.
+     *
+     * @param email the email
+     * @return the user by email
+     */
     User getUserByEmail(String email);
 
+    /**
+     * Gets all users.
+     *
+     * @return the all users
+     */
     List<StandardUser> getAllUsers();
 
+    /**
+     * Create new user user.
+     *
+     * @param userType the user type
+     * @return the user
+     */
     User createNewUser(UserType userType);
 
+    /**
+     * Update user.
+     *
+     * @param user the user
+     */
     void updateUser(User user);
 
+    /**
+     * Remove user.
+     *
+     * @param userId the user id
+     */
     void removeUser(long userId);
 
+    /**
+     * Gets new id for temp user.
+     *
+     * @return the new id for temp user
+     */
     long getNewIdForTempUser();
 
 }

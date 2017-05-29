@@ -18,6 +18,7 @@ import java.security.SecureRandom;
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
 
+
     @Autowired
     private UserService userService;
 
@@ -34,6 +35,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final int TOKEN_LENGTH = 130;
     private final long TOKEN_VALIDATION_PERIOD = 1000 * 60 * 60 * 24;
 
+    /**
+     *
+     * @param login
+     * @param password the password
+     * @return
+     */
     @Override
     public AuthenticationResult login(String login, String password) {
         StandardUser user = (StandardUser) userService.getUserByEmail(login);
@@ -65,6 +72,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 //        return false;
 //    }
 
+    /**
+     *
+     * @param userId the user id
+     * @param token  the token
+     * @return
+     */
     @Override
     public boolean isTokenValid(long userId, String token) {
         User user = userService.getUserById(userId);
@@ -84,13 +97,22 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return new BigInteger(TOKEN_LENGTH, random).toString(32);
     }
 
+    /**
+     *
+     * @param password the password
+     * @return
+     */
     @Override
     public boolean isPasswordFormatCorrect(String password) {
         // TODO make some more rules for password format
         return password.length() >= 5;
     }
 
-
+    /**
+     *
+     * @param email the email
+     * @return
+     */
     @Override
     public boolean isEmailFormatCorrect(String email) {
         String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";

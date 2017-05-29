@@ -11,6 +11,11 @@ import java.util.List;
  */
 @Service
 public class CategoryService {
+    /**
+     * Get all list.
+     *
+     * @return the list
+     */
     public List<Category> getAll(){
         final List<Category> categoryCommandList = new ArrayList<>();
         categoryCommandList.add(new Category(-1, "Any"));
@@ -21,6 +26,12 @@ public class CategoryService {
         return categoryCommandList;
     }
 
+    /**
+     * Get category name by id string.
+     *
+     * @param id the id
+     * @return the string
+     */
     public String getCategoryNameById(Long id){
         switch(id.intValue()){
             case -1:

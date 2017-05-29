@@ -28,6 +28,9 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/user")
 public class UserController {
 
+    /**
+     * The constant JSP_PATH_PREFIX.
+     */
     final static String JSP_PATH_PREFIX = "user/";
 
     @Autowired
@@ -45,6 +48,15 @@ public class UserController {
     @Autowired
     private CartService cartService;
 
+    /**
+     * Show register string.
+     *
+     * @param model           the model
+     * @param response        the response
+     * @param userIdCookie    the user id cookie
+     * @param userTokenCookie the user token cookie
+     * @return the string
+     */
     @RequestMapping("/register")
     public String showRegister(Model model,
                                HttpServletResponse response,
@@ -59,6 +71,15 @@ public class UserController {
         return JSP_PATH_PREFIX + "user_register";
     }
 
+    /**
+     * Create new user string.
+     *
+     * @param redirectAttributes      the redirect attributes
+     * @param response                the response
+     * @param tempUserId              the temp user id
+     * @param userRegistrationCommand the user registration command
+     * @return the string
+     */
     @RequestMapping("/create")
     public String createNewUser(RedirectAttributes redirectAttributes,
                                 HttpServletResponse response,
@@ -116,6 +137,13 @@ public class UserController {
         return "redirect:register";
     }
 
+    /**
+     * Show edit string.
+     *
+     * @param model        the model
+     * @param userIdCookie the user id cookie
+     * @return the string
+     */
     @RequestMapping("/edit")
     public String showEdit(Model model, @CookieValue(value = "id") String userIdCookie) {
         StandardUser user = (StandardUser) userService.getUserById(Long.parseLong(userIdCookie));
@@ -123,6 +151,13 @@ public class UserController {
         return JSP_PATH_PREFIX + "user_edit";
     }
 
+    /**
+     * Save string.
+     *
+     * @param userIdCookie        the user id cookie
+     * @param userStandardCommand the user standard command
+     * @return the string
+     */
     @RequestMapping("/save")
     public String save(@CookieValue(value = "id") String userIdCookie,
                        @ModelAttribute("userStandardCommand") UserStandardCommand userStandardCommand) {
@@ -137,6 +172,12 @@ public class UserController {
         return "redirect:homepage";
     }
 
+    /**
+     * Show edit email string.
+     *
+     * @param model the model
+     * @return the string
+     */
     @RequestMapping("/edit-email")
     public String showEditEmail(Model model) {
         if (!model.containsAttribute("userChangeEmailCommand")) {
@@ -145,6 +186,14 @@ public class UserController {
         return JSP_PATH_PREFIX + "user_edit_email";
     }
 
+    /**
+     * Save email string.
+     *
+     * @param userIdCookie           the user id cookie
+     * @param redirectAttributes     the redirect attributes
+     * @param userChangeEmailCommand the user change email command
+     * @return the string
+     */
     @RequestMapping("/save-email")
     public String saveEmail(@CookieValue(value = "id") String userIdCookie,
                             RedirectAttributes redirectAttributes,
@@ -176,6 +225,13 @@ public class UserController {
     }
 
 
+    /**
+     * Show edit password string.
+     *
+     * @param model        the model
+     * @param userIdCookie the user id cookie
+     * @return the string
+     */
     @RequestMapping("/edit-password")
     public String showEditPassword(Model model, @CookieValue(value = "id") String userIdCookie) {
         if (!model.containsAttribute("userChangePasswordCommand")) {
@@ -184,6 +240,15 @@ public class UserController {
         return JSP_PATH_PREFIX + "user_edit_password";
     }
 
+    /**
+     * Save password string.
+     *
+     * @param userIdCookie              the user id cookie
+     * @param response                  the response
+     * @param redirectAttributes        the redirect attributes
+     * @param userChangePasswordCommand the user change password command
+     * @return the string
+     */
     @RequestMapping("/save-password")
     public String savePassword(@CookieValue(value = "id") String userIdCookie,
                                HttpServletResponse response,
@@ -227,6 +292,14 @@ public class UserController {
     }
 
 
+    /**
+     * Show user string.
+     *
+     * @param model           the model
+     * @param userIdCookie    the user id cookie
+     * @param userTokenCookie the user token cookie
+     * @return the string
+     */
     @RequestMapping("/homepage")
     public String showUser(Model model,
                            @CookieValue(value = "id", defaultValue = "") String userIdCookie,
@@ -240,6 +313,12 @@ public class UserController {
         return JSP_PATH_PREFIX + "user_homepage";
     }
 
+    /**
+     * Send new verification email string.
+     *
+     * @param userIdCookie the user id cookie
+     * @return the string
+     */
     @RequestMapping("send-new-verification-email")
     public String sendNewVerificationEmail(@CookieValue(value = "id", defaultValue = "") String userIdCookie) {
         StandardUser user = (StandardUser) userService.getUserById(Long.parseLong(userIdCookie));
@@ -249,6 +328,15 @@ public class UserController {
         return "redirect:homepage";
     }
 
+    /**
+     * Show login string.
+     *
+     * @param model           the model
+     * @param response        the response
+     * @param userIdCookie    the user id cookie
+     * @param userTokenCookie the user token cookie
+     * @return the string
+     */
     @RequestMapping("/login")
     public String showLogin(Model model,
                             HttpServletResponse response,
@@ -262,6 +350,15 @@ public class UserController {
         return JSP_PATH_PREFIX + "user_login";
     }
 
+    /**
+     * Logout user string.
+     *
+     * @param model           the model
+     * @param response        the response
+     * @param userIdCookie    the user id cookie
+     * @param userTokenCookie the user token cookie
+     * @return the string
+     */
     @RequestMapping("/logout")
     public String logoutUser(Model model,
                              HttpServletResponse response,
@@ -282,6 +379,15 @@ public class UserController {
         return "redirect:login";
     }
 
+    /**
+     * Authenticate user string.
+     *
+     * @param response           the response
+     * @param tempUserId         the temp user id
+     * @param userLoginCommand   the user login command
+     * @param redirectAttributes the redirect attributes
+     * @return the string
+     */
     @RequestMapping("/authenticate")
     public String authenticateUser(
             HttpServletResponse response,
@@ -327,6 +433,14 @@ public class UserController {
 
     }
 
+    /**
+     * Verify email string.
+     *
+     * @param model             the model
+     * @param userId            the user id
+     * @param verificationToken the verification token
+     * @return the string
+     */
     @RequestMapping("/verify-email")
     public String verifyEmail(Model model,
                               @RequestParam Long userId,

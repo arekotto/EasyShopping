@@ -20,12 +20,24 @@ public class MainController {
     @Autowired
     private AuthenticationService authenticationService;
 
+    /**
+     * The User service.
+     */
     @Autowired
     UserService userService;
 
+    /**
+     * The News service.
+     */
     @Autowired
     NewsService newsService;
 
+    /**
+     * Show home page string.
+     *
+     * @param model the model
+     * @return the string
+     */
     @RequestMapping("")
     public String showHomePage(Model model) {
         List<News> newsCommandList = newsService.findAll();

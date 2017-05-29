@@ -14,15 +14,26 @@ import java.security.SecureRandom;
 @Service
 public class EmailVerificationService {
 
+    /**
+     * The User service.
+     */
     @Autowired
     UserService userService;
 
+    /**
+     * The Email service.
+     */
     @Autowired
     EmailService emailService;
 
     private SecureRandom random = new SecureRandom();
     private int VERIFICATION_TOKEN_LENGTH = 100;
 
+    /**
+     * Begin verification process.
+     *
+     * @param user the user
+     */
     public void beginVerificationProcess(StandardUser user) {
 //        StandardUser user = (StandardUser) userService.getUserById(userId);
         if (user != null && !user.isEmailVerified()) {

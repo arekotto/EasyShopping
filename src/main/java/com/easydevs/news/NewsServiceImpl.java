@@ -27,6 +27,10 @@ public class NewsServiceImpl implements NewsService {
 
     private final String NEWS_ID_SEQUENCE_COLLECTION_NAME = "newsIdSequence";
 
+    /**
+     *
+     * @param news the news
+     */
     @Override
     public void insertNews(News news) {
         news.setId(getNewIdAndInc());
@@ -39,6 +43,10 @@ public class NewsServiceImpl implements NewsService {
         mongoTemplate.upsert(query, update, News.class);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<News> findAll() {
         return mongoTemplate.findAll(News.class);

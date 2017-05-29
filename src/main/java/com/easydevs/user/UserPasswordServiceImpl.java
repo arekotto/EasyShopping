@@ -27,6 +27,11 @@ public class UserPasswordServiceImpl implements UserPasswordService {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
+    /**
+     *
+     * @param userId the user id
+     * @return
+     */
     @Override
     public String getPasswordHash(long userId) {
         Query query = new Query();
@@ -39,6 +44,11 @@ public class UserPasswordServiceImpl implements UserPasswordService {
         }
     }
 
+    /**
+     *
+     * @param userId   the user id
+     * @param passwordHash
+     */
     @Override
     public void insertOrUpdatePassword(long userId, String passwordHash) {
         Query query = new Query(Criteria.where("userId").is(userId));
@@ -50,6 +60,10 @@ public class UserPasswordServiceImpl implements UserPasswordService {
         mongoTemplate.upsert(query, update, UserPasswordTO.class);
     }
 
+    /**
+     *
+     * @param userId the user id
+     */
     @Override
     public void deletePassword(long userId) {
         // TODO

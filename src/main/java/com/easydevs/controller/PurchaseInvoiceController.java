@@ -32,23 +32,50 @@ import java.util.List;
 @RequestMapping("/purchase-invoice")
 public class PurchaseInvoiceController {
 
+    /**
+     * The constant JSP_PATH_PREFIX.
+     */
     final static String JSP_PATH_PREFIX = "purchase/";
 
+    /**
+     * The Purchase invoice service.
+     */
     @Autowired
     PurchaseInvoiceService purchaseInvoiceService;
 
+    /**
+     * The User service.
+     */
     @Autowired
     UserService userService;
 
+    /**
+     * The Product service.
+     */
     @Autowired
     ProductService productService;
 
+    /**
+     * The Cart service.
+     */
     @Autowired
     CartService cartService;
 
+    /**
+     * The Email service.
+     */
     @Autowired
     EmailService emailService;
 
+    /**
+     * Show create new form string.
+     *
+     * @param model                   the model
+     * @param userId                  the user id
+     * @param purchaseCreationCommand the purchase creation command
+     * @return the string
+     * @throws IOException the io exception
+     */
     @RequestMapping("/create")
     public String showCreateNewForm(Model model,
                                     @CookieValue("id") String userId,
@@ -96,6 +123,13 @@ public class PurchaseInvoiceController {
         return "redirect:../homepage";
     }
 
+    /**
+     * Create string.
+     *
+     * @param model  the model
+     * @param userId the user id
+     * @return the string
+     */
     @RequestMapping("/view-all")
     public String create(Model model,
                          @CookieValue("id") String userId) {
@@ -106,6 +140,13 @@ public class PurchaseInvoiceController {
         return JSP_PATH_PREFIX + "purchase_all";
     }
 
+    /**
+     * View string.
+     *
+     * @param model     the model
+     * @param invoiceId the invoice id
+     * @return the string
+     */
     @RequestMapping("/view/{invoiceId}")
     public String view(Model model, @PathVariable Long invoiceId) {
 

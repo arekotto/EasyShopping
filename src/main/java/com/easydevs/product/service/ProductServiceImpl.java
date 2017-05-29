@@ -30,7 +30,6 @@ import java.util.regex.Pattern;
 /**
  * Created by Arek on 02.01.2017.
  */
-
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -48,6 +47,11 @@ public class ProductServiceImpl implements ProductService {
     private Logger log = LoggerFactory.getLogger(this.getClass());
     private final String PRODUCT_ID_SEQUENCE_COLLECTION_NAME = "productIdSequence";
 
+    /**
+     *
+     * @param productId the product id
+     * @return
+     */
     @Override
     public Product getProductById(long productId) {
         log.info("ProductService - getProductById", productId);
@@ -61,6 +65,10 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Product createNewProduct() {
 
@@ -72,6 +80,10 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
+    /**
+     *
+     * @return
+     */
     private Long getNewIdAndInc() {
         log.info("ProductService - getNewIdAndInc");
 
@@ -95,6 +107,10 @@ public class ProductServiceImpl implements ProductService {
         return currentId;
     }
 
+    /**
+     *
+     * @param product the product
+     */
     @Override
     public void updateProduct(Product product) {
         log.info("ProductService - updateProduct", product.toString());
@@ -108,6 +124,11 @@ public class ProductServiceImpl implements ProductService {
         mongoTemplate.upsert(query, update, StandardProduct.class);
     }
 
+    /**
+     *
+     * @param productId the product id
+     * @param review    the review
+     */
     @Override
     public void rateProduct(long productId, Review review) {
         log.info("ProductService - rateProduct", productId, review.toString());
@@ -137,6 +158,10 @@ public class ProductServiceImpl implements ProductService {
         this.updateProduct(updatedProduct);
     }
 
+    /**
+     *
+     * @param product the product
+     */
     @Override
     public void removeProduct(Product product) {
         log.info("ProductService - removeProduct", product.getId());
@@ -145,11 +170,20 @@ public class ProductServiceImpl implements ProductService {
         mongoTemplate.findAndRemove(query, StandardProduct.class);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<StandardProduct> getAll() {
         return mongoTemplate.findAll(StandardProduct.class);
     }
 
+    /**
+     *
+     * @param userId the user id
+     * @return
+     */
     @Override
     public List<StandardProduct> getProductsByUserId(long userId) {
         log.info("ProductService - getProductsByUserId", userId);
@@ -158,6 +192,11 @@ public class ProductServiceImpl implements ProductService {
         return mongoTemplate.find(query, StandardProduct.class);
     }
 
+    /**
+     *
+     * @param categoryId the category id
+     * @return
+     */
     @Override
     public List<StandardProduct> getProductsByCategory(long categoryId) {
         log.info("ProductService - getProductsByCategory", categoryId);
@@ -166,6 +205,12 @@ public class ProductServiceImpl implements ProductService {
         return mongoTemplate.find(query, StandardProduct.class);
     }
 
+    /**
+     *
+     * @param searchQuery    the search query
+     * @param searchCategory the search category
+     * @return
+     */
     @Override
     public List<StandardProduct> search(String searchQuery, long searchCategory) {
         log.info("ProductService - searching products by query", searchQuery);
@@ -183,6 +228,11 @@ public class ProductServiceImpl implements ProductService {
         return mongoTemplate.find(query, StandardProduct.class);
     }
 
+    /**
+     *
+     * @param searchQuery the search query
+     * @return
+     */
     @Override
     public List<StandardProduct> search(String searchQuery) {
         Query query = new Query(
@@ -194,6 +244,10 @@ public class ProductServiceImpl implements ProductService {
 
         return mongoTemplate.find(query, StandardProduct.class);    }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<Category> getAllCategories() {
         log.info("ProductService - getAllCategories");

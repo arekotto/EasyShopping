@@ -6,10 +6,20 @@ package com.easydevs.support;
 public class DbIdSequence {
     private Long current = 0L;
 
+    /**
+     * Gets current.
+     *
+     * @return the current
+     */
     public Long getCurrent() {
         return current;
     }
 
+    /**
+     * Sets current.
+     *
+     * @param current the current
+     */
     public void setCurrent(Long current) {
         this.current = current;
     }

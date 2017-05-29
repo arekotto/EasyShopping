@@ -11,12 +11,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+/**
+ * The type Db backup.
+ */
 @Service
 public class DbBackup {
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
+    /**
+     * Sets backup.
+     */
     @PostConstruct
     public void setBackup() {
         final Runnable backup = new Runnable() {
@@ -34,6 +40,9 @@ public class DbBackup {
         final ScheduledFuture<?> backupHandle = scheduler.scheduleAtFixedRate(backup, 1, 1, MINUTES);
     }
 
+    /**
+     * Restore.
+     */
     public void restore() {
         try {
             Runtime.getRuntime().exec("mongorestore dbBackup");

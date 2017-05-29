@@ -18,6 +18,11 @@ public class EmailServiceImpl implements EmailService {
 
     private final String HOST_ADDRESS = "89.77.244.32:80";
 
+    /**
+     * @param userId
+     * @param emailAddress
+     * @param verificationToken
+     */
     @Override
     public void sendVerificationEmail(Long userId, String emailAddress, String verificationToken) {
 
@@ -34,6 +39,11 @@ public class EmailServiceImpl implements EmailService {
 
     }
 
+    /**
+     * @param emailAddress
+     * @param emailSubject
+     * @param emailContent
+     */
     @Override
     public void sendEmail(String emailAddress, String emailSubject, String emailContent) {
 

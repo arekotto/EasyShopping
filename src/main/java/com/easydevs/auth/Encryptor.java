@@ -10,6 +10,12 @@ public class Encryptor {
 
     private MessageDigest md;
 
+    /**
+     * Encrypt with md 5 string.
+     *
+     * @param string the string
+     * @return the string
+     */
     public String encryptWithMD5(String string){
         try {
             md = MessageDigest.getInstance("MD5");

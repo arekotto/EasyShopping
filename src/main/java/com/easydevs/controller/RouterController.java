@@ -14,10 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by Arek on 31.10.2016.
  */
-
 @Controller
 public class RouterController {
 
+    /**
+     * The User service.
+     */
     @Autowired
     UserService userService;
 
@@ -32,6 +34,14 @@ public class RouterController {
 //        return "main/header";
 //    }
 
+    /**
+     * Retrieve header logged in string.
+     *
+     * @param model        the model
+     * @param request      the request
+     * @param userIdCookie the user id cookie
+     * @return the string
+     */
     @RequestMapping("/header")
     public String retrieveHeaderLoggedIn(Model model,
                                          HttpServletRequest request,
@@ -49,11 +59,21 @@ public class RouterController {
         return "main/header";
     }
 
+    /**
+     * Retrieve footer string.
+     *
+     * @return the string
+     */
     @RequestMapping("/footer")
     public String retrieveFooter(){
         return "main/footer";
     }
 
+    /**
+     * Retrieve home page string.
+     *
+     * @return the string
+     */
     @RequestMapping("/home")
     public String retrieveHomePage() {
         return "redirect:/";

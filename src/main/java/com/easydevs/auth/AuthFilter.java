@@ -24,6 +24,7 @@ public class AuthFilter extends OncePerRequestFilter{
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+
     private final List<String> filteredUrls = new ArrayList<String>() {{
         add("/user/logout");
         add("/user/homepage");
@@ -58,6 +59,14 @@ public class AuthFilter extends OncePerRequestFilter{
     @Autowired
     private MultipartResolver multipartResolver;
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @param filterChain
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
@@ -85,6 +94,11 @@ public class AuthFilter extends OncePerRequestFilter{
         }
     }
 
+    /**
+     *
+     * @param req
+     * @return
+     */
     private String getUrl(HttpServletRequest req) {
         String reqUrl = req.getRequestURL().toString();
         String queryString = req.getQueryString();

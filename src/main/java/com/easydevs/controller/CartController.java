@@ -28,6 +28,9 @@ import java.util.List;
 @RequestMapping("/cart")
 public class CartController {
 
+    /**
+     * The constant JSP_PATH_PREFIX.
+     */
     final static String JSP_PATH_PREFIX = "cart/";
 
     @Autowired
@@ -39,6 +42,15 @@ public class CartController {
     @Autowired
     private UserService userService;
 
+    /**
+     * View string.
+     *
+     * @param model      the model
+     * @param userId     the user id
+     * @param tempUserId the temp user id
+     * @param request    the request
+     * @return the string
+     */
     @RequestMapping("/view")
     public String view(Model model,
                        @CookieValue(value = "id", defaultValue = "") String userId,
@@ -70,6 +82,16 @@ public class CartController {
         return JSP_PATH_PREFIX + "cart";
     }
 
+    /**
+     * Add string.
+     *
+     * @param request    the request
+     * @param response   the response
+     * @param userId     the user id
+     * @param tempUserId the temp user id
+     * @param productId  the product id
+     * @return the string
+     */
     @RequestMapping("/add")
     public String add(HttpServletRequest request,
                       HttpServletResponse response,
@@ -103,6 +125,15 @@ public class CartController {
     }
 
 
+    /**
+     * Remove string.
+     *
+     * @param userId     the user id
+     * @param tempUserId the temp user id
+     * @param productId  the product id
+     * @param request    the request
+     * @return the string
+     */
     @RequestMapping("/remove")
     public String remove(@CookieValue(value = "id", defaultValue = "") String userId,
                          @CookieValue(value = "tempId", defaultValue = "") String tempUserId,
