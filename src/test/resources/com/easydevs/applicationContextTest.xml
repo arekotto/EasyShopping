@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/context
+	   http://www.springframework.org/schema/context/spring-context.xsd
+	   http://www.springframework.org/schema/data/mongo
+	   http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+
+    <import resource="classpath:com/easydevs/applicationContext.xml"/>
+
+    <context:annotation-config />
+    <context:component-scan base-package="com.easydevs.user"/>
+
+
+    <!--mongo-->
+    <mongo:mongo host="localhost" port="27017" id="contentMongo"/>
+    <mongo:db-factory id="contentMongoDbFactory" mongo-ref="contentMongo" dbname="test_db"/>
+
+    <bean id="contentMongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg ref="contentMongoDbFactory"/>
+
+    </bean>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!--10mB-->
+        <property name="maxUploadSize" value="10000000 "/>
+    </bean>
+
+    <!--email-->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="587" />
+        <property name="username" value="easyydevs" />
+		<property name="password" value="12qwasdzxc" />
+
+		<!-- The name of the property, following JavaBean naming conventions -->
+		<property name="javaMailProperties">
+        <props>
+            <prop key="mail.transport.protocol">smtp</prop>
+            <prop key="mail.smtp.auth">true</prop>
+            <prop key="mail.smtp.starttls.enable">true</prop>
+            <prop key="mail.debug">true</prop>
+        </props>
+    </property>
+    </bean>
+</beans>
