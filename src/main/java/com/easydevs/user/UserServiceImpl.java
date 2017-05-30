@@ -76,6 +76,16 @@ public class UserServiceImpl implements UserService {
         mongoTemplate.findAndRemove(query, StandardUser.class);
     }
 
+    @Override
+    public void setUserAdmin(long userId, boolean isAdmin) {
+        log.info("User service - setUserAdmin", userId, isAdmin);
+
+        Query query = new Query(Criteria.where("id").is(userId));
+        StandardUser existingUser = mongoTemplate.findOne(query, StandardUser.class);
+        existingUser.setIsAdmin(isAdmin);
+        this.updateUser(existingUser);
+    }
+
     /**
      *
      * @param email the email

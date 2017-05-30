@@ -56,6 +56,14 @@ public interface UserService {
     void removeUser(long userId);
 
     /**
+     * Sets user admin.
+     *
+     * @param userId the user id
+     * @param isAdmin should user be admin
+     */
+    void setUserAdmin(long userId, boolean isAdmin);
+
+    /**
      * Gets new id for temp user.
      *
      * @return the new id for temp user
