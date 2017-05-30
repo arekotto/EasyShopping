@@ -62,4 +62,14 @@ public class UserServiceImplTest {
         assertEquals(country, testedUser.getCountry());
         assertEquals(name, testedUser.getName());
     }
+
+    @Test
+    public void removeTest() {
+        StandardUser standardUser = (StandardUser) userService.createNewUser(UserType.STANDARD);
+        long id = standardUser.getId();
+
+        userService.removeUser(id);
+
+        assertNull(userService.getUserById(id));
+    }
 }
