@@ -20,24 +20,30 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = {"/com/easydevs/applicationContextTest.xml"})
 public class NewsServiceImplTest {
 
+    /**
+     * The News service.
+     */
     @Autowired
     NewsService newsService;
 
+    /**
+     * The Mongo template.
+     */
     @Autowired
     MongoTemplate mongoTemplate;
 
+    /**
+     * Clean up db.
+     */
     @Before
     public void cleanUpDb(){
         mongoTemplate.dropCollection(News.class);
         mongoTemplate.dropCollection("newsIdSequence");
     }
 
-    @Test
-    public void someTest() {
-        newsService.findAll();
-        assertEquals(3, 3);
-    }
-
+    /**
+     * Insert news test.
+     */
     @Test
     public void insertNewsTest() {
         News news = new News();

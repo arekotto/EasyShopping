@@ -15,15 +15,20 @@ import static org.junit.Assert.*;
 /**
  * Created by arekotto on 29/05/2017.
  */
-
 // These two lines have to be here in order to run the test in the test context.
 @RunWith( SpringJUnit4ClassRunner.class )
 @ContextConfiguration(locations = {"/com/easydevs/applicationContextTest.xml"})
 public class UserServiceImplTest {
 
+    /**
+     * The User service.
+     */
     @Autowired
     UserService userService;
 
+    /**
+     * The Mongo template.
+     */
     @Autowired
     MongoTemplate mongoTemplate;
 
@@ -63,6 +68,9 @@ public class UserServiceImplTest {
         assertEquals(name, testedUser.getName());
     }
 
+    /**
+     * Remove test.
+     */
     @Test
     public void removeTest() {
         StandardUser standardUser = (StandardUser) userService.createNewUser(UserType.STANDARD);

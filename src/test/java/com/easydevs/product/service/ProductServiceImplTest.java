@@ -22,12 +22,21 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = {"/com/easydevs/applicationContextTest.xml"})
 public class ProductServiceImplTest {
 
+    /**
+     * The Product service.
+     */
     @Autowired
     ProductService productService;
 
+    /**
+     * The Mongo template.
+     */
     @Autowired
     MongoTemplate mongoTemplate;
 
+    /**
+     * Clean up db.
+     */
     @Before
     public void cleanUpDb() {
         mongoTemplate.dropCollection(StandardProduct.class);
@@ -35,6 +44,11 @@ public class ProductServiceImplTest {
 
     }
 
+    /**
+     * Create new product.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void createNewProduct() throws Exception {
         StandardProduct product = (StandardProduct) productService.createNewProduct();
@@ -65,6 +79,11 @@ public class ProductServiceImplTest {
         assertTrue(updatedProduct.getPrice() - price == 0);
     }
 
+    /**
+     * Remove product.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void removeProduct() throws Exception {
         StandardProduct product = (StandardProduct) productService.createNewProduct();

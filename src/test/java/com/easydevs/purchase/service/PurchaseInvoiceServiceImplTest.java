@@ -23,21 +23,38 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = {"/com/easydevs/applicationContextTest.xml"})
 public class PurchaseInvoiceServiceImplTest {
 
+    /**
+     * The Purchase service.
+     */
     @Autowired
     PurchaseInvoiceService purchaseService;
 
+    /**
+     * The Product service.
+     */
     @Autowired
     ProductService productService;
 
+    /**
+     * The Mongo template.
+     */
     @Autowired
     MongoTemplate mongoTemplate;
 
+    /**
+     * Clean up db.
+     */
     @Before
     public void cleanUpDb() {
         mongoTemplate.dropCollection(PurchaseInvoice.class);
         mongoTemplate.dropCollection("invoiceIdSequence");
     }
 
+    /**
+     * Create new purchase invoice.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void createNewPurchaseInvoice() throws Exception {
         PurchaseInvoice invoice = purchaseService.createNewPurchaseInvoice();
@@ -75,6 +92,11 @@ public class PurchaseInvoiceServiceImplTest {
         assertEquals(invoiceToTest2.getUserName(), userName);
     }
 
+    /**
+     * Remove purchase invoice.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void removePurchaseInvoice() throws Exception {
         PurchaseInvoice invoice = purchaseService.createNewPurchaseInvoice();
