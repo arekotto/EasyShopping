@@ -28,12 +28,27 @@
                         <th>User name</th>
                         <th>User e-mail</th>
                         <th></th>
+                        <th></th>
                     </tr>
                     <c:forEach var="user" items="${users}">
                         <tr>
                             <td>${user.id}</td>
                             <td>${user.name}</td>
                             <td>${user.email}</td>
+                            <td>
+                                <c:if test="${!user.isAdmin}">
+                                    <form action="/admin/make-admin">
+                                        <input class="btn btn-default" type="hidden" name="make-admin" value="${user.id}"/>
+                                        <input class="btn btn-danger" type="submit" value="Make admin"/>
+                                    </form>
+                                </c:if>
+                                <c:if test="${user.isAdmin}">
+                                    <form action="/admin/degrade-admin">
+                                        <input class="btn btn-default" type="hidden" name="degrade-admin" value="${user.id}"/>
+                                        <input class="btn btn-danger" type="submit" value="Degrade admin"/>
+                                    </form>
+                                </c:if>
+                            </td>
                             <td>
                                 <form action="/admin/remove">
                                     <input class="btn btn-default" type="hidden" name="remove" value="${user.id}"/>

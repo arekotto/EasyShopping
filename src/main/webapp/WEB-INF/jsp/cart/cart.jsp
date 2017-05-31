@@ -49,7 +49,7 @@
                     </c:forEach>
                 </table>
                 <c:if test="${!empty productCommandList}">
-                    <form action="/purchase-invoice/create">
+                    <form onsubmit="return confirm('Accepting will purchase everything in your cart. You will recieve purchase invoice on your e-mail.') ? true : false;" action="/purchase-invoice/create">
                         <input class="btn btn-default" type="submit" value="Buy">
                     </form>
                 </c:if>

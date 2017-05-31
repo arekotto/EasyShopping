@@ -71,6 +71,18 @@ public class AdminController {
         return "redirect:deleteuser";
     }
 
+    @RequestMapping("/make-admin")
+    public String makeAdmin(Model model, @RequestParam("make-admin") long userId) {
+        userService.setUserAdmin(userId, true);
+        return "redirect:deleteuser";
+    }
+
+    @RequestMapping("/degrade-admin")
+    public String degradeAdmin(Model model, @RequestParam("degrade-admin") long userId) {
+        userService.setUserAdmin(userId, false);
+        return "redirect:deleteuser";
+    }
+
     /**
      * Add news string.
      *

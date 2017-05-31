@@ -54,6 +54,10 @@ public class StandardUser implements User {
         this.tokenValidationTimeStamp = timeStamp;
     }
 
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
     @Override
     public long getId() {
         return this.id;
