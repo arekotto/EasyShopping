@@ -37,7 +37,7 @@
                         <td>${productCommand.description}</td>
                         <td>${productCommand.manufacturer}</td>
                         <td>${productCommand.price}</td>
-                        <td><form action="/product/view/${productCommand.id}">
+                        <td><form action="/EasyShopping/product/view/${productCommand.id}">
                             <input type="submit" class="btn btn-default" value="Details" />
                         </form></td>
                         <td>
@@ -49,7 +49,7 @@
                     </c:forEach>
                 </table>
                 <c:if test="${!empty productCommandList}">
-                    <form onsubmit="return confirm('Accepting will purchase everything in your cart. You will recieve purchase invoice on your e-mail.') ? true : false;" action="/purchase-invoice/create">
+                    <form onsubmit="return confirm('Accepting will purchase everything in your cart. You will recieve purchase invoice on your e-mail.') ? true : false;" action="/EasyShopping/purchase-invoice/create">
                         <input class="btn btn-default" type="submit" value="Buy">
                     </form>
                 </c:if>

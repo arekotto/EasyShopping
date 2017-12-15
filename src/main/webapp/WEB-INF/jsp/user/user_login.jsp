@@ -19,7 +19,7 @@
     </div>
     <div class="row">
         <div class="col-lg-12 text-center">
-            <form:form action="${request.contextPath}/user/authenticate" commandName="userLoginCommand">
+            <form:form action="${request.contextPath}/EasyShopping/user/authenticate" commandName="userLoginCommand">
             <form class="form-horizontal">
                 <div class="form-group row">
                     <div class="col-md-6 col-md-offset-3">

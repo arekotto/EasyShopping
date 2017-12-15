@@ -21,7 +21,7 @@
             <h3>
                 Add news
             </h3>
-            <form:form action="${request.contextPath}/admin/createnews"
+            <form:form action="${request.contextPath}/EasyShopping/admin/createnews"
                        commandName="newsCommand"
                        method="post"
                        enctype="multipart/form-data">

@@ -27,7 +27,7 @@
             <h3 class="title">
                 Add item
             </h3>
-        <form:form action="${request.contextPath}/product/create"
+        <form:form action="${request.contextPath}/EasyShopping/product/create"
                    commandName="productCreationCommand"
                    method="post"
                    enctype="multipart/form-data">

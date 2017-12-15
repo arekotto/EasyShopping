@@ -33,7 +33,7 @@
                     </div>
                     <br/>
                 </c:if>
-                <form:form action="${request.contextPath}/user/save-email" commandName="userChangeEmailCommand">
+                <form:form action="${request.contextPath}/EasyShopping/user/save-email" commandName="userChangeEmailCommand">
                     <div class="form-group row">
                         <div class="input-group col-md-6 col-md-offset-3">
                             <span class="input-group-addon">New Email:</span>
