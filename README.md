@@ -1,6 +1,11 @@
-# Mongo in docker
+# Docker
+To run app locally execute build-and-run.sh script:
 
-```
-docker run -p 127.0.0.1:27017:27017 --name mongodb -d mongo
+```bash
+./build-and-run.sh
 ```
 
+This will run mongo container, build the app and run it with tomcat. The app should be available at: 
+```
+localhost:8080/EasyShopping
+```
