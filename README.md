@@ -9,3 +9,5 @@ This will run mongo container, build the app and run it with tomcat. The app sho
 ```
 localhost:8080/EasyShopping
 ```
+
+ **NO AUTOMATION FOR WINDOWS, LOOSERS!**
