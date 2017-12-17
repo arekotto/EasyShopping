@@ -30,7 +30,7 @@
                 ${productCommand.name}<br/>
                 ${productCommand.description}<br/>
                 ${productCommand.manufacturer}<br/>
-                <a href="/EasyShopping/product/remove?productId=${productCommand.id}" style="color:red">Remove</a><br/><br/>
+                <a href="/product/remove?productId=${productCommand.id}" style="color:red">Remove</a><br/><br/>
 
 
             </c:forEach>

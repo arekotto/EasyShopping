@@ -16,6 +16,7 @@ public class StandardProduct implements Product {
     private long categoryId;
     private String categoryName;
     private boolean hasImage = false;
+    private long quantity = 0;
     private List<Review> reviews;
 
     /**
@@ -152,6 +153,14 @@ public class StandardProduct implements Product {
      * @param category the category
      */
     public void setCategoryName(String category) { this.categoryName = category; }
+
+    public long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(long quantity) {
+        this.quantity = quantity;
+    }
 
     /**
      * Is has image boolean.

@@ -36,7 +36,7 @@
                     Wrong e-mail address.
                 </div>
             </c:if>
-            <form:form action="${request.contextPath}/EasyShopping/user/create" commandName="userRegistrationCommand">
+            <form:form action="${request.contextPath}/user/create" commandName="userRegistrationCommand">
             <form class="form-horizontal">
                 <div class="form-group row">
                     <div class="col-md-6 col-md-offset-3">

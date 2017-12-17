@@ -22,7 +22,7 @@
                 <div class="alert alert-danger">
                     Please verify your email first. A verification email has been sent to your address.
                 </div>
-                <form action="/EasyShopping/user/send-new-verification-email">
+                <form action="/user/send-new-verification-email">
                     <input class="btn btn-default" type="submit" value="Send New Email">
                 </form>
             </div>

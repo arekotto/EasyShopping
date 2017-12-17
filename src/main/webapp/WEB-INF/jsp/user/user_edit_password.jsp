@@ -31,7 +31,7 @@
                     <div class="alert alert-danger">${userChangePasswordCommand.errorMessage}</div>
                     <br/>
                 </c:if>
-                <form:form action="${request.contextPath}/EasyShopping/user/save-password" commandName="userChangePasswordCommand">
+                <form:form action="${request.contextPath}/user/save-password" commandName="userChangePasswordCommand">
                     <div class="form-group row">
                         <div class="input-group col-md-6 col-md-offset-3">
                             <span class="input-group-addon">Current Password:</span>

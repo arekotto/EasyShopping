@@ -25,7 +25,7 @@
     <div class="torso">
         <div class="inner-torso">
             <div class="form-horizontal">
-                <form:form action="${request.contextPath}/EasyShopping/user/save" commandName="userStandardCommand">
+                <form:form action="${request.contextPath}/user/save" commandName="userStandardCommand">
                     <div class="form-group row">
                         <div class="input-group col-md-6 col-md-offset-3">
                             <span class="input-group-addon">Name:</span>

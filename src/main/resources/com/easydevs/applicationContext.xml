@@ -22,8 +22,12 @@
     <!--<bean id="userService" class="com.easydevs.user.UserServiceImpl"/>-->
 
     <!--mongo-->
+    <!--Uncomment when using docker-->
     <mongo:mongo host="172.18.0.10" port="27017" id="contentMongo"/>
+    <!--Uncomment when using local-->
+    <!--<mongo:mongo host="localhost" port="27017" id="contentMongo"/>-->
     <mongo:db-factory id="contentMongoDbFactory" mongo-ref="contentMongo" dbname="content_db"/>
+
 
     <bean id="contentMongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
         <constructor-arg ref="contentMongoDbFactory"/>

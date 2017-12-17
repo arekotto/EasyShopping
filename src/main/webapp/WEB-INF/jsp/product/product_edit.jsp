@@ -28,7 +28,7 @@
                 Edit item
             </h3>
             <form:form
-                    action="${request.contextPath}/EasyShopping/product/save?productId=${productCommand.id}&addedByUserId=${productCommand.createdByUserId}"
+                    action="${request.contextPath}/product/save?productId=${productCommand.id}&addedByUserId=${productCommand.createdByUserId}"
                     commandName="productCommand"
                     method="post"
                     enctype="multipart/form-data">

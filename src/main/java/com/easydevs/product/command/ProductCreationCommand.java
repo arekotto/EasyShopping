@@ -10,6 +10,7 @@ public class ProductCreationCommand {
     private String manufacturer;
     private double price;
     private long categoryId;
+    private long quantity;
 
     /**
      * Gets name.
@@ -99,5 +100,13 @@ public class ProductCreationCommand {
      */
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(long quantity) {
+        this.quantity = quantity;
     }
 }

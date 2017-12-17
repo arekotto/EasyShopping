@@ -37,7 +37,7 @@
             </c:if>
 
             <form class="form-horizontal">
-                <form:form action="${request.contextPath}/EasyShopping/user/edit"
+                <form:form action="${request.contextPath}/user/edit"
                            commandName="userStandardCommand">
                     <%--Email: ${userStandardCommand.email}--%>
                     <%--Name: ${userStandardCommand.name}--%>
@@ -71,11 +71,11 @@
                     </div>
                     <div class="form-group row">
                         <div class="btn-group" role="group" aria-label="...">
-                            <a class="btn btn-default" role="button" href="${request.contextPath}/EasyShopping/user/edit">Edit
+                            <a class="btn btn-default" role="button" href="${request.contextPath}/user/edit">Edit
                                 Info</a>
-                            <a class="btn btn-default" role="button" href="${request.contextPath}/EasyShopping/user/edit-password">Change
+                            <a class="btn btn-default" role="button" href="${request.contextPath}/user/edit-password">Change
                                 Password</a>
-                            <a class="btn btn-default" role="button" href="${request.contextPath}/EasyShopping/user/edit-email">Change
+                            <a class="btn btn-default" role="button" href="${request.contextPath}/user/edit-email">Change
                                 Email</a>
                         </div>
                     </div>

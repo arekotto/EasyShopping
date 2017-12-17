@@ -56,10 +56,10 @@
                     ${productCommand.averageRating}
                 </p>
                 <c:if test="${productCommand.hasImage}">
-                    <img class="img-fluid" src="/EasyShopping/product/image/${productCommand.id}"/>
+                    <img class="img-fluid" src="/product/image/${productCommand.id}"/>
                 </c:if>
                 <c:if test="${isUserProduct != null && !isUserProduct}">
-                    <form action="/EasyShopping/cart/add">
+                    <form action="/cart/add">
                         <input type="hidden" name="productId" value="${productCommand.id}"
                                class="btn btn-default"/>
                         <input type="submit" value="Add to cart" class="btn btn-default"/>
@@ -76,7 +76,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="form-horizontal">
-                            <form:form action="/EasyShopping/product/review"
+                            <form:form action="/product/review"
                                        commandName="reviewCommand">
                                 <div class="form-group row">
                                     <div class="input-group col-md-10 col-md-offset-1">

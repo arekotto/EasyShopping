@@ -64,6 +64,12 @@
                             <form:input type="number" step="0.01" path="price" class="form-control"/>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <div class="input-group col-md-6 col-md-offset-3">
+                            <span class="input-group-addon">Price:</span>
+                            <form:input type="number" step="1" path="quantity" class="form-control"/>
+                        </div>
+                    </div>
                 </div>
                 <p>
                     <label>Upload an Image:</label>

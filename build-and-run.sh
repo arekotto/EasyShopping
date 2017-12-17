@@ -18,7 +18,7 @@ docker build -t easyshopping .
 
 echo "-------------------------------------------------------"
 echo "running app docker"
-docker run -p 8080:8080 --net easynet --name easyshopping -d easyshopping
+docker run -p 8443:8443 --net easynet --name easyshopping -d easyshopping
 
 echo "-------------------------------------------------------"
 echo "app running"

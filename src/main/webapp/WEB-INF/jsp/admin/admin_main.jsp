@@ -20,8 +20,8 @@
                 Admin panel
             </h3>
             <div>
-                <a class="btn btn-default" href="/EasyShopping/admin/deleteuser">Users</a>
-                <a class="btn btn-default" href="/EasyShopping/admin/addnews">News</a>
+                <a class="btn btn-default" href="/admin/deleteuser">Users</a>
+                <a class="btn btn-default" href="/admin/addnews">News</a>
             </div>
         </div>
     </div>

@@ -18,6 +18,7 @@ public class ProductCommand {
     private String manufacturer;
     private double price;
     private long categoryId;
+    private long quantity;
     private String categoryName;
     private boolean hasImage;
     private boolean shouldHideAddToCartButton = false;
@@ -45,6 +46,7 @@ public class ProductCommand {
         price = standardProduct.getPrice();
         hasImage = standardProduct.isHasImage();
         reviews = standardProduct.getReviews();
+        quantity = standardProduct.getQuantity();
     }
 
 

@@ -30,25 +30,25 @@
     <div class="row">
         <div class="col-sm-12 text-center">
             <div class="btn-group" role="group" aria-label="...">
-                <a class="btn btn-default" role="button" href="/EasyShopping/home">Home</a>
-                <a class="btn btn-default" role="button" href="/EasyShopping/product/all">Products</a>
+                <a class="btn btn-default" role="button" href="/home">Home</a>
+                <a class="btn btn-default" role="button" href="/product/all">Products</a>
                 <c:choose>
                     <c:when test="${headerCommand.isLoggedIn}">
-                        <a class="btn btn-default" role="button" href="/EasyShopping/product/createForm">Add Product</a>
-                        <a class="btn btn-default" role="button" href="/EasyShopping/product/user">My Products</a>
-                        <a class="btn btn-default" role="button" href="/EasyShopping/purchase-invoice/view-all">Orders</a>
-                        <a class="btn btn-default" role="button" href="/EasyShopping/user/homepage">${headerCommand.userEmail}</a>
-                        <a class="btn btn-default" role="button" href="/EasyShopping/user/logout">Log out</a>
+                        <a class="btn btn-default" role="button" href="/product/createForm">Add Product</a>
+                        <a class="btn btn-default" role="button" href="/product/user">My Products</a>
+                        <a class="btn btn-default" role="button" href="/purchase-invoice/view-all">Orders</a>
+                        <a class="btn btn-default" role="button" href="/user/homepage">${headerCommand.userEmail}</a>
+                        <a class="btn btn-default" role="button" href="/user/logout">Log out</a>
                     </c:when>
                     <c:otherwise>
-                        <a class="btn btn-default" role="button" href="/EasyShopping/user/login">Log in</a>
-                        <a class="btn btn-default" role="button" href="/EasyShopping/user/register">Register</a>
+                        <a class="btn btn-default" role="button" href="/user/login">Log in</a>
+                        <a class="btn btn-default" role="button" href="/user/register">Register</a>
                     </c:otherwise>
                 </c:choose>
-                <a class="btn btn-default" role="button" href="/EasyShopping/cart/view">Cart</a>
+                <a class="btn btn-default" role="button" href="/cart/view">Cart</a>
                 <c:choose>
                     <c:when test="${headerCommand.isAdmin}">
-                        <a class="btn btn-default" role="button" href="/EasyShopping/admin/main">Admin panel</a>
+                        <a class="btn btn-default" role="button" href="/admin/main">Admin panel</a>
                     </c:when>
                 </c:choose>
             </div>

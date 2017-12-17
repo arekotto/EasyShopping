@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="input-group col-md-3" role="group">
                     <c:if test="${!isOnlyForUser}">
-                        <form:form action="${request.contextPath}/EasyShopping/product/search" commandName="searchCommand">
+                        <form:form action="${request.contextPath}/product/search" commandName="searchCommand">
                             <form:select path="searchCategory" class="form-control" style="height:auto;">
                                 <form:options items="${categoryCommandList}" itemLabel="name" itemValue="id"/>
                             </form:select>
@@ -55,7 +55,7 @@
                                     <c:if test="${productCommand.hasImage}">
                                         <img style="max-width:150px; max-height: 150px;"
                                              class="img-thumbnail"
-                                             src="/EasyShopping/product/image/${productCommand.id}"/>
+                                             src="/product/image/${productCommand.id}"/>
                                     </c:if>
                                 </div>
                                 <div class="col-md-8">
@@ -66,7 +66,7 @@
                                     <p>Rating: ${productCommand.averageRating}</p>
 
                                     <c:if test="${!isOnlyForUser}">
-                                        <form action="/EasyShopping/product/view/${productCommand.id}">
+                                        <form action="/product/view/${productCommand.id}">
                                             <input class="btn btn-default" type="submit" value="Details"/>
                                         </form>
                                     </c:if>
@@ -74,14 +74,14 @@
                                     <c:choose>
                                         <c:when test="${isOnlyForUser}">
                                         <span>
-                                            <form action="/EasyShopping/product/remove">
+                                            <form action="/product/remove">
                                                 <input type="hidden" name="productId"
                                                        value="${productCommand.id}"/>
                                                 <input class="btn btn-default" type="submit" value="Remove"/>
                                             </form>
                                            </span>
                                             <span>
-                                             <form action="/EasyShopping/product/edit">
+                                             <form action="/product/edit">
                                                  <input type="hidden" name="productId" value="${productCommand.id}"/>
                                                  <input class="btn btn-default" type="submit" value="Edit"/>
                                               </form>
@@ -89,7 +89,7 @@
                                         </c:when>
                                         <c:when test="${!productCommand.shouldHideAddToCartButton}">
                                             <span>
-                                               <form action="/EasyShopping/cart/add">
+                                               <form action="/cart/add">
                                                    <input class="btn btn-default" type="hidden" name="productId"
                                                           value="${productCommand.id}"/>
                                                    <input class="btn btn-default" type="submit"
