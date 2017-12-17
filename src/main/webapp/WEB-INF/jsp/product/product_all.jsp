@@ -63,6 +63,7 @@
                                     <p>Description: ${productCommand.description}</p>
                                     <p>Manufacturer: ${productCommand.manufacturer}</p>
                                     <p>Category: ${productCommand.categoryName}</p>
+                                    <p>Left in Stock: ${productCommand.quantity}</p>
                                     <p>Rating: ${productCommand.averageRating}</p>
 
                                     <c:if test="${!isOnlyForUser}">

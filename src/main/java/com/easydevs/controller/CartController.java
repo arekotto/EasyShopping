@@ -115,7 +115,8 @@ public class CartController {
         if (userCart == null) {
             userCart = cartService.createNewCart(userIdLong, !isRequestVerified);
         }
-        if (productService.getProductById(productId) != null) {
+        StandardProduct addedProduct = (StandardProduct) productService.getProductById(productId);
+        if (addedProduct != null && addedProduct.getQuantity() > 0) {
             userCart.addToCart(productId);
             cartService.updateCartForUser(userIdLong, userCart);
 

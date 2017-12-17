@@ -101,6 +101,7 @@ public class ProductController {
         newProduct.setAddedByUserId(Long.parseLong(userId));
         newProduct.setCategory(productCreationCommand.getCategory());
         newProduct.setPrice(productCreationCommand.getPrice());
+        newProduct.setQuantity(productCreationCommand.getQuantity());
 
         MultipartFile image = request.getFile("image");
 
@@ -163,6 +164,7 @@ public class ProductController {
             product.setDescription(productCommand.getDescription());
             product.setManufacturer(productCommand.getManufacturer());
             product.setPrice(productCommand.getPrice());
+            product.setQuantity(productCommand.getQuantity());
 
             MultipartFile image = request.getFile("image");
 
@@ -212,30 +214,20 @@ public class ProductController {
 //            reviewCommand.setUserId(Long.parseLong(userIdCookie));
             int[] ratings = new int[]{1, 2, 3, 4, 5};
             productCommand.setAverageRating(product.countAverageRating());
+
+            Boolean isRequestVerified = (Boolean) request.getAttribute("isRequestVerified");
+
+            boolean isUserProduct = isRequestVerified != null && isRequestVerified && product.getAddedByUserId() == userId;
+            model.addAttribute("isUserProduct", isUserProduct);
+            productCommand.setShouldHideAddToCartButton(isUserProduct || product.getQuantity() <= 0);
+            Boolean isReviewed = product.isReviewedByUserId(userId) || userId == 0;
+            model.addAttribute("isReviewed", isReviewed);
+
+            model.addAttribute("hasReviews", product.isHasReviews());
+
             model.addAttribute("productCommand", productCommand);
             model.addAttribute("reviewCommand", reviewCommand);
             model.addAttribute("ratings", ratings);
-
-            Boolean isRequestVerified = (Boolean) request.getAttribute("isRequestVerified");
-            if (isRequestVerified != null && isRequestVerified && product.getAddedByUserId() == userId) {
-                model.addAttribute("isUserProduct", true);
-            } else {
-                model.addAttribute("isUserProduct", false);
-            }
-
-            Boolean isReviewedByUser = product.isReviewedByUserId(userId);
-            if (isReviewedByUser || userId == 0) {
-                model.addAttribute("isReviewed", true);
-            } else {
-                model.addAttribute("isReviewed", false);
-            }
-
-            boolean isHasReviews = product.isHasReviews();
-            if (isHasReviews) {
-                model.addAttribute("hasReviews", true);
-            } else {
-                model.addAttribute("hasReviews", false);
-            }
 
             return JSP_PATH_PREFIX + "product_view";
 
@@ -346,7 +338,7 @@ public class ProductController {
             for (StandardProduct standardProduct : standardProducts) {
                 ProductCommand productCommand = new ProductCommand(standardProduct);
                 productCommand.setCategoryName(categoryService.getCategoryNameById(standardProduct.getCategory()));
-                if (userId.equals(String.valueOf(productCommand.getCreatedByUserId()))) {
+                if (userId.equals(String.valueOf(productCommand.getCreatedByUserId())) || productCommand.getQuantity() <= 0) {
                     productCommand.setShouldHideAddToCartButton(true);
                 }
                 productCommand.setAverageRating(standardProduct.countAverageRating());

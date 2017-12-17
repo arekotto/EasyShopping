@@ -84,43 +84,43 @@ public class PurchaseInvoiceController {
         long userIdLong = Long.parseLong(userId);
         Cart userCart = cartService.getCartForUser(userIdLong, false);
 
-        if (userCart != null && userCart.getProductIdList() != null && !userCart.getProductIdList().isEmpty()) {
-            PurchaseInvoice invoice = purchaseInvoiceService.createNewPurchaseInvoice();
-            StandardUser user = (StandardUser) userService.getUserById(userIdLong);
-            if (user != null && !user.isEmailVerified()) {
-                return UserController.JSP_PATH_PREFIX + "user_email_not_verified_warn";
-            }
-            List<StandardProduct> productList = new ArrayList<>();
-
-            for (Long productId : userCart.getProductIdList()) {
-                StandardProduct product = (StandardProduct) productService.getProductById(productId);
-                productList.add(product);
-
-            }
-            invoice.setShipToAddressCity(user.getCity());
-            invoice.setShipToAddressCountry(user.getCountry());
-            invoice.setShipToAddressStreet(user.getStreet());
-            invoice.setUserId(user.getId());
-            invoice.setUserName(user.getName());
-            invoice.setProductList(productList);
-            invoice.calculateCurrentPrice();
-
-            model.addAttribute("purchaseInvoiceCommand", invoice);
-
-            purchaseInvoiceService.updatePurchaseInvoice(invoice);
-
-            userCart.resetCart();
-            cartService.updateCartForUser(userIdLong, userCart);
-
-            emailService.sendEmail(user.getEmail(), "Purchase Confirmation", getPurchaseEmailBody(invoice ,user.getName()));
-
-            return "redirect:view/" + invoice.getId();
-
+        if (userCart == null || userCart.getProductIdList() == null || userCart.getProductIdList().isEmpty()) {
+            return "redirect:../homepage";
         }
 
+        PurchaseInvoice invoice = purchaseInvoiceService.createNewPurchaseInvoice();
+        StandardUser user = (StandardUser) userService.getUserById(userIdLong);
+        if (user != null && !user.isEmailVerified()) {
+            return UserController.JSP_PATH_PREFIX + "user_email_not_verified_warn";
+        }
 
+        List<StandardProduct> productList = new ArrayList<>();
+        for (Long productId : userCart.getProductIdList()) {
+            StandardProduct product = (StandardProduct) productService.getProductById(productId);
+            productList.add(product);
+            product.setQuantity(product.getQuantity() - 1);
+            product.setQuantitySold(product.getQuantitySold() + 1);
+            productService.updateProduct(product);
+        }
 
-        return "redirect:../homepage";
+        invoice.setShipToAddressCity(user.getCity());
+        invoice.setShipToAddressCountry(user.getCountry());
+        invoice.setShipToAddressStreet(user.getStreet());
+        invoice.setUserId(user.getId());
+        invoice.setUserName(user.getName());
+        invoice.setProductList(productList);
+        invoice.calculateCurrentPrice();
+
+        model.addAttribute("purchaseInvoiceCommand", invoice);
+
+        purchaseInvoiceService.updatePurchaseInvoice(invoice);
+
+        userCart.resetCart();
+        cartService.updateCartForUser(userIdLong, userCart);
+
+        emailService.sendEmail(user.getEmail(), "Purchase Confirmation", getPurchaseEmailBody(invoice ,user.getName()));
+
+        return "redirect:view/" + invoice.getId();
     }
 
     /**

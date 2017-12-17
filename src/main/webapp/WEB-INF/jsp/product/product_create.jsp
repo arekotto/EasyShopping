@@ -27,7 +27,7 @@
             <h3 class="title">
                 Add item
             </h3>
-        <form:form action="${request.contextPath}/EasyShopping/product/create"
+        <form:form action="${request.contextPath}/product/create"
                    commandName="productCreationCommand"
                    method="post"
                    enctype="multipart/form-data">
@@ -66,7 +66,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="input-group col-md-6 col-md-offset-3">
-                            <span class="input-group-addon">Price:</span>
+                            <span class="input-group-addon">In Stock:</span>
                             <form:input type="number" step="1" path="quantity" class="form-control"/>
                         </div>
                     </div>

@@ -17,6 +17,7 @@ public class StandardProduct implements Product {
     private String categoryName;
     private boolean hasImage = false;
     private long quantity = 0;
+    private long quantitySold = 0;
     private List<Review> reviews;
 
     /**
@@ -156,6 +157,14 @@ public class StandardProduct implements Product {
 
     public long getQuantity() {
         return quantity;
+    }
+
+    public long getQuantitySold() {
+        return quantitySold;
+    }
+
+    public void setQuantitySold(long quantitySold) {
+        this.quantitySold = quantitySold;
     }
 
     public void setQuantity(long quantity) {

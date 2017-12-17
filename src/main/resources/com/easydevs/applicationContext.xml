@@ -31,7 +31,6 @@
 
     <bean id="contentMongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
         <constructor-arg ref="contentMongoDbFactory"/>
-
     </bean>
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

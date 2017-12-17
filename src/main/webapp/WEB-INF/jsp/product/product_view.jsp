@@ -55,10 +55,27 @@
                     Rating:
                     ${productCommand.averageRating}
                 </p>
+                <p>
+                    Times sold:
+                    ${productCommand.quantitySold}
+                </p>
+                <c:choose>
+                    <c:when test="${productCommand.quantity > 0}">
+                        <p>
+                            Left in stock:
+                                ${productCommand.quantity}
+                        </p>
+                    </c:when>
+                    <c:otherwise>
+                        <p>
+                            <strong>Out of stock!</strong>
+                        </p>
+                    </c:otherwise>
+                </c:choose>
                 <c:if test="${productCommand.hasImage}">
                     <img class="img-fluid" src="/product/image/${productCommand.id}"/>
                 </c:if>
-                <c:if test="${isUserProduct != null && !isUserProduct}">
+                <c:if test="${!productCommand.shouldHideAddToCartButton}">
                     <form action="/cart/add">
                         <input type="hidden" name="productId" value="${productCommand.id}"
                                class="btn btn-default"/>

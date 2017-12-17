@@ -19,6 +19,7 @@ public class ProductCommand {
     private double price;
     private long categoryId;
     private long quantity;
+    private long quantitySold;
     private String categoryName;
     private boolean hasImage;
     private boolean shouldHideAddToCartButton = false;
@@ -47,6 +48,7 @@ public class ProductCommand {
         hasImage = standardProduct.isHasImage();
         reviews = standardProduct.getReviews();
         quantity = standardProduct.getQuantity();
+        quantitySold = standardProduct.getQuantitySold();
     }
 
 
@@ -254,4 +256,19 @@ public class ProductCommand {
      */
     public void setAverageRating(double rating) { averageRating = rating; }
 
+    public long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(long quantity) {
+        this.quantity = quantity;
+    }
+
+    public long getQuantitySold() {
+        return quantitySold;
+    }
+
+    public void setQuantitySold(long quantitySold) {
+        this.quantitySold = quantitySold;
+    }
 }
