@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -161,6 +164,48 @@ public class PurchaseInvoiceController {
         return "";
     }
 
+    /**
+     * View string.
+     *
+     * @param invoiceId the invoice id
+     * @return the string
+     */
+    @RequestMapping("/copy/{invoiceId}")
+    public String copy(HttpServletRequest request,
+                       HttpServletResponse response,
+                       @CookieValue(value = "id", defaultValue = "") String userId,
+                       @CookieValue(value = "tempId", defaultValue = "") String tempUserId,
+                       @PathVariable Long invoiceId) {
+
+        PurchaseInvoice invoice = purchaseInvoiceService.getPurchaseInvoiceById(invoiceId);
+
+        Boolean isRequestVerified = (Boolean) request.getAttribute("isRequestVerified");
+
+        long userIdLong;
+        if (isRequestVerified) {
+            userIdLong = Long.parseLong(userId);
+        } else if (!tempUserId.isEmpty()) {
+            userIdLong = Long.parseLong(tempUserId);
+        } else {
+            userIdLong = userService.getNewIdForTempUser();
+            response.addCookie(createNewCookie("tempId", String.valueOf(userIdLong)));
+        }
+
+        Cart userCart = cartService.getCartForUser(userIdLong, !isRequestVerified);
+        if (userCart == null) {
+            userCart = cartService.createNewCart(userIdLong, !isRequestVerified);
+        }
+
+        for(int i = 0; i < invoice.getProductList().size(); i++){
+            userCart.addToCart(invoice.getProductList().get(i).getId());
+        }
+
+        cartService.updateCartForUser(userIdLong, userCart);
+
+
+        return "redirect:../../cart/view";
+    }
+
     private String getPurchaseEmailBody(PurchaseInvoice invoice, String userName) {
 
         String body;
@@ -175,5 +220,11 @@ public class PurchaseInvoiceController {
         body = body.concat("\n\nThank you for shopping with us!\n\nThe EazyDevs Team\n");
         System.out.println(body);
         return body;
+    }
+
+    private Cookie createNewCookie(String key, String value) {
+        Cookie cookie = new Cookie(key, value);
+        cookie.setPath("/");
+        return cookie;
     }
 }

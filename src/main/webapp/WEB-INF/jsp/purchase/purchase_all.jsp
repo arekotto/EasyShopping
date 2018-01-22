@@ -31,8 +31,6 @@
                                 <th>Description</th>
                                 <th>Manufacturer</th>
                                 <th>Price</th>
-                                <th></th>
-                                <th></th>
                             </tr>
                             <c:forEach var="productCommand" items="${purchaseInvoiceCommand.productList}">
                                 <tr>
@@ -56,9 +54,16 @@
                     </div>
                 </div>
                 <div class="row">
-                    <h3>
-                        Total price ${purchaseInvoiceCommand.price} $
-                    </h3>
+                    <div class="col-xs-4">
+                        <form action="/purchase-invoice/copy/${purchaseInvoiceCommand.id}">
+                            <input class="btn btn-default" type="submit" value="Buy again"/>
+                        </form>
+                    </div>
+                    <div class="col-xs-4 text-right">
+                        <h3>
+                            Total price ${purchaseInvoiceCommand.price} $
+                        </h3>
+                    </div>
                 </div>
                 <div style="clear:both;"></div>
                 <br/>
