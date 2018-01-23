@@ -37,6 +37,7 @@
                         <a class="btn btn-default" role="button" href="/product/createForm">Add Product</a>
                         <a class="btn btn-default" role="button" href="/product/user">My Products</a>
                         <a class="btn btn-default" role="button" href="/purchase-invoice/view-all">Orders</a>
+                        <a class="btn btn-default" role="button" href="/purchase-invoice/view-cancelled">Cancelled Orders</a>
                         <a class="btn btn-default" role="button" href="/user/homepage">${headerCommand.userEmail}</a>
                         <a class="btn btn-default" role="button" href="/user/logout">Log out</a>
                     </c:when>

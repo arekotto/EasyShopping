@@ -18,6 +18,7 @@ public class PurchaseInvoiceCommand {
     private String shipToAddressStreet;
     private String shipToAddressCity;
     private String shipToAddressCountry;
+    private boolean isCancelled;
 
     /**
      * Instantiates a new Purchase invoice command.
@@ -160,5 +161,9 @@ public class PurchaseInvoiceCommand {
      * @param country the country
      */
     public void setShipToAddressCountry(String country) { this.shipToAddressCountry = country; }
+
+    public boolean getIsCancelled() { return this.isCancelled; }
+
+    public void setIsCancelled(boolean isCancelled) { this.isCancelled = isCancelled; }
     
 }

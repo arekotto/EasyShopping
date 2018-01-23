@@ -20,7 +20,7 @@
     <div class="torso">
         <div class="inner-torso">
             <h3 class="title">
-                All Purchase Invoices
+                Cancelled Purchase Invoices
             </h3>
             <c:forEach var="purchaseInvoiceCommand" items="${purchaseInvoiceCommandList}">
                 <div class="row">
@@ -57,11 +57,6 @@
                     <div class="col-xs-4">
                         <form action="/purchase-invoice/copy/${purchaseInvoiceCommand.id}">
                             <input class="btn btn-default" type="submit" value="Buy again"/>
-                        </form>
-                        <form action="/purchase-invoice/cancel/${purchaseInvoiceCommand.id}">
-                            <%--<input type="hidden" name="purchaseInvoiceCommandId"--%>
-                                   <%--value="${purchaseInvoiceCommand.id}"/>--%>
-                            <input class="btn btn-default" type="submit" value="Cancel"/>
                         </form>
                     </div>
                     <div class="col-xs-4 text-right">

@@ -31,7 +31,6 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
     private final String INVOICE_ID_SEQUENCE_COLLECTION_NAME = "invoiceIdSequence";
 
     /**
-     *
      * @param id the id
      * @return
      */
@@ -49,7 +48,6 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
     }
 
     /**
-     *
      * @return
      */
     @Override
@@ -60,18 +58,25 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
     }
 
     /**
-     *
      * @param userId the user id
      * @return
      */
     @Override
     public List<PurchaseInvoice> getPurchaseInvoiceListByUserId(long userId) {
-        Query query = new Query(Criteria.where("userId").is(userId));
-        return  mongoTemplate.find(query, PurchaseInvoice.class);
+//        Query query = new Query(Criteria.where("userId").is(userId));
+        Query query = new Query(Criteria.where("userId").is(userId).orOperator(Criteria.where("isCancelled").is(false),
+                Criteria.where("isCancelled").exists(false)));
+        return mongoTemplate.find(query, PurchaseInvoice.class);
+    }
+
+    @Override
+    public List<PurchaseInvoice> getCancelledInvoiceListByUserId(long userId) {
+        Query query = new Query(Criteria.where("userId").is(userId).andOperator(Criteria.where("isCancelled").is(true),
+                Criteria.where("isCancelled").exists(true)));
+        return mongoTemplate.find(query, PurchaseInvoice.class);
     }
 
     /**
-     *
      * @return
      */
     private Long getNewIdAndInc() {
@@ -97,8 +102,22 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
         return currentId;
     }
 
+    @Override
+    public void cancelPurchaseInvoice(PurchaseInvoice invoice) {
+        log.info("PurchaseInvoiceService - cancelPurchaseInvoice", invoice.toString());
+
+        invoice.setIsCancelled(true);
+
+        Query query = new Query(Criteria.where("id").is(invoice.getId()));
+
+        DBObject dbDoc = new BasicDBObject();
+        mongoTemplate.getConverter().write(invoice, dbDoc);
+        Update update = Update.fromDBObject(dbDoc);
+
+        mongoTemplate.upsert(query, update, PurchaseInvoice.class);
+    }
+
     /**
-     *
      * @param invoice the invoice
      */
     @Override
@@ -115,7 +134,6 @@ public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
     }
 
     /**
-     *
      * @param invoice the invoice
      */
     @Override

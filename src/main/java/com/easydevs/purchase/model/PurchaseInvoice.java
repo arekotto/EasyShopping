@@ -18,6 +18,7 @@ public class PurchaseInvoice {
     private String shipToAddressStreet;
     private String shipToAddressCity;
     private String shipToAddressCountry;
+    private boolean isCancelled;
 
     /**
      * Instantiates a new Purchase invoice.
@@ -49,6 +50,7 @@ public class PurchaseInvoice {
         this.shipToAddressCity = user.getCity();
         this.shipToAddressCountry = user.getCountry();
         this.shipToAddressStreet = user.getStreet();
+        this.isCancelled = false;
     }
 
     /**
@@ -199,4 +201,8 @@ public class PurchaseInvoice {
 
         this.price = Math.round(totalPrice * 100.0) / 100.0;
     }
+
+    public boolean getIsCancelled() { return this.isCancelled; }
+
+    public void setIsCancelled(boolean isCancelled) { this.isCancelled = isCancelled; }
 }

@@ -121,7 +121,7 @@ public class PurchaseInvoiceController {
         userCart.resetCart();
         cartService.updateCartForUser(userIdLong, userCart);
 
-        emailService.sendEmail(user.getEmail(), "Purchase Confirmation", getPurchaseEmailBody(invoice ,user.getName()));
+        emailService.sendEmail(user.getEmail(), "Purchase Confirmation", getPurchaseEmailBody(invoice, user.getName()));
 
         return "redirect:view/" + invoice.getId();
     }
@@ -142,6 +142,17 @@ public class PurchaseInvoiceController {
 
         return JSP_PATH_PREFIX + "purchase_all";
     }
+
+    @RequestMapping("/view-cancelled")
+    public String createCancelled(Model model,
+                                  @CookieValue("id") String userId) {
+
+        model.addAttribute("purchaseInvoiceCommandList", purchaseInvoiceService.getCancelledInvoiceListByUserId(Long.parseLong(userId)));
+
+
+        return JSP_PATH_PREFIX + "purchase_cancelled";
+    }
+
 
     /**
      * View string.
@@ -196,7 +207,7 @@ public class PurchaseInvoiceController {
             userCart = cartService.createNewCart(userIdLong, !isRequestVerified);
         }
 
-        for(int i = 0; i < invoice.getProductList().size(); i++){
+        for (int i = 0; i < invoice.getProductList().size(); i++) {
             userCart.addToCart(invoice.getProductList().get(i).getId());
         }
 
@@ -204,6 +215,37 @@ public class PurchaseInvoiceController {
 
 
         return "redirect:../../cart/view";
+    }
+
+    /**
+     * View string.
+     *
+     * @param invoiceId the invoice id
+     * @return the string
+     */
+    @RequestMapping("/cancel/{invoiceId}")
+    public String cancel(HttpServletRequest request,
+                         HttpServletResponse response,
+                         @CookieValue(value = "id", defaultValue = "") String userId,
+                         @CookieValue(value = "tempId", defaultValue = "") String tempUserId,
+                         @PathVariable Long invoiceId) {
+
+        PurchaseInvoice invoice = purchaseInvoiceService.getPurchaseInvoiceById(invoiceId);
+        purchaseInvoiceService.cancelPurchaseInvoice(invoice);
+
+        List<StandardProduct> productList = invoice.getProductList();
+
+        for (StandardProduct product : productList) {
+            long productId = product.getId();
+            StandardProduct productToChange = (StandardProduct) productService.getProductById(productId);
+
+            productToChange.setQuantity(productToChange.getQuantity() + 1);
+            productToChange.setQuantitySold(productToChange.getQuantity() - 1);
+
+            productService.updateProduct(productToChange);
+        }
+
+        return "redirect:../view-cancelled";
     }
 
     private String getPurchaseEmailBody(PurchaseInvoice invoice, String userName) {

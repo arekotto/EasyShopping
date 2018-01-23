@@ -26,6 +26,9 @@ public interface PurchaseInvoiceService {
      */
     List<PurchaseInvoice> getPurchaseInvoiceListByUserId(long userId);
 
+
+    List<PurchaseInvoice> getCancelledInvoiceListByUserId(long userId);
+
     /**
      * Create new purchase invoice purchase invoice.
      *
@@ -46,5 +49,7 @@ public interface PurchaseInvoiceService {
      * @param invoice the invoice
      */
     void removePurchaseInvoice(PurchaseInvoice invoice);
+
+    void cancelPurchaseInvoice(PurchaseInvoice invoice);
 
 }

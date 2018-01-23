@@ -59,6 +59,18 @@
                 Total price ${purchaseInvoiceCommand.price} $
                 <br><br>
             </h3>
+            <c:when test="${purchaseInvoiceCommand.isCancelled}">
+                <h5>
+                    Cancelled
+                </h5>
+            </c:when>
+            <c:otherwise>
+                <form action="/purchase-invoice/cancel/${purchaseInvoiceCommand.id}">
+                    <input type="hidden" name="purchaseInvoiceCommandId"
+                           value="${purchaseInvoiceCommand.id}"/>
+                    <input class="btn btn-default" type="submit" value="Cancel"/>
+                </form>
+            </c:otherwise>
         </div>
     </div>
 </div>
