@@ -1,4 +1,8 @@
-# Docker
+# EasyShopping
+
+An online store web app developed using Java and Spring as part of a group programming project during my Bachelor degree. 
+
+## Docker
 To run app locally execute build-and-run.sh script:
 
 ```bash
